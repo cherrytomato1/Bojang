@@ -54,3 +54,6 @@ bin
 build
 .project
 .classpath
+
+# Tracked gradle-wrapper
+!/backend/gradle/wrapper/gradle-wrapper.jar
