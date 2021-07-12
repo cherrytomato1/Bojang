@@ -11,8 +11,8 @@ VS Studio
 
 # mysql 접근
 url: jdbc:mysql://localhost:3306
-username: root
-password: 1234
+username: ssafy
+password: ssafy
 
 # 데이터베이스 생성
 ```sql
