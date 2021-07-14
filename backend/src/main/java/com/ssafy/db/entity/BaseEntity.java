@@ -15,7 +15,7 @@ import javax.persistence.MappedSuperclass;
 @Setter
 @MappedSuperclass
 public class BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // pk
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // mySql의 AUTO_INCREMENT를 사용(대리키)
     Long id = null;
 }
