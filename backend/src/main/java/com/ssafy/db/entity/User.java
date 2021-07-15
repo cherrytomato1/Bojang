@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 /**
@@ -18,6 +19,7 @@ public class User extends BaseEntity{
     String position;
     String department;
     String name;
+    @Column(name = "userId")
     String userId;
 
     @JsonIgnore

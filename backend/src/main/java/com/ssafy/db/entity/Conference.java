@@ -3,17 +3,18 @@ package com.ssafy.db.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Getter
 @Setter
 public class Conference extends BaseEntity {
-    int owner_id;
-    int conference_category;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    User user;
+    @ManyToOne
+    Conference_category conferenceCategory;
     @Temporal(TemporalType.TIMESTAMP)
     Date call_start_time;
     @Temporal(TemporalType.TIMESTAMP)
