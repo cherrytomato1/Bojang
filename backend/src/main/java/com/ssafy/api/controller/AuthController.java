@@ -48,6 +48,9 @@ public class AuthController {
 		String password = loginInfo.getPassword();
 		
 		User user = userService.getUserByUserId(userId);
+		// 로그인 시도하려는 회원이 존재하지 않음
+		if(user == null)
+			return ResponseEntity.status(404).body(UserLoginPostRes.of(404,"존재하지 않는 계정입니다.",null));
 		// 로그인 요청한 유저로부터 입력된 패스워드 와 디비에 저장된 유저의 암호화된 패스워드가 같은지 확인.(유효한 패스워드인지 여부 확인)
 		if(passwordEncoder.matches(password, user.getPassword())) {
 			// 유효한 패스워드가 맞는 경우, 로그인 성공으로 응답.(액세스 토큰을 포함하여 응답값 전달)

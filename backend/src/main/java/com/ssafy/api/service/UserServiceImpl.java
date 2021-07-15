@@ -1,5 +1,6 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.request.UserUpdatePatchReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,32 +11,49 @@ import com.ssafy.db.repository.UserRepository;
 import com.ssafy.db.repository.UserRepositorySupport;
 
 /**
- *	유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
+ * 유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
  */
 @Service("userService")
 public class UserServiceImpl implements UserService {
-	@Autowired
-	UserRepository userRepository;
-	
-	@Autowired
-	UserRepositorySupport userRepositorySupport;
-	
-	@Autowired
-	PasswordEncoder passwordEncoder;
-	
-	@Override
-	public User createUser(UserRegisterPostReq userRegisterInfo) {
-		User user = new User();
-		user.setUserId(userRegisterInfo.getId());
-		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
-		user.setPassword(passwordEncoder.encode(userRegisterInfo.getPassword()));
-		return userRepository.save(user);
-	}
+    @Autowired
+    UserRepository userRepository;
 
-	@Override
-	public User getUserByUserId(String userId) {
-		// 디비에 유저 정보 조회 (userId 를 통한 조회).
-		User user = userRepositorySupport.findUserByUserId(userId).get();
-		return user;
-	}
+    @Autowired
+    UserRepositorySupport userRepositorySupport;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Override
+    public User createUser(UserRegisterPostReq userRegisterInfo) {
+        User user = new User();
+        user.setUserId(userRegisterInfo.getUserId());
+        // 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
+        user.setPassword(passwordEncoder.encode(userRegisterInfo.getPassword()));
+        // 유저 이름
+        user.setName(userRegisterInfo.getName());
+        // 유저 deparment
+        user.setDepartment(userRegisterInfo.getDepartment());
+        // 유저 position
+        user.setPosition(userRegisterInfo.getPosition());
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User getUserByUserId(String userId) {
+        // 디비에 유저 정보 조회 (userId 를 통한 조회).
+        User user = userRepositorySupport.findUserByUserId(userId).get();
+        return user;
+    }
+
+    @Override
+    public User updateUserByUserId(String userId, UserUpdatePatchReq userUpdateInfo) {
+        User user = getUserByUserId(userId);
+        user.setDepartment(userUpdateInfo.getDepartment());
+        user.setPosition(userUpdateInfo.getPosition());
+        user.setName(userUpdateInfo.getName());
+        return userRepository.save(user);
+    }
+
+
 }
