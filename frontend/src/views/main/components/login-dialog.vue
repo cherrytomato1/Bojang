@@ -10,6 +10,7 @@
       :rules="state.rules"
       ref="loginForm"
       :label-position="state.form.align"
+      v-loading="loading1"
     >
       <el-form-item
         prop="id"
@@ -129,7 +130,8 @@ export default {
         ]
       },
       dialogVisible: computed(() => props.open),
-      formLabelWidth: "120px"
+      formLabelWidth: "120px",
+      loading1: true
     });
 
     onMounted(() => {
@@ -138,6 +140,8 @@ export default {
 
     const clickLogin = function() {
       // 로그인 클릭 시 validate 체크 후 그 결과 값에 따라, 로그인 API 호출 또는 경고창 표시
+      console.log(state.loading1);
+      state.loading1 = true;
       loginForm.value.validate(valid => {
         if (valid) {
           console.log("submit");
@@ -154,13 +158,17 @@ export default {
               );
               handleClose();
               console.log(state.dialogVisible);
+              state.loading = false;
             })
             .catch(function(err) {
+              state.loading = false;
               alert(err);
             });
         } else {
+          state.loading1 = ref(false);
           alert("Validate error!");
         }
+        console.log(state.loading1);
       });
     };
 
