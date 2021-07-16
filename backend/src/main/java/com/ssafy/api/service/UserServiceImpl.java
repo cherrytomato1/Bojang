@@ -73,26 +73,25 @@ public class UserServiceImpl implements UserService {
     public void deleteUserByUserId(String userId) {
         User user = getUserByUserId(userId);
 
-//        List<User_conference> userConfList = (List<User_conference>) userConferenceRepository.findByUserId(user);
-//        if (!userConfList.isEmpty()) {
-//            for (User_conference conf : userConfList) {
-//                userConferenceRepository.delete(conf);
-//            }
-//        }
-//
-//        List<Conference_history> historyList = (List<Conference_history>) conferenceHistoryRepository.findByUserId(user);
-//        if (!historyList.isEmpty()) {
-//            for (Conference_history history : historyList) {
-//                conferenceHistoryRepository.delete(history);
-//            }
-//        }
-//
-//        List<Conference> conferences = (List<Conference>) conferenceRepository.findByUserId(user);
-//        if(!conferences.isEmpty()){
-//            for (Conference conference : conferences){
-//                conferenceRepository.delete(conference);
-//            }
-//        }
+        List<User_conference> userConfList = userConferenceRepository.findByUser(user);
+            for (User_conference conf : userConfList) {
+                userConferenceRepository.delete(conf);
+            }
+
+
+        List<Conference_history> historyList = conferenceHistoryRepository.findByUser(user);
+        if (!historyList.isEmpty()) {
+            for (Conference_history history : historyList) {
+                conferenceHistoryRepository.delete(history);
+            }
+        }
+
+        List<Conference> conferences =  conferenceRepository.findByUser(user);
+        if(!conferences.isEmpty()){
+            for (Conference conference : conferences){
+                conferenceRepository.delete(conference);
+            }
+        }
 
         userRepository.delete(user);
     }
