@@ -185,6 +185,9 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.20")
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.2' // mariadb
+
 }
 
 def generated='src/main/generated'
