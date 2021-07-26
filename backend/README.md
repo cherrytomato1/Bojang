@@ -10,9 +10,9 @@ Node 14+
 VS Studio
 
 # mysql 접근
-url: jdbc:mysql://localhost:3306
-username: ssafy
-password: ssafy
+url: jdbc:mariadb://i5a508.p.ssafy.io:3306
+username: root
+password: root
 
 # 데이터베이스 생성
 ```sql
