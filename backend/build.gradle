@@ -191,6 +191,8 @@ dependencies {
 
     implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.2' // mariadb
 
+    implementation("org.springframework.boot:spring-boot-oauth2-client")
+
 }
 
 def generated='src/main/generated'
