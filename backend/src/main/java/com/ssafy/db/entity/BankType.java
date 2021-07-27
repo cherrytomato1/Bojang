@@ -11,8 +11,8 @@ import javax.persistence.Id;
 @Getter @Setter
 public class BankType {
 	@Id
-	Long id;
+	private  Long id;
 
 	@Column(name = "name")
-	String name;
+	private String name;
 }

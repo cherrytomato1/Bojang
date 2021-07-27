@@ -11,9 +11,8 @@ import javax.persistence.Id;
 @Getter @Setter
 public class Market {
 	@Id
-	Long id;
+	private Long id;
 
 	@Column(name = "name")
-	String name;
-
+	private String name;
 }

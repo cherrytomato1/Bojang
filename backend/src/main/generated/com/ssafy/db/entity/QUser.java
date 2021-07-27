@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,33 +18,48 @@ public class QUser extends EntityPathBase<User> {
 
     private static final long serialVersionUID = 846542477L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QUser user = new QUser("user");
 
-    public final QBaseEntity _super = new QBaseEntity(this);
+    public final StringPath accountNumber = createString("accountNumber");
 
-    public final StringPath department = createString("department");
+    public final StringPath address = createString("address");
 
-    //inherited
-    public final NumberPath<Long> id = _super.id;
+    public final StringPath addressDetail = createString("addressDetail");
+
+    public final QBankType bankType;
+
+    public final StringPath id = createString("id");
 
     public final StringPath name = createString("name");
 
-    public final StringPath password = createString("password");
+    public final DateTimePath<java.time.LocalDateTime> registerTime = createDateTime("registerTime", java.time.LocalDateTime.class);
 
-    public final StringPath position = createString("position");
+    public final QUserType userType;
 
-    public final StringPath userId = createString("userId");
+    public final NumberPath<Integer> zipCode = createNumber("zipCode", Integer.class);
 
     public QUser(String variable) {
-        super(User.class, forVariable(variable));
+        this(User.class, forVariable(variable), INITS);
     }
 
     public QUser(Path<? extends User> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QUser(PathMetadata metadata) {
-        super(User.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QUser(PathMetadata metadata, PathInits inits) {
+        this(User.class, metadata, inits);
+    }
+
+    public QUser(Class<? extends User> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.bankType = inits.isInitialized("bankType") ? new QBankType(forProperty("bankType")) : null;
+        this.userType = inits.isInitialized("userType") ? new QUserType(forProperty("userType")) : null;
     }
 
 }

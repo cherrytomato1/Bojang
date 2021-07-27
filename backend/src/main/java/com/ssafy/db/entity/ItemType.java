@@ -3,20 +3,17 @@ package com.ssafy.db.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
 @Getter
 @Setter
-public class basket {
+public class ItemType {
     @Id
-    private String id;
-    private int amount;
+    private Long id;
 
-    @ManyToOne
-    private item item;
-
-
+    @Column(name = "name")
+    private String name;
 }

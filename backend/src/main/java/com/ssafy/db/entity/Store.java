@@ -11,32 +11,32 @@ import javax.persistence.*;
 public class Store {
 	@Id
 	@Column(name="id", nullable = false, length = 32)
-	String id;
+	private String id;
 
 	@OneToOne
 	@JoinColumn(name="id")
-	User user;
+	private User user;
 
 	@Column(name = "name", nullable = false, length = 20)
-	String name;
+	private String name;
 
 	@Column(name = "section", nullable = false)
-	Integer section;
+	private Integer section;
 
 	@Column(name = "comment", length = 200)
-	String comment;
+	private String comment;
 
 	@Column(name = "address", length = 200)
-	String address;
+	private String address;
 
 	@Column(name = "image")
-	String image;
+	private String image;
 
 	@ManyToOne
 	@JoinColumn(name = "id")
-	Market marketId;
+	private Market marketId;
 
 	@ManyToOne
 	@JoinColumn(name = "id")
-	StoreType storeTypeId;
+	private StoreType storeTypeId;
 }

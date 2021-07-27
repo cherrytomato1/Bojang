@@ -14,5 +14,5 @@ public class StoreLive {
 	@Id
 	@OneToOne
 	@JoinColumn(name = "id")
-	Store storeId;
+	private Store storeId;
 }

@@ -8,19 +8,20 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 public class Sales {
 
-	@Id
-	@ManyToOne
-	@JoinColumn(name = "id", nullable = false)
-	Store storeId;
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "id", nullable = false)
+    private Store storeId;
 
-//	@Temporal(TemporalType.DATE)
-	@CreatedDate
-	@Column(name = "register_time", nullable = false)
-	LocalDate registerTime;
+    //	@Temporal(TemporalType.DATE)
+    @CreatedDate
+    @Column(name = "register_time", nullable = false)
+    private LocalDate registerTime;
 
-	@Column(name = "amount", nullable = false)
-	Integer amount;
+    @Column(name = "amount", nullable = false)
+    private Integer amount;
 }
