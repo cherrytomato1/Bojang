@@ -10,10 +10,11 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@Table(name = "order_table")
 public class Order {
 
     @Id
-    @Column(name = "id", nullable = false, updatable = false, length = 32)
+    @Column(name = "id", nullable = false, length = 32)
     private String id;
 
     @CreatedDate
@@ -24,16 +25,16 @@ public class Order {
     private int price;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+//    @JoinColumn(name = "id")
     private OrderStatus orderStatus;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+//    @JoinColumn(name = "id")
     private ItemType itemType;
 
     @ManyToOne
-    @JoinColumn(name = "id")
-    private User userId;
+//    @JoinColumn(name = "id")
+    private User user;
 
 
 }

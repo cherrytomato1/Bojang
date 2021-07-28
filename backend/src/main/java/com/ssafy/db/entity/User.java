@@ -38,11 +38,11 @@ public class User {
     LocalDateTime registerTime;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+//    @JoinColumn(name = "bank_id")
     BankType bankType;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+//    @JoinColumn(name = "userid")
     UserType userType;
 
 }

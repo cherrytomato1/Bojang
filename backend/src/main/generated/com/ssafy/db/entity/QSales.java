@@ -24,6 +24,8 @@ public class QSales extends EntityPathBase<Sales> {
 
     public final NumberPath<Integer> amount = createNumber("amount", Integer.class);
 
+    public final NumberPath<Long> id = createNumber("id", Long.class);
+
     public final DatePath<java.time.LocalDate> registerTime = createDate("registerTime", java.time.LocalDate.class);
 
     public final QStore storeId;

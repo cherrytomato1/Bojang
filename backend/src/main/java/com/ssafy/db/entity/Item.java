@@ -33,18 +33,18 @@ public class Item {
     private LocalDateTime registerTime;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+//    @JoinColumn(name = "id")
     private Price price;
 
 
     @ManyToOne
-    @JoinColumn(name = "id")
+//    @JoinColumn(name = "id")
     private ItemType itemType;
 
 
     @ManyToOne
-    @JoinColumn(name = "id")
-    private Store storeId;
+//    @JoinColumn(name = "id")
+    private Store store;
 
 
 }

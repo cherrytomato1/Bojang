@@ -7,12 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import java.io.Serializable;
 
 @Entity
 @Getter @Setter
-public class StoreLive {
+public class StoreLive implements Serializable {
 	@Id
 	@OneToOne
-	@JoinColumn(name = "id")
+//	@JoinColumn(name = "id")
 	private Store storeId;
 }

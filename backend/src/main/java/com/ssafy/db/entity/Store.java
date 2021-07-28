@@ -14,7 +14,7 @@ public class Store {
 	private String id;
 
 	@OneToOne
-	@JoinColumn(name="id")
+	@JoinColumn(name="user_id")
 	private User user;
 
 	@Column(name = "name", nullable = false, length = 20)
@@ -33,10 +33,10 @@ public class Store {
 	private String image;
 
 	@ManyToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "market_id")
 	private Market marketId;
 
 	@ManyToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "store_id")
 	private StoreType storeTypeId;
 }
