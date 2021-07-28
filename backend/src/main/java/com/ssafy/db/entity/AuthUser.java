@@ -3,9 +3,7 @@ package com.ssafy.db.entity;
 import com.ssafy.common.auth.Role;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter @Setter
@@ -17,6 +15,5 @@ public class AuthUser {
 
 	@Column(nullable = false)
 	private Role role;
-
 	private String email;
 }

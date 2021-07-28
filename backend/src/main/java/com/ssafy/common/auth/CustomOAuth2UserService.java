@@ -49,9 +49,12 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
 	// 유저 생성 및 수정 서비스 로직
 	private AuthUser saveOrUpdate(OAuthAttributes attributes){
-		AuthUser user = authUserRepository.findByEmail(attributes.getEmail())
-//							.map(entity -> entity.update(attributes.getName()))
-							.orElse(attributes.toEntity());
+//		AuthUser user = authUserRepository.findByEmail(attributes.getEmail())
+////							.map(entity -> entity.update(attributes.getName()))
+//							.orElse(attributes.toEntity());
+		System.out.println(attributes.getId().longValue());
+		AuthUser user = authUserRepository.findById(attributes.getId().longValue())
+				.orElse(attributes.toEntity());
 		return authUserRepository.save(user);
 	}
 }
