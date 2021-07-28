@@ -2,6 +2,7 @@ package com.ssafy.db.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -11,7 +12,8 @@ import javax.persistence.*;
 public class OrderItem {
 
     @Id
-    @Column(name = "id", nullable = false, updatable = false, length = 32)
+    @GenericGenerator(name="Id",strategy = "com.ssafy.db.util.IdGenerator")
+    @GeneratedValue(generator = "Id")
     private String id;
 
     @ManyToOne

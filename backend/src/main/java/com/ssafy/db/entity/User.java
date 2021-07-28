@@ -1,6 +1,7 @@
 package com.ssafy.db.entity;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -14,7 +15,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class User {
     @Id
-    @Column(name = "id", nullable = false, updatable = false, length = 32)
+    @GenericGenerator(name="userId",strategy = "com.ssafy.db.util.IdGenerator")
+    @GeneratedValue(generator = "userId")
     String id;
 
     @Column(name = "name", nullable = false, length = 10)
