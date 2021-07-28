@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 	AuthService authService;
 
-	@RequestMapping("/{code}")
-	public String returnCode(@PathVariable String code) {
-		System.out.println(code);
-		return code;
+	@RequestMapping("/login/oauth2")
+	public String returnCode() {
+		return null;
 	}
 }

@@ -24,7 +24,7 @@ public class OAuthAttributes {
 	}
 
 	public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes){
-		return of("id", attributes);
+		return of(userNameAttributeName, attributes);
 	}
 
 	private static OAuthAttributes of(String userNameAttributeName, Map<String, Object> attributes) {

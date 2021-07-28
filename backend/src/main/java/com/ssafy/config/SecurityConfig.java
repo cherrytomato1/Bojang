@@ -49,6 +49,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.anyRequest().authenticated()
 				.and()
 					.oauth2Login()
+//						.loginPage("/login")
+//						.authorizationEndpoint().baseUri("login/oauth2/autherization")
+//					.and()
 						.defaultSuccessUrl("/loginSuccess")
 					 	.failureUrl("/loginFailure")
 						.userInfoEndpoint()
@@ -57,8 +60,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 	@Bean
-	public ClientRegistrationRepository clientRegistrationRepository(/*OAuth2ClientProperties oAuth2ClientProperties*/
-			@Value("${spring.security.oauth2.client.registration.kakao.client-id}") String kakaoClientId
+	public ClientRegistrationRepository clientRegistrationRepository(OAuth2ClientProperties oAuth2ClientProperties
+			, @Value("${spring.security.oauth2.client.registration.kakao.client-id}") String kakaoClientId
 			, @Value("${spring.security.oauth2.client.registration.kakao.client-secret}") String kakaoClientSecret) {
 //		List<ClientRegistration> registrations = oAuth2ClientProperties.getRegistration().keySet().stream()
 //														 .map(client -> getRegistration(oAuth2ClientProperties, client))
@@ -68,32 +71,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		System.out.println("====> getRegistrationRepository");
 		registrations.add(CustomOAuth2Provider.KAKAO.getBuilder("kakao")
+								//rest client id
 								  .clientId(kakaoClientId)
-								  .clientSecret(kakaoClientSecret) //필요없는 값인데 null이면 실행이 안되도록 설정되어 있음
-								  .jwkSetUri("test") //필요없는 값인데 null이면 실행이 안되도록 설정되어 있음
+								//client secret
+								  .clientSecret(kakaoClientSecret)
+								//temp uri(사용x)
+								  .jwkSetUri("temp")
 								  .build());
 
 		return new InMemoryClientRegistrationRepository(registrations);
-	}
-
-	private ClientRegistration getRegistration(OAuth2ClientProperties clientProperties, String client) {
-		if ("google".equals(client)) {
-			OAuth2ClientProperties.Registration registration = clientProperties.getRegistration().get("google");
-			return CommonOAuth2Provider.GOOGLE.getBuilder(client)
-						   .clientId(registration.getClientId())
-						   .clientSecret(registration.getClientSecret())
-						   .scope("email", "profile")
-						   .build();
-		}
-		if ("facebook".equals(client)) {
-			OAuth2ClientProperties.Registration registration = clientProperties.getRegistration().get("facebook");
-			return CommonOAuth2Provider.FACEBOOK.getBuilder(client)
-						   .clientId(registration.getClientId())
-						   .clientSecret(registration.getClientSecret())
-						   .userInfoUri("https://graph.facebook.com/me?fields=id,name,email,link")
-						   .scope("email")
-						   .build();
-		}
-		return null;
 	}
 }

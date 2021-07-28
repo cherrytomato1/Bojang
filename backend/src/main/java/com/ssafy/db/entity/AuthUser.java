@@ -14,6 +14,8 @@ public class AuthUser {
 	private Long id;
 
 	@Column(nullable = false)
+	//이넘을 스트링으로 저장
+	@Enumerated(EnumType.STRING)
 	private Role role;
 	private String email;
 }
