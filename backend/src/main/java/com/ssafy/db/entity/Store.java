@@ -3,6 +3,7 @@ package com.ssafy.db.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -10,11 +11,12 @@ import javax.persistence.*;
 @Getter @Setter
 public class Store {
 	@Id
-	@Column(name="id", nullable = false, length = 32)
+	@GenericGenerator(name="Id",strategy = "com.ssafy.db.util.IdGenerator")
+	@GeneratedValue(generator = "Id")
 	private String id;
 
 	@OneToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="id")
 	private User user;
 
 	@Column(name = "name", nullable = false, length = 20)
@@ -33,10 +35,8 @@ public class Store {
 	private String image;
 
 	@ManyToOne
-	@JoinColumn(name = "market_id")
-	private Market marketId;
+	private Market market;
 
 	@ManyToOne
-	@JoinColumn(name = "store_id")
-	private StoreType storeTypeId;
+	private StoreType storeType;
 }

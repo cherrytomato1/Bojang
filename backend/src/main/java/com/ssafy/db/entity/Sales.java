@@ -1,12 +1,11 @@
 package com.ssafy.db.entity;
 
-import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
@@ -15,19 +14,18 @@ import java.time.LocalDate;
 public class Sales {
 
     @Id
-    @Generated
-    private Long id;
+    @GenericGenerator(name = "Id", strategy = "com.ssafy.db.util.IdGenerator")
+    @GeneratedValue(generator = "Id")
+    private String id;
 
-//    @Id
     @ManyToOne
-    @JoinColumn(name = "store_id", nullable = false, insertable = false, updatable = false)
-    private Store storeId;
+    private Store store;
 
     //	@Temporal(TemporalType.DATE)
     @CreatedDate
-    @Column(name = "register_time", nullable = false, updatable = false)
+    @Column(name = "register_time", nullable = false)
     private LocalDate registerTime;
 
-    @Column(name = "amount", nullable = false, updatable = false)
+    @Column(name = "amount", nullable = false)
     private Integer amount;
 }

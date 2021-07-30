@@ -9,20 +9,15 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-public class Basket {
+public class FavoriteStore {
     @Id
     @GenericGenerator(name="Id",strategy = "com.ssafy.db.util.IdGenerator")
     @GeneratedValue(generator = "Id")
     private String id;
 
-    @Column(name = "amount")
-    private int amount;
-
-    @ManyToOne
-    private Item item;
-
     @ManyToOne
     private User user;
 
-
+    @ManyToOne
+    private Store store;
 }

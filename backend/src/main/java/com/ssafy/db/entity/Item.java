@@ -2,6 +2,7 @@ package com.ssafy.db.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -13,7 +14,8 @@ import java.time.LocalDateTime;
 public class Item {
 
     @Id
-    @Column(name = "id", nullable = false, updatable = false, length = 32)
+    @GenericGenerator(name="Id",strategy = "com.ssafy.db.util.IdGenerator")
+    @GeneratedValue(generator = "Id")
     private String id;
 
     @Column(name = "name")
@@ -33,18 +35,15 @@ public class Item {
     private LocalDateTime registerTime;
 
     @ManyToOne
-//    @JoinColumn(name = "id")
     private Price price;
 
 
     @ManyToOne
-//    @JoinColumn(name = "id")
     private ItemType itemType;
 
 
     @ManyToOne
-//    @JoinColumn(name = "id")
-    private Store store;
+    private Store storeId;
 
 
 }

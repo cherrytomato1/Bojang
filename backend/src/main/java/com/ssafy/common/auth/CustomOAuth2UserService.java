@@ -21,7 +21,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
-//	private final UserRepository userRepository;
+	//	private final UserRepository userRepository;
 	private final HttpSession httpSession;
 	private final AuthUserRepository authUserRepository;
 
@@ -31,30 +31,30 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		OAuth2User oAuth2User = delegate.loadUser(userRequest);
 		System.out.println("=========> loadUser");
 
-		// OAuth2 서비스 id (구글, 카카오, 네이버)
+		// OAuth2 서비스 id(카카오)
 		String registrationId = userRequest.getClientRegistration().getRegistrationId();
 		// OAuth2 로그인 진행 시 키가 되는 필드 값(PK)
-		String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
+		String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
+			.getUserInfoEndpoint().getUserNameAttributeName();
 
 		// OAuth2UserService
-		OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
+		OAuthAttributes attributes = OAuthAttributes
+			.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 		AuthUser user = saveOrUpdate(attributes);
 //		httpSession.setAttribute("user", new SessionUser(user));
 		httpSession.setAttribute("user", user);
 
-		return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(user.getRole().getKey())),
-				attributes.getAttributes(),
-				attributes.getNameAttributeKey());
+		return new DefaultOAuth2User(
+			Collections.singleton(new SimpleGrantedAuthority(user.getRole().getKey())),
+			attributes.getAttributes(),
+			attributes.getNameAttributeKey());
 	}
 
-	// 유저 생성 및 수정 서비스 로직
-	private AuthUser saveOrUpdate(OAuthAttributes attributes){
-//		AuthUser user = authUserRepository.findByEmail(attributes.getEmail())
-////							.map(entity -> entity.update(attributes.getName()))
-//							.orElse(attributes.toEntity());
+	private AuthUser saveOrUpdate(OAuthAttributes attributes) {
+
 		System.out.println(attributes.getId().longValue());
 		AuthUser user = authUserRepository.findById(attributes.getId().longValue())
-				.orElse(attributes.toEntity());
+			.orElse(attributes.toEntity());
 		return authUserRepository.save(user);
 	}
 }

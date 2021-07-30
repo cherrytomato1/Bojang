@@ -28,9 +28,8 @@ public class OAuthAttributes {
 	}
 
 	private static OAuthAttributes of(String userNameAttributeName, Map<String, Object> attributes) {
-		// kakao는 kakao_account에 유저정보가 있다. (email)
+
 		Map<String, Object> account = (Map<String, Object>) attributes.get("kakao_account");
-		// kakao_account안에 또 profile이라는 JSON객체가 있다. (nickname, profile_image)
 		Map<String, Object> profile = (Map<String, Object>) account.get("profile");
 		return OAuthAttributes.builder()
 					   .name((String) profile.get("name"))

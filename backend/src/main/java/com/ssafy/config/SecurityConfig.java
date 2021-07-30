@@ -48,12 +48,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.antMatchers( "/", "/login/**").permitAll()
 					.anyRequest().authenticated()
 				.and()
+//					.formLogin().disable()
 					.oauth2Login()
 //						.loginPage("/login")
 //						.authorizationEndpoint().baseUri("login/oauth2/autherization")
 //					.and()
-						.defaultSuccessUrl("/loginSuccess")
-					 	.failureUrl("/loginFailure")
+//						.defaultSuccessUrl("/loginSuccess")
+//					 	.failureUrl("/loginFailure")
+
 						.userInfoEndpoint()
 						.userService(customOAuth2UserService);
 	}

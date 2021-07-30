@@ -2,18 +2,16 @@ package com.ssafy.db.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import java.io.Serializable;
+import javax.persistence.*;
 
 @Entity
 @Getter @Setter
-public class StoreLive implements Serializable {
+public class StoreLive {
 	@Id
-	@OneToOne
-//	@JoinColumn(name = "id")
-	private Store storeId;
+	private Long id;
+
+	@ManyToOne
+	private Store store;
 }
