@@ -1,10 +1,14 @@
 <template>
   <v-app>
-    <v-container pa-0>
+    <v-container
+      class="fixed-bar"
+      pa-0
+    >
       <v-app-bar
         color="vll accent-4"
         height="65px"
       >
+        <!-- <div> -->
         <!-- 로고 버튼으로 만듬(누르면 홈화면으로 이동하기 위해서) -->
         <button class="pa-6">
           <img
@@ -73,7 +77,8 @@
           <v-tab>용운시장</v-tab>
         </v-tabs>
       </v-card>
-      <!-- <v-app>
+    </v-container>
+    <!-- <v-app>
     <v-app-bar
       app
       color="primary"
@@ -111,26 +116,29 @@
       </v-btn>
     </v-app-bar> -->
 
-      <v-main>
-        <StoreMap />
-        <RecommendSection />
-      </v-main>
-      <router-view />
-    </v-container>
+    <v-main>
+      <!-- <router-view name="StoreMap"> -->
+      <Mainpage />
+      <!-- <SelectStore />
+      <StoreLive /> -->
+    </v-main>
+    <router-view />
   </v-app>
 </template>
 
 <script>
-import StoreMap from './components/mainpage/StoreMap';
-import RecommendSection from './components/mainpage/RecommendSection';
+import Mainpage from './views/Mainpage';
+
+import SelectStore from './components/mainpage/SelectStore';
+import StoreLive from './components/storeDetail/StoreLive';
+
 // import OrderList from '@/components/mypage/OrderList';
 
 export default {
   name: 'App',
 
   components: {
-    StoreMap,
-    RecommendSection,
+    Mainpage,
     // OrderList,
     // Mypage,
   },
@@ -160,5 +168,9 @@ export default {
 #app{
   font-family: 'Jua', sans-serif;
 }
-
+.fixed-bar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
 </style>

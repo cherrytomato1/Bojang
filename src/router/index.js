@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import RecommendSection from '@/components/mainpage/RecommendSection'
-import StoreMap from '@/components/mainpage/StoreMap'
+import Mainpage from '@/views/Mainpage'
+import StoreDetail from '@/views/StoreDetail'
 import OrderList from '@/components/mypage/OrderList'
 import UserInformationModify from '@/components/mypage/UserInformationModify'
 import FrequentStore from '@/components/mypage/FrequentStore'
@@ -13,14 +13,14 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'RecommendSection',
-    component: RecommendSection
+    path: '/mainpage',
+    name: 'Mainpage',
+    component: Mainpage
   },
   {
-    path: '/store-map',
-    name: 'StoreMap',
-    component: StoreMap
+    path: '/storedetail',
+    name: 'StoreDetail',
+    component: StoreDetail
   },
   {
     path: '/orderlist',
@@ -42,11 +42,6 @@ const routes = [
     name: 'StoreInformationModify',
     component: StoreInformationModify
   },
-  // {
-  //   path: '/home',
-  //   name: 'Home',
-  //   component: Home
-  // },
 ]
 
 const router = new VueRouter({
