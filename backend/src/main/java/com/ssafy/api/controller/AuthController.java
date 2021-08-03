@@ -23,8 +23,7 @@ public class AuthController {
 	@RequestMapping("/login/oauth2")
 	public String returnCode() {
 		session.getAttribute("user");
-		return "/";
-	}
+		return "/";	}
 
 
 	/*

@@ -27,7 +27,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
 public class NotFoundHandler {
-	@Value("${spa.default-file}")
+	@Value("/error")
 	String defaultFile;
 	 
 	@ExceptionHandler(NoHandlerFoundException.class)

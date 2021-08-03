@@ -1,10 +1,13 @@
 package com.ssafy.config;
 
-import com.ssafy.common.auth.CustomOAuth2Provider;
-import com.ssafy.common.auth.CustomOAuth2UserService;
+
+import com.ssafy.security.RestAuthenticationEntryPoint;
+import com.ssafy.security.TokenAuthenticationFilter;
+import com.ssafy.security.oauth2.CustomOAuth2UserService;
+import com.ssafy.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
+import com.ssafy.security.oauth2.OAuth2AuthenticationFailureHandler;
+import com.ssafy.security.oauth2.OAuth2AuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -12,17 +15,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -32,55 +26,76 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final CustomOAuth2UserService customOAuth2UserService;
 
+	private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+
+	private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
+
+	private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
+
 	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
+	public TokenAuthenticationFilter tokenAuthenticationFilter() {
+		return new TokenAuthenticationFilter();
+	}
+
+	/*
+		stateless 한 상태를 위해서 세션에 저장하지 않고
+		쿠키에 base64로 인코딩된 쿠키로 저장
+	*/
+	@Bean
+	public HttpCookieOAuth2AuthorizationRequestRepository cookieAuthorizationRequestRepository() {
+		return new HttpCookieOAuth2AuthorizationRequestRepository();
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-				.csrf().disable()
-				.headers().frameOptions().disable()
-//				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and()
-					.authorizeRequests()
-					.antMatchers( "/", "/login/**").permitAll()
-					.anyRequest().authenticated()
-				.and()
-//					.formLogin().disable()
-					.oauth2Login()
-//						.loginPage("/login")
-//						.authorizationEndpoint().baseUri("login/oauth2/autherization")
-//					.and()
-//						.defaultSuccessUrl("/loginSuccess")
-//					 	.failureUrl("/loginFailure")
+			.cors()
+			.and()
+			.sessionManagement()
+			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and()
+			.csrf()
+			.disable()
+			.formLogin()
+			.disable()
+			.httpBasic()
+			.disable()
+			.exceptionHandling()
+			.authenticationEntryPoint(new RestAuthenticationEntryPoint())
+			.and()
+			.authorizeRequests()
+			.antMatchers("/",
+				"/error",
+				"/favicon.ico",
+				"/**/*.png",
+				"/**/*.gif",
+				"/**/*.svg",
+				"/**/*.jpg",
+				"/**/*.html",
+				"/**/*.css",
+				"/**/*.js")
+			.permitAll()
+			.antMatchers("/auth/**", "/oauth2/**")
+			.permitAll()
+			.anyRequest()
+			.authenticated()
+			.and()
+			.oauth2Login()
+			.authorizationEndpoint()
+			.baseUri("/oauth2/authorize")
+			.authorizationRequestRepository(cookieAuthorizationRequestRepository())
+			.and()
+			.redirectionEndpoint()
+			.baseUri("/oauth2/callback/*")
+			.and()
+			.userInfoEndpoint()
+			.userService(customOAuth2UserService)
+			.and()
+			.successHandler(oAuth2AuthenticationSuccessHandler)
+			.failureHandler(oAuth2AuthenticationFailureHandler);
 
-						.userInfoEndpoint()
-						.userService(customOAuth2UserService);
-	}
-
-
-	@Bean
-	public ClientRegistrationRepository clientRegistrationRepository(OAuth2ClientProperties oAuth2ClientProperties
-			, @Value("${spring.security.oauth2.client.registration.kakao.client-id}") String kakaoClientId
-			, @Value("${spring.security.oauth2.client.registration.kakao.client-secret}") String kakaoClientSecret) {
-//		List<ClientRegistration> registrations = oAuth2ClientProperties.getRegistration().keySet().stream()
-//														 .map(client -> getRegistration(oAuth2ClientProperties, client))
-//														 .filter(Objects::nonNull)
-//														 .collect(Collectors.toList());
-		List<ClientRegistration> registrations = new ArrayList<>();
-
-		System.out.println("====> getRegistrationRepository");
-		registrations.add(CustomOAuth2Provider.KAKAO.getBuilder("kakao")
-								//rest client id
-								  .clientId(kakaoClientId)
-								//client secret
-								  .clientSecret(kakaoClientSecret)
-								//temp uri(사용x)
-								  .jwkSetUri("temp")
-								  .build());
-
-		return new InMemoryClientRegistrationRepository(registrations);
+		// 커스텀 토큰 필터 추가
+		http.addFilterBefore(tokenAuthenticationFilter(),
+			UsernamePasswordAuthenticationFilter.class);
 	}
 }

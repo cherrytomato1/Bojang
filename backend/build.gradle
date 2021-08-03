@@ -33,8 +33,6 @@ plugins {
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'eclipse'
 apply plugin: 'com.github.node-gradle.node'
-//이클립스인 경우를 위한 QueryDSL 플러그인. IntelliJ는 불필요.
-//apply plugin: 'com.ewerk.gradle.plugins.querydsl'
 
 
 repositories {
@@ -61,21 +59,6 @@ configurations {
     providedRuntime
 }
 
-/*task npmInstall(type: NpmTask, overwrite: true) {
-    args = ['install']
-}*/
-
-/*
-task webpack(type: NpmTask, dependsOn: 'npmInstall') {
-    args = ['run','build']
-}
-
-// processResources is a Java task. Run the webpack bundling before this task using the 'build' task in the package.json
-processResources.dependsOn 'webpack'
-
- */
-
-//set build time and inject value to application.properties
 def buildTime() {
     def date = new Date()
     def formattedDate = date.format('yyyyMMdd_HHmm')
@@ -101,31 +84,6 @@ processResources {
     }
 }
 
-//이클립스인 경우를 위한 QueryDSL 설정. IntelliJ는 불필요. [시작]
-//def querydslDir = 'src/main/generated'
-//querydsl {
-//    library = "com.querydsl:querydsl-apt"
-//    jpa = true
-//    querydslSourcesDir = querydslDir
-//}
-//
-//sourceSets {
-//    main {
-//        java {
-//            srcDirs = ['src/main/java', querydslDir]
-//        }
-//    }
-//}
-//
-//compileQuerydsl {
-//    options.annotationProcessorPath = configurations.querydsl
-//}
-//
-//configurations {
-//    querydsl.extendsFrom compileClasspath
-//}
-//[끝]
-
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-websocket")
@@ -146,21 +104,6 @@ dependencies {
     implementation("com.querydsl:querydsl-jpa:${querydslVer}")
     implementation("com.querydsl:querydsl-apt:${querydslVer}")
 
-    //STOMP 웹소캣 서버 사이드 테스트를 위한 의존성 추가
-    implementation("org.springframework.boot:spring-boot-starter-mustache")
-    //STOMP 관련 프론트 라이브러리
-    implementation('org.webjars.bower:jquery:3.3.1')
-    implementation('org.webjars:sockjs-client:1.1.2')
-    implementation('org.webjars:stomp-websocket:2.3.3-1')
-    implementation('org.webjars:webjars-locator:0.30')
-    //WebRTC 클라이언트 의존성 추가
-    implementation('org.webjars.bower:webrtc-adapter:7.4.0')
-    //Kurento (미디어서버) 관련 의존성 추가
-    implementation('org.kurento:kurento-client:6.16.0')
-    implementation('org.kurento:kurento-utils-js:6.15.0')
-
-
-    //IntelliJ용
     //IntelliJ에서는 하기 annotationProcessor를 쓰면 별도의 querydsl 플러그인 및 플러그인 설정이 불필요.
     annotationProcessor("com.querydsl:querydsl-apt:${querydslVer}:jpa")
 
@@ -174,8 +117,11 @@ dependencies {
 
     testImplementation("com.jayway.jsonpath:json-path:2.4.0")
 
-    implementation("com.auth0:java-jwt:3.10.3")
-    
+//    implementation("com.auth0:java-jwt:3.10.3")
+    //jsonWebToken
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+
+
     implementation("io.springfox:springfox-swagger2:3.0.0")
     implementation("io.springfox:springfox-swagger-ui:3.0.0")
     implementation("io.springfox:springfox-data-rest:3.0.0")

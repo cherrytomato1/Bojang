@@ -1,48 +1,35 @@
 package com.ssafy.db.entity;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ssafy.security.OAuthProvider;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.annotation.CreatedDate;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@Setter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter @Setter
+@RequiredArgsConstructor
 public class User {
-    @Id
-    @GenericGenerator(name="userId",strategy = "com.ssafy.db.util.IdGenerator")
-    @GeneratedValue(generator = "userId")
-    String id;
+    @Id @GenericGenerator(name="userIdGenerator", strategy = "com.ssafy.db.util.IdGenerator")
+    @GeneratedValue(generator = "userIdGenerator")
+    private String id;
 
-    @Column(name = "name", nullable = false, length = 10)
-    String name;
+    private String name;
 
-    @Column(name = "zip_code", length = 5)
-    Integer zipCode;
+    private String email;
 
-    @Column(name = "address", length = 200)
-    String address;
+    private String imageUrl;
 
-    @Column(name = "address_detail", length = 200)
-    String addressDetail;
+    private Boolean emailVerified = false;
 
-    @Column(name = "account_number", length = 200)
-    String accountNumber;
+    @JsonIgnore
+    private String password = null;
 
-    //	@Temporal(TemporalType.TIMESTAMP)
-    @CreatedDate
-    @Column(name = "register_time")
-    LocalDateTime registerTime;
+    private OAuthProvider provider;
 
-    @ManyToOne
-    BankType bankType;
-
-    @ManyToOne
-    UserType userType;
-
+    private String AuthId;
 }
