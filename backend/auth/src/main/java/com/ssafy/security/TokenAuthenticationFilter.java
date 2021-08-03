@@ -19,6 +19,9 @@ import java.io.IOException;
 @Slf4j
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
+	/*
+		헤더 파싱 String 및 토큰 Header 정의
+	 */
 	public static final String TOKEN_PREFIX = "Bearer ";
 	public static final String HEADER_STRING = "Authorization";
 

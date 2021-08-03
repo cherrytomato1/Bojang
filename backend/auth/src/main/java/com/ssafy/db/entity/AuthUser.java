@@ -13,7 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Getter @Setter
 @RequiredArgsConstructor
-public class User {
+public class AuthUser {
     @Id @GenericGenerator(name="userIdGenerator", strategy = "com.ssafy.db.util.IdGenerator")
     @GeneratedValue(generator = "userIdGenerator")
     private String id;

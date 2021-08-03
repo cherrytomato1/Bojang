@@ -19,6 +19,12 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Optional;
 
+
+/**
+ *
+ * OAuthSuccessHandler
+ * 로그인 성공 시 토큰을 포함한 redirect uri 지정 및 반환
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor

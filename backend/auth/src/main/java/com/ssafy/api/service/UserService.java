@@ -1,4 +1,4 @@
 package com.ssafy.api.service;
 
-public interface AuthService {
+public interface UserService {
 }

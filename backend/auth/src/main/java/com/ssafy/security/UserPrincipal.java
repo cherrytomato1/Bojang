@@ -1,6 +1,6 @@
 package com.ssafy.security;
 
-import com.ssafy.db.entity.User;
+import com.ssafy.db.entity.AuthUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +16,7 @@ public class UserPrincipal implements OAuth2User, UserDetails {
 	//tokenProvider에서 넣어둔 userID(generated)
 	private String id;
 	private String email;
+	//unused
 	private String password;
 	//oauthprovider (unused)
 	private OAuthProvider oAuthProvider;
@@ -30,21 +31,21 @@ public class UserPrincipal implements OAuth2User, UserDetails {
 		this.authorities = authorities;
 	}
 
-	public static UserPrincipal create(User user) {
+	public static UserPrincipal create(AuthUser authUser) {
 		List<GrantedAuthority> authorities = Collections.
 			singletonList(new SimpleGrantedAuthority("ROLE_USER"));
 
 		return new UserPrincipal(
-			user.getId(),
-			user.getEmail(),
-			user.getPassword(),
+			authUser.getId(),
+			authUser.getEmail(),
+			authUser.getPassword(),
 			authorities
 		);
 	}
 
-	public static UserPrincipal create(User user, Map<String, Object> attributes,
+	public static UserPrincipal create(AuthUser authUser, Map<String, Object> attributes,
 		String registrationId) {
-		UserPrincipal userPrincipal = UserPrincipal.create(user);
+		UserPrincipal userPrincipal = UserPrincipal.create(authUser);
 		userPrincipal.setAttributes(attributes);
 		userPrincipal.oAuthProvider = OAuthProvider.valueOf(registrationId);
 		return userPrincipal;
@@ -58,11 +59,19 @@ public class UserPrincipal implements OAuth2User, UserDetails {
 		return email;
 	}
 
+	/*
+		OAuth2Users 인터페이스의 getPassword 구현체
+		미사용 데이터로 null 반환
+	 */
 	@Override
 	public String getPassword() {
 		return password;
 	}
 
+	/*
+		UserDetails 에서 userName 을 구분하기 위해 오버라이딩한 메서드
+		유저 인증정보를 사용할 유저 아이디를 반환
+	 */
 	@Override
 	public String getUsername() {
 		//principal은 provider에 따라 다르게 발급
@@ -72,7 +81,8 @@ public class UserPrincipal implements OAuth2User, UserDetails {
 //			return id;
 //		}
 //		return null;
-		return getName();
+//		return getName();
+		return id;
 	}
 
 	@Override

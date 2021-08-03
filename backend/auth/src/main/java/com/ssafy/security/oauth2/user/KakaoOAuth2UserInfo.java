@@ -21,7 +21,7 @@ public class KakaoOAuth2UserInfo extends OAuth2UserInfo {
         return String.valueOf(attributes.get("id"));
     }
 
-    //name이 아니라 nickname으로 참조
+    //name 이 아니라 nickname 으로 참조
     @Override
     public String getName() {
         return (String) properties.get("nickname");

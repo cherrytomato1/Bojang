@@ -10,14 +10,14 @@ import com.querydsl.core.types.Path;
 
 
 /**
- * QUser is a Querydsl query type for User
+ * QAuthUser is a Querydsl query type for AuthUser
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QUser extends EntityPathBase<User> {
+public class QAuthUser extends EntityPathBase<AuthUser> {
 
-    private static final long serialVersionUID = 846542477L;
+    private static final long serialVersionUID = 1444299605L;
 
-    public static final QUser user = new QUser("user");
+    public static final QAuthUser authUser = new QAuthUser("authUser");
 
     public final StringPath authId = createString("authId");
 
@@ -35,16 +35,16 @@ public class QUser extends EntityPathBase<User> {
 
     public final EnumPath<com.ssafy.security.OAuthProvider> provider = createEnum("provider", com.ssafy.security.OAuthProvider.class);
 
-    public QUser(String variable) {
-        super(User.class, forVariable(variable));
+    public QAuthUser(String variable) {
+        super(AuthUser.class, forVariable(variable));
     }
 
-    public QUser(Path<? extends User> path) {
+    public QAuthUser(Path<? extends AuthUser> path) {
         super(path.getType(), path.getMetadata());
     }
 
-    public QUser(PathMetadata metadata) {
-        super(User.class, metadata);
+    public QAuthUser(PathMetadata metadata) {
+        super(AuthUser.class, metadata);
     }
 
 }
