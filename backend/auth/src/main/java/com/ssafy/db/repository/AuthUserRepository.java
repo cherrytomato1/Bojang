@@ -9,6 +9,8 @@ import java.util.Optional;
 @Repository
 public interface AuthUserRepository extends JpaRepository<AuthUser, String> {
     Optional<AuthUser> findByEmail(String email);
-    //authId로 이미 가입된 회원 참조
-    Optional<AuthUser> findByAuthId(String authId);
+    //userId로 이미 가입된 회원 참조
+    Optional<AuthUser> findById(String id);
+    //userId로 이미 가입된 회원 참조
+    Optional<AuthUser> findByUserId(String userId);
 }
