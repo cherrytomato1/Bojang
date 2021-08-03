@@ -31,5 +31,5 @@ public class User {
 
     private OAuthProvider provider;
 
-    private String AuthId;
+    private String authId;
 }

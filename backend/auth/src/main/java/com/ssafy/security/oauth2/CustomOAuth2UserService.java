@@ -94,7 +94,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 				throw new OAuth2AuthenticationProcessingException(
 					"Id not found from Kakao OAuth");
 			}
-			return userRepository.findById(oAuth2UserInfo.getId());
+			//authId로 가입된 유저 참조 없으면 Optional.empty
+			return userRepository.findByAuthId(oAuth2UserInfo.getId());
 		}
 		throw new OAuth2AuthenticationProcessingException("invalid registrationId");
 	}
