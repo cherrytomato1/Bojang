@@ -21,7 +21,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(
+	securedEnabled = true,
+	jsr250Enabled = true,
+	prePostEnabled = true
+)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final CustomOAuth2UserService customOAuth2UserService;

@@ -20,6 +20,8 @@ public class UserController {
     @GetMapping("/profile")
     @PreAuthorize("hasRole('USER')")
     public User getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
+
+        System.out.println("[get] ================> profile");
         return userRepository.findById(userPrincipal.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
     }
