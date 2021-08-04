@@ -1,78 +1,57 @@
 <template>
   <v-card
-    color="color1"
-    max-width="1000"
-    class="align-center"
+    max-width="600"
+    class="mx-auto"
   >
-    <v-card-title class="text-center justify-center py-6">
-      <h1 class="font-weight-bold text-h2 basil--text">
-        싸피시장
-      </h1>
-    </v-card-title>
-
-    <v-tabs
-      v-model="tab"
-      background-color="transparent"
-      color="basil"
-      grow
+    <v-toolbar
+      class="color4"
+      dark
     >
-      <v-tab
-        v-for="item in items"
-        :key="item.tabName"
-      >
-        {{ item.tabName }}
-      </v-tab>
-    </v-tabs>
+      <v-toolbar-title>판매중인 상품</v-toolbar-title>
+    </v-toolbar>
 
-    <v-tabs-items v-model="tab">
-      <v-tab-item
-        v-for="item in items"
-        :key="item.tabName"
+    <v-list
+      subheader
+      two-line
+    >
+      <v-list-item
+        v-for="product in products"
+        :key="product.name"
       >
-        <v-card
-          color="color3"
-          flat
-        >
-          <!-- <v-card-title class="text-center justify-center py-6">
-            <h1 class="font-weight-bold text-h2 basil--text">
-              싸피시장
-            </h1>
-          </v-card-title> -->
-
-          <!-- <v-tabs
-            v-model="tab"
-            background-color="transparent"
-            color="basil"
-            grow
+        <v-list-item-avatar>
+          <v-icon
+            class="grey lighten-1"
+            dark
           >
-            <v-tab
-              v-for="item in items"
-              :key="item.tabName"
-            >
-              {{ item.tabName }}
-            </v-tab>
-          </v-tabs> -->
+            mdi-fish
+          </v-icon>
+        </v-list-item-avatar>
 
-          <v-tabs-items v-model="tab">
-            <v-tab-item
-              v-for="item in items"
-              :key="item.tabName"
-            >
-              <v-card
-                color="vll"
-                flat
-              >
-                <v-card-text>
-                  <v-img
-                    :src="item.image"
-                  />
-                </v-card-text>
-              </v-card>
-            </v-tab-item>
-          </v-tabs-items>
-        </v-card>
-      </v-tab-item>
-    </v-tabs-items>
+        <v-list-item-content>
+          <v-list-item-title v-text="product.name" />
+
+          <v-list-item-subtitle v-text="product.price" />
+        </v-list-item-content>
+
+        <v-list-item-action>
+          <v-btn icon>
+            <v-icon color="grey lighten-1">
+              mdi-information
+            </v-icon>
+          </v-btn>
+        </v-list-item-action>
+      </v-list-item>
+      <v-btn>
+        <v-icon
+          left
+        >
+          mdi-basket
+        </v-icon>
+        장바구니에 담기
+      </v-btn>
+
+      <v-divider inset />
+    </v-list>
   </v-card>
 </template>
 
@@ -103,21 +82,43 @@
 
 <script>
   export default {
-    data () {
-      return {
-        tab: null,
-        items: [
-          {tabName:'단골가게',image:require("../../assets/map/MarketMap_7.jpg"),
-          stores:['동아미용실','충남상회','형제사','남해건어물','남문뻥튀기','남문상회','완도고금상회','월계슈퍼','풍년종묘농약사','재호이불','완도상회']},
-          {tabName:'농산물',image:require("../../assets/map/MarketMap_1.jpg")},
-          {tabName:'축산물',image:require("../../assets/map/MarketMap_2.jpg")},
-          {tabName:'수산물',image:require("../../assets/map/MarketMap_3.jpg")},
-          {tabName:'가공식품',image:require("../../assets/map/MarketMap_4.jpg")},
-          {tabName:'의류신발',image:require("../../assets/map/MarketMap_5.jpg")},
-          {tabName:'가정용품',image:require("../../assets/map/MarketMap_6.jpg")},
-          {tabName:'기타',image:require("../../assets/map/MarketMap_7.jpg")},
-        ],
-      }
-    },
+    data: () => ({
+      files: [
+        {
+          color: 'blue',
+          icon: 'mdi-clipboard-text',
+          subtitle: 'Jan 20, 2014',
+          title: 'Vacation itinerary',
+        },
+        {
+          color: 'amber',
+          icon: 'mdi-gesture-tap-button',
+          subtitle: 'Jan 10, 2014',
+          title: 'Kitchen remodel',
+        },
+      ],
+      products: [
+        {
+          name: '갈치',
+          price: '1마리 10,000원 / 5마리 40,000원',
+        },
+        {
+          name: '꽁치',
+          price: '1마리 10,000원 / 5마리 40,000원',
+        },
+        {
+          name: '한치',
+          price: '1마리 10,000원 / 5마리 40,000원',
+        },
+        {
+          name: '쥐치',
+          price: '1마리 10,000원 / 5마리 40,000원',
+        },
+        {
+          name: '자갈치',
+          price: '1마리 10,000원 / 5마리 40,000원',
+        },
+      ],
+    }),
   }
 </script>

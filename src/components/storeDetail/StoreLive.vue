@@ -3,37 +3,36 @@
     class="mx-auto"
     max-width="375"
   >
+    <!-- img height를 812 - 184 = 로 우선설정 -->
     <v-img
       class="white--text align-end"
-      height="812px"
+      height="628px"
       src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
     >
       <!-- <v-card-title>Top 10 Australian beaches</v-card-title> -->
     </v-img>
     <!-- 아래는 채팅창 / 이후 채팅창이 화면 안에 하단으로 들어와야 함. -->
+
     <v-card-subtitle class="pb-0">
-      Number 10
+      채팅창
     </v-card-subtitle>
 
     <v-card-text class="text--primary">
-      <div>Whitehaven Beach</div>
+      <div>채팅내역</div>
 
-      <div>Whitsunday Island, Whitsunday Islands</div>
+      <div>채팅내역</div>
     </v-card-text>
 
     <v-card-actions>
-      <v-btn
-        color="orange"
-        text
-      >
-        Share
-      </v-btn>
+      <v-text-field />
 
       <v-btn
-        color="orange"
-        text
+        icon
+        color="blue"
       >
-        Explore
+        <v-icon>
+          mdi-send
+        </v-icon>
       </v-btn>
     </v-card-actions>
   </v-card>
