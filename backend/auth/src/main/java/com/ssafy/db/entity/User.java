@@ -41,6 +41,9 @@ public class User {
 	@CreatedDate
 	LocalDateTime registerTime;
 
+	@Column(name = "phone_number", length = 15)
+	String phoneNumber;
+
 	@ManyToOne
 	BankType bankType;
 

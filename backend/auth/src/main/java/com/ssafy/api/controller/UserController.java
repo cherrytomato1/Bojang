@@ -3,8 +3,10 @@ package com.ssafy.api.controller;
 
 import com.ssafy.api.request.UserUpdatePatchRequest;
 import com.ssafy.api.response.UserIdGetResponse;
-import com.ssafy.api.response.UserResponse;
+import com.ssafy.api.response.UserGetResponse;
+import com.ssafy.api.response.UserUpdatePatchResponse;
 import com.ssafy.api.service.UserService;
+import com.ssafy.common.exception.handler.BadRequestException;
 import com.ssafy.common.exception.handler.ResourceNotFoundException;
 import com.ssafy.db.entity.AuthUser;
 import com.ssafy.db.entity.User;
@@ -13,15 +15,18 @@ import com.ssafy.security.CurrentUser;
 import com.ssafy.security.UserPrincipal;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
@@ -29,7 +34,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @Api(value = "회원정보 CRUD API", tags = {"Auth-User"})
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 @Slf4j
 public class UserController {
 
@@ -58,7 +63,7 @@ public class UserController {
 
 	@GetMapping("/info")
 	@PreAuthorize("hasRole('USER')")
-	@ApiOperation(value = "User 정보 반환", notes = "토큰 정보에 담긴 유저 반환", response = UserResponse.class)
+	@ApiOperation(value = "User 정보 반환", notes = "토큰 정보에 담긴 유저 반환", response = UserGetResponse.class)
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK"),
 		@ApiResponse(code = 400, message = "Bad Request"),
@@ -66,15 +71,15 @@ public class UserController {
 		@ApiResponse(code = 403, message = "Forbidden"),
 		@ApiResponse(code = 404, message = "Not Found")
 	})
-	public ResponseEntity<UserResponse> getUser(
+	public ResponseEntity<UserGetResponse> getUser(
 		@ApiIgnore @CurrentUser UserPrincipal userPrincipal) {
 		User user;
 		try {
 			user = userService.getUser(userPrincipal.getUser().getId());
 		} catch (ResourceNotFoundException ex) {
-			return ResponseEntity.status(404).body(UserResponse.of(404, "유저 정보 조회 실패", null));
+			return ResponseEntity.status(404).body(UserGetResponse.of(404, "유저 정보 조회 실패", null));
 		}
-		return ResponseEntity.status(200).body(UserResponse.of(200, "Success", user));
+		return ResponseEntity.status(200).body(UserGetResponse.of(200, "Success", user));
 	}
 
 	@GetMapping("/userid")
@@ -90,30 +95,74 @@ public class UserController {
 	})
 	public ResponseEntity<UserIdGetResponse> getUserId(
 		@ApiIgnore @CurrentUser UserPrincipal userPrincipal) {
-		Optional<String> userId = Optional.ofNullable(userPrincipal.getUser().getId());
-		return userId.map(
-			id -> ResponseEntity.status(200).body(UserIdGetResponse.of(200, "Success", id)))
-			       .orElseGet(() -> ResponseEntity.status(404)
-				                        .body(UserIdGetResponse.of(404, "유저 정보 조회 실패", null)));
-
+		String userId;
+		try {
+			userId = userService.getUserIdByUserPrincipal(userPrincipal);
+		} catch (ResourceNotFoundException ex) {
+			return ResponseEntity.status(404)
+				       .body(UserIdGetResponse.of(404, "유저 정보 조회 실패", null));
+		}
+		return ResponseEntity.status(200).body(UserIdGetResponse.of(200, "Success", userId));
 	}
 
-//	@PatchMapping("/update")
-//	@PreAuthorize("hasRole('USER')")
-//	@ApiOperation(value = "User ID 반환", notes = "토큰 정보에 담긴 유저 ID 반환", response =
-//		                                                                  UserIdGetResponse.class)
-//	@ApiResponses(value = {
-//		@ApiResponse(code = 200, message = "OK"),
-//		@ApiResponse(code = 400, message = "Bad Request"),
-//		@ApiResponse(code = 401, message = "Unauthorized"),
-//		@ApiResponse(code = 403, message = "Forbidden"),
-//		@ApiResponse(code = 404, message = "Not Found")
-//	})
-//	public ResponseEntity<UserResponse> updateUser(
-//		@ApiIgnore @CurrentUser UserPrincipal userPrincipal,
-//		UserUpdatePatchRequest userUpdatePatchRequest) {
-//
-//	}
+	@PatchMapping("/updateUserType")
+	@PreAuthorize("hasRole('USER')")
+	@ApiOperation(value = "UserType 정보 Update", notes = "유저 Type 업데이트", response =
+		                                                                    UserUpdatePatchResponse.class)
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK"),
+		@ApiResponse(code = 400, message = "Bad Request"),
+		@ApiResponse(code = 401, message = "Unauthorized"),
+		@ApiResponse(code = 403, message = "Forbidden"),
+		@ApiResponse(code = 404, message = "Not Found")
+	})
+	public ResponseEntity<? super UserUpdatePatchResponse> updateUserType(
+		@ApiIgnore @CurrentUser UserPrincipal userPrincipal, @RequestBody Long userTypeId) {
+
+		try {
+			String userId = userService.getUserIdByUserPrincipal(userPrincipal);
+			userService.updateUserType(userId, userTypeId);
+		} catch (ResourceNotFoundException ex) {
+			return ResponseEntity.status(404)
+				       .body(UserUpdatePatchResponse.of(404, "유저 정보 조회 실패"));
+		} catch (BadRequestException ex) {
+			return ResponseEntity.status(400)
+				       .body(UserUpdatePatchResponse.of(400, ex.getMessage()));
+		}
+
+		return ResponseEntity.status(200)
+			       .body(UserUpdatePatchResponse.of(200, "Success"));
+	}
+
+	@PatchMapping("/update")
+	@PreAuthorize("hasRole('USER')")
+	@ApiOperation(value = "User 정보 Update", notes = "모든 유저정보를 업데이트, Request Body에 모든 정보 필요", response =
+		                                                                  UserUpdatePatchResponse.class)
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK"),
+		@ApiResponse(code = 400, message = "Bad Request"),
+		@ApiResponse(code = 401, message = "Unauthorized"),
+		@ApiResponse(code = 403, message = "Forbidden"),
+		@ApiResponse(code = 404, message = "Not Found")
+	})
+	public ResponseEntity<? super UserUpdatePatchResponse> updateUser(
+		@ApiIgnore @CurrentUser UserPrincipal userPrincipal,
+		@ApiParam(value = "업데이트할 유저 정보", required = true) @RequestBody UserUpdatePatchRequest userUpdatePatchRequest) {
+
+		try {
+			String userId = userService.getUserIdByUserPrincipal(userPrincipal);
+			userService.updateUser(userUpdatePatchRequest, userId);
+		} catch (ResourceNotFoundException ex) {
+			return ResponseEntity.status(404)
+				       .body(UserUpdatePatchResponse.of(404, "유저 정보 조회 실패"));
+		} catch (BadRequestException ex) {
+			return ResponseEntity.status(400)
+				       .body(UserUpdatePatchResponse.of(400, ex.getMessage()));
+		}
+
+		return ResponseEntity.status(200)
+			       .body(UserUpdatePatchResponse.of(200, "Success"));
+	}
 ////
 //    public ResponseEntity<UserLoginPostRes> login(@RequestBody @ApiParam(value="로그인 정보",
 //    required = true) UserLoginPostReq loginInfo) {
