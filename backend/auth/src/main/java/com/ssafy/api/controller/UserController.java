@@ -24,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -117,7 +118,7 @@ public class UserController {
 		@ApiResponse(code = 404, message = "Not Found")
 	})
 	public ResponseEntity<? super UserUpdatePatchResponse> updateUserType(
-		@ApiIgnore @CurrentUser UserPrincipal userPrincipal, @RequestBody Long userTypeId) {
+		@ApiIgnore @CurrentUser UserPrincipal userPrincipal, @ApiParam(value = "userType ID", example = "1") @RequestBody Long userTypeId) {
 
 		try {
 			String userId = userService.getUserIdByUserPrincipal(userPrincipal);
@@ -163,6 +164,18 @@ public class UserController {
 		return ResponseEntity.status(200)
 			       .body(UserUpdatePatchResponse.of(200, "Success"));
 	}
+
+//	@DeleteMapping("/update")
+//	@PreAuthorize("hasRole('USER')")
+//	@ApiOperation(value = "User 정보 Update", notes = "모든 유저정보를 업데이트, Request Body에 모든 정보 필요", response =
+//		                                                                                         UserUpdatePatchResponse.class)
+//	@ApiResponses(value = {
+//		@ApiResponse(code = 200, message = "OK"),
+//		@ApiResponse(code = 400, message = "Bad Request"),
+//		@ApiResponse(code = 401, message = "Unauthorized"),
+//		@ApiResponse(code = 403, message = "Forbidden"),
+//		@ApiResponse(code = 404, message = "Not Found")
+//	})
 ////
 //    public ResponseEntity<UserLoginPostRes> login(@RequestBody @ApiParam(value="로그인 정보",
 //    required = true) UserLoginPostReq loginInfo) {

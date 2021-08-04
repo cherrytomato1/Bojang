@@ -25,6 +25,10 @@ public class UserServiceImpl implements UserService {
 
 	private final BankTypeRepository bankTypeRepository;
 
+	/*
+		UserPrincipal에서 userId 반환
+		없을 시 ResourceNotFoundException 반환
+	 */
 	@Override
 	public String getUserIdByUserPrincipal(UserPrincipal userPrincipal) {
 		Optional<String> userId = Optional.ofNullable(userPrincipal.getUser().getId());
@@ -42,7 +46,7 @@ public class UserServiceImpl implements UserService {
 		User existingUser = findUserById(userId);
 		try {
 			updateUserType(existingUser, userTypeId);
-		} catch (ResourceNotFoundException ex){
+		} catch (ResourceNotFoundException ex) {
 			throw new BadRequestException(ex.getMessage());
 		}
 		return userRepository.save(existingUser);
@@ -71,10 +75,18 @@ public class UserServiceImpl implements UserService {
 		return userRepository.save(existingUser);
 	}
 
+	/*
+		id에서 유저 객체 반환
+    */
 	private User findUserById(String userId) {
 		return userRepository.findById(userId)
 			       .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
 	}
+
+	/*
+		userUpdatePatchRequest가 유효한지 확인
+		null인 값을 확인하면 BadRequestException 발생
+	 */
 
 	private void validateUpdateUserRequest(UserUpdatePatchRequest userUpdatePatchRequest) {
 		if (userUpdatePatchRequest.getName() == null || userUpdatePatchRequest.getUserType() == null
