@@ -2,6 +2,7 @@
   <v-container>
     <StoreMap />
     <RecommendStore />
+    <SelectStore />
   </v-container>
 </template>
 
@@ -12,13 +13,13 @@
 <script>
 import StoreMap from '@/components/mainpage/StoreMap';
 import RecommendStore from '@/components/mainpage/RecommendStore';
+import SelectStore from '@/components/mainpage/SelectStore';
 
 export default {
-  name: 'App',
-
   components: {
     StoreMap,
     RecommendStore,
+    SelectStore,
   },
 }
 </script>

@@ -80,7 +80,6 @@
     </v-container>
 
     <v-main>
-      <!-- <router-view name="StoreMap"> -->
       <Mainpage />
       <!-- <SelectStore />
       <StoreLive /> -->
@@ -89,6 +88,7 @@
       <UserInformationModify />
       <FrequentStore />
       <OrderList />
+      <StoreDetail />
     </v-main>
     <router-view />
   </v-app>
@@ -96,15 +96,12 @@
 
 <script>
 import Mainpage from './views/Mainpage';
-// import Mypage from './views/mypage/Mypage';
-
-import SelectStore from './components/mainpage/SelectStore';
-import StoreLive from './components/storeDetail/StoreLive';
 
 import StoreInformationModify from '@/components/mypage/StoreInformationModify';
 import UserInformationModify from '@/components/mypage/UserInformationModify';
 import FrequentStore from '@/components/mypage/FrequentStore';
 import OrderList from '@/components/mypage/OrderList';
+import StoreDetail from './views/StoreDetail';
 
 export default {
   name: 'App',
@@ -117,6 +114,7 @@ export default {
     OrderList,
     // Mypage,
 
+    StoreDetail,
   },
 
   data: () => ({

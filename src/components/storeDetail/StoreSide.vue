@@ -1,8 +1,129 @@
 <template>
-  <v-btn
-    elevation="5"
-    x-large
-  />
+  <v-container>
+    <v-btn
+      elevation="5"
+      x-large
+    >
+      <v-icon
+        dark
+        left
+      >
+        mdi-arrow-left
+      </v-icon>
+      시장 둘러보기
+    </v-btn>
+
+    <!-- 스토어 이름/이미지/설명 -->
+    <v-container
+      ma-5
+    >
+      <v-row>
+        <v-img
+          :src="store.image"
+        />
+      </v-row>
+      <v-row>
+        <h3>
+          {{ store.name }}
+        </h3>
+      </v-row>
+      <v-row>
+        {{ store.ment }}
+      </v-row>
+    </v-container>
+
+    <!-- 단골가게 등록 버튼 -->
+    <div class="text-center">
+      <v-dialog
+        v-model="dialog"
+        width="500"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            color="red lighten-2"
+            dark
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon
+              dark
+              left
+            >
+              mdi-heart
+            </v-icon>
+            단골가게 등록
+          </v-btn>
+        </template>
+
+        <v-card>
+          <v-card-title class="text-h5 grey lighten-2">
+            단골가게 등록
+          </v-card-title>
+
+          <v-card-text>
+            해당 가게를 단골가게로 추가했습니다.
+          </v-card-text>
+
+          <v-divider />
+
+          <v-card-actions>
+            <v-spacer />
+            <v-btn
+              color="primary"
+              text
+              @click="dialog = false"
+            >
+              확인
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
+
+    <!-- 호출버튼 -->
+    <div class="text-center">
+      <v-bottom-sheet
+        v-model="sheet"
+        inset
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            color="orange"
+            dark
+            v-bind="attrs"
+            x-large
+            text
+            v-on="on"
+          >
+            <v-icon
+              dark
+              left
+            >
+              mdi-bell
+            </v-icon>
+            사장님 호출
+          </v-btn>
+        </template>
+        <v-sheet
+          class="text-center"
+          height="200px"
+        >
+          <v-btn
+            class="mt-6"
+            text
+            color="error"
+            @click="sheet = !sheet"
+          >
+            확인
+          </v-btn>
+          <div class="my-3">
+            사장님께 방문을 알렸어요. <br>
+            잠시만 기다려주세요.
+          </div>
+        </v-sheet>
+      </v-bottom-sheet>
+    </div>
+  </v-container>
 </template>
 
 <style>
@@ -32,21 +153,20 @@
 
 <script>
   export default {
-    data () {
-      return {
-        tab: null,
-        items: [
-          {tabName:'단골가게',image:require("../../assets/map/MarketMap_7.jpg"),
-          stores:['동아미용실','충남상회','형제사','남해건어물','남문뻥튀기','남문상회','완도고금상회','월계슈퍼','풍년종묘농약사','재호이불','완도상회']},
-          {tabName:'농산물',image:require("../../assets/map/MarketMap_1.jpg")},
-          {tabName:'축산물',image:require("../../assets/map/MarketMap_2.jpg")},
-          {tabName:'수산물',image:require("../../assets/map/MarketMap_3.jpg")},
-          {tabName:'가공식품',image:require("../../assets/map/MarketMap_4.jpg")},
-          {tabName:'의류신발',image:require("../../assets/map/MarketMap_5.jpg")},
-          {tabName:'가정용품',image:require("../../assets/map/MarketMap_6.jpg")},
-          {tabName:'기타',image:require("../../assets/map/MarketMap_7.jpg")},
-        ],
-      }
+    data: () => ({
+      sheet: false,
+      dialog: false,
+      store:
+        {
+          image:require("../../assets/store/store_1.jpg"),
+          name:'민기네 가게',
+          ment:'민기네 가게는 싸피시장에서 30년 이상 장사한 가게입니다. 믿음과 신뢰를 바탕으로 판매하고 있습니다.'
+        },
+    }),
+    methods: {
+      next() {
+        alert('단골가게로 등록되었습니다.')
+      },
     },
   }
 </script>
