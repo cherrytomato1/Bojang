@@ -22,8 +22,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
-@Api(value = "회원정보 CRUD API", tags = {"Auth."})
+@Api(value = "회원정보 CRUD API", tags = {"Auth-User"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -34,6 +35,7 @@ public class UserController {
 
     @GetMapping("/profile")
     @PreAuthorize("hasRole('USER')")
+    @ApiIgnore
     @ApiOperation(value = "AuthUser 객체 반환", notes = "토큰에 담긴 AuthUser 객체 반환", response = AuthUser.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "OK"),
@@ -42,7 +44,7 @@ public class UserController {
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found")
     })
-    public AuthUser getAuthUser(@CurrentUser UserPrincipal userPrincipal) {
+    public AuthUser getAuthUser(@ApiIgnore @CurrentUser UserPrincipal userPrincipal) {
         AuthUser authUser = authUserRepository.findById(userPrincipal.getId())
                                 .orElseThrow(() -> new ResourceNotFoundException("AuthUser", "id", userPrincipal.getId()));
         System.out.println(authUser);
@@ -52,7 +54,7 @@ public class UserController {
 
     @GetMapping("/info")
     @PreAuthorize("hasRole('USER')")
-    @ApiOperation(value = "User Infomation", notes = "토큰 정보에 담긴 유저 반환", response = UserInfoGetResponse.class)
+    @ApiOperation(value = "User 정보 반환", notes = "토큰 정보에 담긴 유저 반환", response = UserInfoGetResponse.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "OK"),
         @ApiResponse(code = 400, message = "Bad Request"),
@@ -60,7 +62,7 @@ public class UserController {
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found")
     })
-    public ResponseEntity<UserInfoGetResponse> getUser(@ApiParam(value = "토큰에 담긴 userDetails", hidden = true ) @CurrentUser UserPrincipal userPrincipal){
+    public ResponseEntity<UserInfoGetResponse> getUser(@ApiIgnore @CurrentUser UserPrincipal userPrincipal){
         User user;
         try {
              user = userService.getUser(userPrincipal.getUser().getId());
