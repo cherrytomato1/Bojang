@@ -3,7 +3,9 @@ package com.ssafy.security.oauth2;
 
 import com.ssafy.common.exception.handler.OAuth2AuthenticationProcessingException;
 import com.ssafy.db.entity.AuthUser;
+import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.AuthUserRepository;
+import com.ssafy.db.repository.UserRepository;
 import com.ssafy.security.OAuthProvider;
 import com.ssafy.security.UserPrincipal;
 import com.ssafy.security.oauth2.user.OAuth2UserInfo;
@@ -26,6 +28,7 @@ import java.util.Optional;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
 	private final AuthUserRepository authUserRepository;
+	private final UserRepository userRepository;
 
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest)
@@ -67,7 +70,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 				OAuthProvider.valueOf(registrationId))) {
 				throw new OAuth2AuthenticationProcessingException(
 					"Looks like you're signed up with " +
-						authUser.getProvider() + " account. Please use your " + authUser.getProvider() +
+						authUser.getProvider() + " account. Please use your " + authUser
+							                                                        .getProvider() +
 						" account to login.");
 			}
 			authUser = updateExistingUser(authUser, oAuth2UserInfo, registrationId);
@@ -95,7 +99,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 					"Id not found from Kakao OAuth");
 			}
 			//authId로 가입된 유저 참조 없으면 Optional.empty
-			return authUserRepository.findByAuthId(oAuth2UserInfo.getId());
+			return authUserRepository.findById(oAuth2UserInfo.getId());
 		}
 		throw new OAuth2AuthenticationProcessingException("invalid registrationId");
 	}
@@ -103,14 +107,23 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	private AuthUser registerNewUser(OAuth2UserRequest oAuth2UserRequest,
 		OAuth2UserInfo oAuth2UserInfo, String registrationId) {
 
-		AuthUser authUser = new AuthUser();
+		User user = User.builder().name(oAuth2UserInfo.getName()).build();
 
-		authUser.setProvider(
-			OAuthProvider.valueOf(registrationId));
-		authUser.setAuthId(oAuth2UserInfo.getId());
-		authUser.setName(oAuth2UserInfo.getName());
-		authUser.setEmail(oAuth2UserInfo.getEmail());
-		authUser.setImageUrl(setImageUrl(oAuth2UserInfo, registrationId));
+		AuthUser authUser = AuthUser.builder().provider(OAuthProvider.valueOf(registrationId))
+			                    .id(oAuth2UserInfo.getId()).name(oAuth2UserInfo.getName())
+			                    .email(oAuth2UserInfo.getEmail())
+			                    .imageUrl(setImageUrl(oAuth2UserInfo, registrationId))
+			                    .user(userRepository.save(user))
+			                    .build();
+
+//		AuthUser authUser = new AuthUser();
+//
+//		authUser.setProvider(
+//			OAuthProvider.valueOf(registrationId));
+//		authUser.setId(oAuth2UserInfo.getId());
+//		authUser.setName(oAuth2UserInfo.getName());
+//		authUser.setEmail(oAuth2UserInfo.getEmail());
+//		authUser.setImageUrl(setImageUrl(oAuth2UserInfo, registrationId));
 //		user.setId(oAuth2UserInfo.getId());
 		return authUserRepository.save(authUser);
 	}
