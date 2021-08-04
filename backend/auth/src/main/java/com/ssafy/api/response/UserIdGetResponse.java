@@ -12,16 +12,16 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@ApiModel("UserLoginPostResponse")
-public class UserInfoGetResponse extends BaseResponseBody{
+@ApiModel("UserResponse")
+public class UserIdGetResponse extends BaseResponseBody{
 	@ApiModelProperty(name="user entity")
-	User user;
+	String userId;
 	
-	public static UserInfoGetResponse of(Integer statusCode, String message, User user) {
-		UserInfoGetResponse res = new UserInfoGetResponse();
+	public static UserIdGetResponse of(Integer statusCode, String message, String userId) {
+		UserIdGetResponse res = new UserIdGetResponse();
 		res.setStatusCode(statusCode);
 		res.setMessage(message);
-		res.setUser(user);
+		res.setUserId(userId);
 		return res;
 	}
 }

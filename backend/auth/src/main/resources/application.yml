@@ -43,7 +43,7 @@ server:
   port: 8080
 
 app:
-  tokenSecret: MINKIMINKI2532MINKIMINKI2532MINK
+  tokenSecret: TERECMINKI2532MINKIMINKI253TEREC
   tokenExpirationMsec: 864000000
   authorizedRedirectUris:
 #    프론트 페이지로 리다이렉팅
