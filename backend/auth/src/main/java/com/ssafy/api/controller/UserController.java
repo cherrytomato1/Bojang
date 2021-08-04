@@ -3,6 +3,7 @@ package com.ssafy.api.controller;
 
 import com.ssafy.api.request.UserLoginPostReq;
 import com.ssafy.api.response.UserInfoGetResponse;
+import com.ssafy.api.service.UserService;
 import com.ssafy.common.exception.handler.ResourceNotFoundException;
 import com.ssafy.db.entity.AuthUser;
 import com.ssafy.db.entity.User;
@@ -29,10 +30,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final AuthUserRepository authUserRepository;
+    private final UserService userService;
 
     @GetMapping("/profile")
     @PreAuthorize("hasRole('USER')")
-    @ApiOperation(value = "AuthUser", notes = "카카오 API를 이용한 로그인", response = AuthUser.class)
+    @ApiOperation(value = "AuthUser 객체 반환", notes = "토큰에 담긴 AuthUser 객체 반환", response = AuthUser.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "OK"),
         @ApiResponse(code = 400, message = "Bad Request"),
@@ -40,9 +42,7 @@ public class UserController {
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found")
     })
-    public AuthUser getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
-
-        System.out.println("[get] ================> profile");
+    public AuthUser getAuthUser(@CurrentUser UserPrincipal userPrincipal) {
         AuthUser authUser = authUserRepository.findById(userPrincipal.getId())
                                 .orElseThrow(() -> new ResourceNotFoundException("AuthUser", "id", userPrincipal.getId()));
         System.out.println(authUser);
@@ -50,10 +50,25 @@ public class UserController {
         return authUser;
     }
 
-//    @GetMapping("/userInfo")
-//    public ResponseEntity<UserInfoGetResponse> getUserInfo(@CurrentUser UserPrincipal userPrincipal){
-//
-//    }
+    @GetMapping("/info")
+    @PreAuthorize("hasRole('USER')")
+    @ApiOperation(value = "User Infomation", notes = "토큰 정보에 담긴 유저 반환", response = UserInfoGetResponse.class)
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "OK"),
+        @ApiResponse(code = 400, message = "Bad Request"),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found")
+    })
+    public ResponseEntity<UserInfoGetResponse> getUser(@ApiParam(value = "토큰에 담긴 userDetails", hidden = true ) @CurrentUser UserPrincipal userPrincipal){
+        User user;
+        try {
+             user = userService.getUser(userPrincipal.getUser().getId());
+        } catch (ResourceNotFoundException ex) {
+            return ResponseEntity.status(404).body(UserInfoGetResponse.of(404, "유저 정보 조회 실패", null));
+        }
+        return ResponseEntity.status(200).body(UserInfoGetResponse.of(200, "Success", user));
+    }
 //
 //    public ResponseEntity<UserLoginPostRes> login(@RequestBody @ApiParam(value="로그인 정보", required = true) UserLoginPostReq loginInfo) {
 //        String userId = loginInfo.getId();
