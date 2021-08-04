@@ -1,6 +1,7 @@
 package com.ssafy.security;
 
 import com.ssafy.db.entity.AuthUser;
+import com.ssafy.db.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,31 +21,40 @@ public class UserPrincipal implements OAuth2User, UserDetails {
 	private String password;
 	//oauthprovider (unused)
 	private OAuthProvider oAuthProvider;
+	private User user;
+
 	private Collection<? extends GrantedAuthority> authorities;
 	private Map<String, Object> attributes;
 
-	public UserPrincipal(String id, String email, String password,
+	public UserPrincipal(String id, String email, String password, User user,
 		Collection<? extends GrantedAuthority> authorities) {
+
 		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.authorities = authorities;
+		this.user = user;
 	}
 
 	public static UserPrincipal create(AuthUser authUser) {
+
 		List<GrantedAuthority> authorities = Collections.
-			singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+			                                                singletonList(
+				                                                new SimpleGrantedAuthority(
+					                                                "ROLE_USER"));
 
 		return new UserPrincipal(
 			authUser.getId(),
 			authUser.getEmail(),
 			authUser.getPassword(),
+			authUser.getUser(),
 			authorities
 		);
 	}
 
 	public static UserPrincipal create(AuthUser authUser, Map<String, Object> attributes,
 		String registrationId) {
+
 		UserPrincipal userPrincipal = UserPrincipal.create(authUser);
 		userPrincipal.setAttributes(attributes);
 		userPrincipal.oAuthProvider = OAuthProvider.valueOf(registrationId);
@@ -53,6 +63,10 @@ public class UserPrincipal implements OAuth2User, UserDetails {
 
 	public String getId() {
 		return id;
+	}
+
+	public User getUser() {
+		return user;
 	}
 
 	public String getEmail() {
@@ -83,6 +97,11 @@ public class UserPrincipal implements OAuth2User, UserDetails {
 //		return null;
 //		return getName();
 		return id;
+	}
+
+	@Override
+	public String getName() {
+		return user.getName();
 	}
 
 	@Override
@@ -117,10 +136,5 @@ public class UserPrincipal implements OAuth2User, UserDetails {
 
 	public void setAttributes(Map<String, Object> attributes) {
 		this.attributes = attributes;
-	}
-
-	@Override
-	public String getName() {
-		return String.valueOf(id);
 	}
 }

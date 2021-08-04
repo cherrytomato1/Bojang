@@ -43,9 +43,36 @@ public class UserController {
     public AuthUser getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
 
         System.out.println("[get] ================> profile");
-        return authUserRepository.findById(userPrincipal.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
+        AuthUser authUser = authUserRepository.findById(userPrincipal.getId())
+                                .orElseThrow(() -> new ResourceNotFoundException("AuthUser", "id", userPrincipal.getId()));
+        System.out.println(authUser);
+        System.out.println(userPrincipal.getUser().getId());
+        return authUser;
     }
 
-
+//    @GetMapping("/userInfo")
+//    public ResponseEntity<UserInfoGetResponse> getUserInfo(@CurrentUser UserPrincipal userPrincipal){
+//
+//    }
+//
+//    public ResponseEntity<UserLoginPostRes> login(@RequestBody @ApiParam(value="로그인 정보", required = true) UserLoginPostReq loginInfo) {
+//        String userId = loginInfo.getId();
+//        String password = loginInfo.getPassword();
+//
+//        User user = userService.getUserByUserId(userId);
+//
+//        //해당하는 아이디를 찾지 못했을 때 실패 응답
+//        if(user == null){
+//            return ResponseEntity.status(404).body(UserLoginPostRes.of(404, "Invalid ID", null));
+//        }
+//
+//        // 로그인 요청한 유저로부터 입력된 패스워드 와 디비에 저장된 유저의 암호화된 패스워드가 같은지 확인.(유효한 패스워드인지 여부 확인)
+//        if(!passwordEncoder.matches(password, user.getPassword())) {
+//            // 유효하지 않는 패스워드인 경우, 로그인 실패로 응답.
+//            return ResponseEntity.status(401).body(UserLoginPostRes.of(401, "Invalid Password", null));
+//        }
+//
+//        // 유효한 패스워드가 맞는 경우, 로그인 성공으로 응답.(액세스 토큰을 포함하여 응답값 전달)
+//        return ResponseEntity.ok(UserLoginPostRes.of(200, "Success", JwtTokenUtil.getToken(userId)));
+//    }
 }
