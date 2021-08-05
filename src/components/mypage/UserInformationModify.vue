@@ -7,14 +7,14 @@
       <v-form>
         <!-- 카카오계정으로 들어온걸 아니까 없애는 건 어떨까?
          이름이 중복된 경우가 있어서? 구현이 조금 다르게 생각해야됨 -->
-        <v-text-field
+        <!-- <v-text-field
           v-model="name"
           :error-messages="nameErrors"
           label="Kakao 계정"
           required
           @input="$v.name.$touch()"
           @blur="$v.name.$touch()"
-        />
+        /> -->
         <v-text-field
           v-model="email"
           :error-messages="emailErrors"

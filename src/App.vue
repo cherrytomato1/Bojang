@@ -22,10 +22,6 @@
         </v-toolbar-title>
         <v-spacer />
 
-        <!-- <v-btn
-        text
-        @click="$router.push({name:'OrderList'})" -->
-        <!-- 라우팅 방법들 -->
         <router-link
           :to="{ name: 'OrderList'}"
           class="pa-5"
@@ -38,9 +34,6 @@
         >
           회원정보 테스트
         </router-link>
-        <!-- <router :to="{ name: 'OrderList'}" exact> -->
-
-        <!-- </v-btn> -->
 
         <button>
           <router-link
@@ -83,38 +76,60 @@
       <Mainpage />
       <!-- <SelectStore />
       <StoreLive /> -->
-      <!-- <Mypage /> -->
-      <StoreInformationModify />
+
+      <!-- <StoreInformationModify />
       <UserInformationModify />
       <FrequentStore />
-      <OrderList />
+      <OrderList /> -->
+
       <StoreDetail />
+
+      <!-- <Pickup /> -->
+      <!-- <UserMypage /> -->
+      <!-- <ShoppingBasket /> -->
+      <!-- <OrderPayment /> -->
+      <!-- <OrderDetail /> -->
+      <!-- <Payment /> --> -->
+      <!-- <router-view /> -->
     </v-main>
-    <router-view />
+    <!-- <StoreMypage /> -->
   </v-app>
 </template>
 
 <script>
 import Mainpage from './views/Mainpage';
 
-import StoreInformationModify from '@/components/mypage/StoreInformationModify';
-import UserInformationModify from '@/components/mypage/UserInformationModify';
-import FrequentStore from '@/components/mypage/FrequentStore';
-import OrderList from '@/components/mypage/OrderList';
+// import StoreInformationModify from '@/components/mypage/StoreInformationModify';
+// import UserInformationModify from '@/components/mypage/UserInformationModify';
+// import FrequentStore from '@/components/mypage/FrequentStore';
+// import OrderList from '@/components/mypage/OrderList';
+// import Pickup from '@/components/pickup/Pickup';
+// import ShoppingBasket from '@/components/payment/ShoppingBasket';
+// import OrderPayment from '@/components/payment/OrderPayment';
+// import OrderDetail from '@/components/payment/OrderDetail';
 import StoreDetail from './views/StoreDetail';
+// import UserMypage from './views/UserMypage';
+// import StoreMypage from './views/StoreMypage';
+// import Payment from '@/views/Payment.vue';
 
 export default {
   name: 'App',
 
   components: {
     Mainpage,
-    StoreInformationModify,
-    UserInformationModify,
-    FrequentStore,
-    OrderList,
-    // Mypage,
+    // StoreInformationModify,
+    // UserInformationModify,
+    // FrequentStore,
+    // OrderList,
+    // UserMypage,
 
     StoreDetail,
+    // StoreMypage,
+    // Payment,
+    // ShoppingBasket,
+    // OrderPayment,
+    // OrderDetail,
+    // Pickup,
   },
 
   data: () => ({
