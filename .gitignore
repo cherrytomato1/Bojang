@@ -40,6 +40,9 @@ Thumbs.db
 *.exe
 *.war
 
+# log files
+*.gz
+
 # Large media files
 *.mp4
 *.tiff

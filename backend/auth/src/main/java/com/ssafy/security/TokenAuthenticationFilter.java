@@ -31,22 +31,31 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 	@Autowired
 	private UserDetailService userDetailService;
 
+	/*
+		토큰 인증 필터 메서드
+		requst header에서 토큰을 받아와 인증을 수행
+	 */
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 		FilterChain filterChain) throws ServletException, IOException {
 		try {
+			//jwt 토큰 받아오기
 			String jwt = getJwtFromRequest(request);
 
+			//토큰 정보가 있으면서, validate 되지 않았을 경우
 			if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
+				//회원의 OAUTH 인증 ID를 받아옴
 				String authId = tokenProvider.getOAuthIdFromToken(jwt);
-				System.out.println("authId : " + authId);
 
+				//UserDetails 정보를 OAUTH ID로 받기
 				UserDetails userDetails = userDetailService.loadUserById(authId);
+				//UserDetails로 athentication 설정
 				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
 					userDetails, null, userDetails.getAuthorities());
+				//authentication에 request 정보 담기
 				authentication
 					.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
+				//securitycontext 에 인증 정보 담기
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			}
 		} catch (Exception ex) {

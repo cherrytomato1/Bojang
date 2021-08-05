@@ -12,6 +12,7 @@ import com.ssafy.security.oauth2.user.OAuth2UserInfo;
 import com.ssafy.security.oauth2.user.OAuth2UserInfoFactory;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -25,6 +26,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
 	private final AuthUserRepository authUserRepository;
@@ -35,11 +37,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		throws OAuth2AuthenticationException {
 
 		OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
-		System.out.println("Token Type : " + oAuth2UserRequest.getAccessToken().getTokenType());
-		System.out.println("Token Value : " + oAuth2UserRequest.getAccessToken().getTokenValue());
+		log.debug("Token Type : " + oAuth2UserRequest.getAccessToken().getTokenType());
+		log.debug("Token Value : " + oAuth2UserRequest.getAccessToken().getTokenValue());
 		//attribute 로그
 		Map<String, Object> attributes = oAuth2User.getAttributes();
-		attributes.forEach((key, value) -> System.out.println(key + " " + value));
+		attributes.forEach((key, value) -> log.debug(key + " " + value));
 
 		try {
 			return processOAuth2User(oAuth2UserRequest, oAuth2User);
@@ -116,15 +118,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 			                    .user(userRepository.save(user))
 			                    .build();
 
-//		AuthUser authUser = new AuthUser();
-//
-//		authUser.setProvider(
-//			OAuthProvider.valueOf(registrationId));
-//		authUser.setId(oAuth2UserInfo.getId());
-//		authUser.setName(oAuth2UserInfo.getName());
-//		authUser.setEmail(oAuth2UserInfo.getEmail());
-//		authUser.setImageUrl(setImageUrl(oAuth2UserInfo, registrationId));
-//		user.setId(oAuth2UserInfo.getId());
+
 		return authUserRepository.save(authUser);
 	}
 
@@ -138,7 +132,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
 	private String setImageUrl(OAuth2UserInfo oAuth2UserInfo, String registrationId) {
 
-		System.out.println("kakaoImage" + registrationId);
+		log.debug("kakaoImage" + registrationId);
 		if (registrationId.equals("kakao")) {
 			Optional<Map<String, Object>> kakaoAccount = Optional.ofNullable(
 				(Map<String, Object>) oAuth2UserInfo.getAttributes()
