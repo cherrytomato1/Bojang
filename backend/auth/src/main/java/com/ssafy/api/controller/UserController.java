@@ -6,6 +6,7 @@ import com.ssafy.api.response.AuthUserProfileGetResponse;
 import com.ssafy.api.response.UserDeleteResponse;
 import com.ssafy.api.response.UserIdGetResponse;
 import com.ssafy.api.response.UserGetResponse;
+import com.ssafy.api.response.UserIdVaidateResponse;
 import com.ssafy.api.response.UserUpdatePatchResponse;
 import com.ssafy.api.service.UserService;
 import com.ssafy.common.exception.handler.BadRequestException;
@@ -29,6 +30,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -114,6 +116,34 @@ public class UserController {
 		}
 		return ResponseEntity.status(200).body(UserIdGetResponse.of(200, "Success", userId));
 	}
+
+	@PostMapping("/validateId")
+	@PreAuthorize("hasRole('USER')")
+	@ApiOperation(value = "User ID 토큰 일치 여부 확인", notes = "토큰 정보에 담긴 유저 ID 반환", response =
+		                                                                  UserIdVaidateResponse.class)
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK"),
+		@ApiResponse(code = 400, message = "Bad Request"),
+		@ApiResponse(code = 401, message = "Unauthorized"),
+		@ApiResponse(code = 403, message = "Forbidden"),
+		@ApiResponse(code = 404, message = "Not Found")
+	})
+	public ResponseEntity<UserIdVaidateResponse> getUserId(
+		@ApiIgnore @CurrentUser UserPrincipal userPrincipal, @ApiParam(value = "일치 여부를 확인할 유저 ID") @RequestBody String userId) {
+		String tokenUserId;
+		try {
+			tokenUserId = userService.getUserIdByUserPrincipal(userPrincipal);
+			if (!tokenUserId.equals(userId)) {
+				return ResponseEntity.status(401)
+					       .body(UserIdVaidateResponse.of(401, "토큰 정보와 userID가 일치하지 않습니다", tokenUserId));
+			}
+		} catch (ResourceNotFoundException ex) {
+			return ResponseEntity.status(404)
+				       .body(UserIdVaidateResponse.of(404, "유저 정보 조회 실패", null));
+		}
+		return ResponseEntity.status(200).body(UserIdVaidateResponse.of(200, "Success", tokenUserId));
+	}
+
 
 	@PatchMapping("/updateUserType")
 	@PreAuthorize("hasRole('USER')")
