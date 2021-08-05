@@ -13,14 +13,4 @@ import lombok.Setter;
 @Setter
 @ApiModel("UserIdValidateResponse")
 public class UserIdVaidateResponse extends BaseResponseBody{
-	@ApiModelProperty(name="토큰이 갖고 있는 ID")
-	String userId;
-	
-	public static UserIdVaidateResponse of(Integer statusCode, String message, String userId) {
-		UserIdVaidateResponse res = new UserIdVaidateResponse();
-		res.setStatusCode(statusCode);
-		res.setMessage(message);
-		res.setUserId(userId);
-		return res;
-	}
 }
