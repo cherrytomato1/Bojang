@@ -2,6 +2,7 @@ package com.ssafy.api.controller;
 
 
 import com.ssafy.api.request.UserUpdatePatchRequest;
+import com.ssafy.api.response.AuthUserProfileGetResponse;
 import com.ssafy.api.response.UserDeleteResponse;
 import com.ssafy.api.response.UserIdGetResponse;
 import com.ssafy.api.response.UserGetResponse;
@@ -40,14 +41,12 @@ import springfox.documentation.annotations.ApiIgnore;
 @Slf4j
 public class UserController {
 
-	private final AuthUserRepository authUserRepository;
 	private final UserService userService;
 
 	@GetMapping("/profile")
 	@PreAuthorize("hasRole('USER')")
-	@ApiIgnore
-	@ApiOperation(value = "AuthUser 객체 반환", notes = "토큰에 담긴 AuthUser 객체 반환", response =
-		                                                                         AuthUser.class)
+	@ApiOperation(value = "OAuth 프로필 반환", notes = "토큰에 담긴 AuthUser 객체 반환", response =
+		                                                                       AuthUserProfileGetResponse.class)
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK"),
 		@ApiResponse(code = 400, message = "Bad Request"),
@@ -55,13 +54,20 @@ public class UserController {
 		@ApiResponse(code = 403, message = "Forbidden"),
 		@ApiResponse(code = 404, message = "Not Found")
 	})
-	public AuthUser getAuthUser(@ApiIgnore @CurrentUser UserPrincipal userPrincipal) {
-		AuthUser authUser = authUserRepository.findById(userPrincipal.getId())
-			                    .orElseThrow(() -> new ResourceNotFoundException("AuthUser", "id",
-				                    userPrincipal.getId()));
+	public ResponseEntity<AuthUserProfileGetResponse> getAuthUser(
+		@ApiIgnore @CurrentUser UserPrincipal userPrincipal) {
+
+		AuthUser authUser;
+		try {
+			authUser = userService.getAuthUser(userPrincipal);
+			authUser.setUser(null);
+		} catch (ResourceNotFoundException ex) {
+			return ResponseEntity.status(404)
+				       .body(AuthUserProfileGetResponse.of(404, "유저 정보 조회 실패", null));
+		}
 		log.debug("get Auth User : " + authUser);
-		authUser.setUser(null);
-		return authUser;
+		return ResponseEntity.status(200)
+			       .body(AuthUserProfileGetResponse.of(200, "Success", authUser));
 	}
 
 	@GetMapping("/info")
@@ -143,7 +149,7 @@ public class UserController {
 	@PreAuthorize("hasRole('USER')")
 	@ApiOperation(value = "User 정보 Update", notes = "모든 유저정보를 업데이트, Request Body에 모든 정보 필요",
 		response =
-		                                                                                         UserUpdatePatchResponse.class)
+			UserUpdatePatchResponse.class)
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK"),
 		@ApiResponse(code = 400, message = "Bad Request"),
@@ -173,7 +179,7 @@ public class UserController {
 	@DeleteMapping("/delete")
 	@PreAuthorize("hasRole('USER')")
 	@ApiOperation(value = "User delete", notes = "토큰에 저장된 유저의 정보를 삭제/탈퇴한다. ", response =
-		                                                                          UserUpdatePatchResponse.class)
+		                                                                          UserDeleteResponse.class)
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK"),
 		@ApiResponse(code = 400, message = "Bad Request"),

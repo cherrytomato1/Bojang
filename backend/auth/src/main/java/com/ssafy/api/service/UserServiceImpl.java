@@ -4,6 +4,7 @@ import com.ssafy.api.request.UserUpdatePatchRequest;
 import com.ssafy.common.exception.handler.BadRequestException;
 import com.ssafy.common.exception.handler.ResourceNotFoundException;
 import com.ssafy.common.model.UserTypeEnum;
+import com.ssafy.db.entity.AuthUser;
 import com.ssafy.db.entity.BankType;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.entity.UserType;
@@ -42,6 +43,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUser(String id) {
 		return findUserById(id);
+	}
+
+	@Override
+	public AuthUser getAuthUser(UserPrincipal userPrincipal) {
+		return authUserRepository.findById(userPrincipal.getId())
+			                    .orElseThrow(() -> new ResourceNotFoundException("AuthUser", "id",
+				                    userPrincipal.getId()));
 	}
 
 	@Override
