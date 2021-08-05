@@ -14,6 +14,6 @@ public interface UserService {
 
 	User updateUser(UserUpdatePatchRequest userUpdatePatchRequest, String userId);
 
-	void deleteUser(String userId);
+	void deleteUser(UserPrincipal userPrincipal);
 
 }

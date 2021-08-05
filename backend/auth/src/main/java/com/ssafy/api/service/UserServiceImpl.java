@@ -7,6 +7,7 @@ import com.ssafy.common.model.UserTypeEnum;
 import com.ssafy.db.entity.BankType;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.entity.UserType;
+import com.ssafy.db.repository.AuthUserRepository;
 import com.ssafy.db.repository.BankTypeRepository;
 import com.ssafy.db.repository.UserRepository;
 import com.ssafy.db.repository.UserTypeRepository;
@@ -18,6 +19,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+
+	private final AuthUserRepository authUserRepository;
 
 	private final UserRepository userRepository;
 
@@ -76,9 +79,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deleteUser(String userId) {
+	public void deleteUser(UserPrincipal userPrincipal) {
+
 		try {
+			String userId = getUserIdByUserPrincipal(userPrincipal);
+			String authId = userPrincipal.getId();
+
+			authUserRepository.deleteById(authId);
 			userRepository.deleteById(userId);
+		} catch (ResourceNotFoundException ex) {
+			throw ex;
 		} catch (Exception ex) {
 			throw new BadRequestException(ex.getMessage());
 		}
@@ -96,7 +106,6 @@ public class UserServiceImpl implements UserService {
 		userUpdatePatchRequest가 유효한지 확인
 		null인 값을 확인하면 BadRequestException 발생
 	 */
-
 	private void validateUpdateUserRequest(UserUpdatePatchRequest userUpdatePatchRequest) {
 		if (userUpdatePatchRequest.getName() == null || userUpdatePatchRequest.getUserType() == null
 			    || userUpdatePatchRequest.getPhoneNumber() == null) {

@@ -60,6 +60,7 @@ public class UserController {
 			                    .orElseThrow(() -> new ResourceNotFoundException("AuthUser", "id",
 				                    userPrincipal.getId()));
 		log.debug("get Auth User : " + authUser);
+		authUser.setUser(null);
 		return authUser;
 	}
 
@@ -184,8 +185,7 @@ public class UserController {
 		@ApiIgnore @CurrentUser UserPrincipal userPrincipal) {
 
 		try {
-			String userId = userService.getUserIdByUserPrincipal(userPrincipal);
-			userService.deleteUser(userId);
+			userService.deleteUser(userPrincipal);
 		} catch (ResourceNotFoundException ex) {
 			return ResponseEntity.status(404)
 				       .body(UserUpdatePatchResponse.of(404, "유저 정보 조회 실패"));
