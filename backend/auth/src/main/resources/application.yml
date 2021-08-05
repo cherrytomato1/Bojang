@@ -18,7 +18,7 @@ spring:
             scope:
               - profile_nickname
               - profile_image
-#           POST로 토큰 발급요청하지 않으면 invalid_token_response
+#           client authentication
             client-authentication-method: POST
 #            client-name: Kakao
         provider:
@@ -46,5 +46,5 @@ app:
   tokenSecret: TERECMINKI2532MINKIMINKI253TEREC
   tokenExpirationMsec: 864000000
   authorizedRedirectUris:
-#    프론트 페이지로 리다이렉팅
+#    redirect front-end url
     - http://localhost:8081/oauth2/redirect

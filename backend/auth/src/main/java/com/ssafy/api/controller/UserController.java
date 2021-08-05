@@ -130,7 +130,7 @@ public class UserController {
 		@ApiResponse(code = 403, message = "Forbidden"),
 		@ApiResponse(code = 404, message = "Not Found")
 	})
-	public ResponseEntity<UserIdVaidateResponse> getUserId(
+	public ResponseEntity<? super UserIdVaidateResponse> getUserId(
 		@ApiIgnore @CurrentUser UserPrincipal userPrincipal, @ApiParam(value = "일치 여부를 확인할 유저 ID") @RequestBody String userId) {
 
 		String tokenUserId;
@@ -138,13 +138,13 @@ public class UserController {
 			tokenUserId = userService.getUserIdByUserPrincipal(userPrincipal);
 			if (!tokenUserId.equals(userId)) {
 				return ResponseEntity.status(401)
-					       .body(UserIdVaidateResponse.of(401, "토큰 정보와 userID가 일치하지 않습니다", tokenUserId));
+					       .body(UserIdVaidateResponse.of(401, "토큰 정보와 userID가 일치하지 않습니다"));
 			}
 		} catch (ResourceNotFoundException ex) {
 			return ResponseEntity.status(404)
-				       .body(UserIdVaidateResponse.of(404, "유저 정보 조회 실패", null));
+				       .body(UserIdVaidateResponse.of(404, "유저 정보 조회 실패"));
 		}
-		return ResponseEntity.status(200).body(UserIdVaidateResponse.of(200, "Success", tokenUserId));
+		return ResponseEntity.status(200).body(UserIdVaidateResponse.of(200, "Success"));
 	}
 
 
