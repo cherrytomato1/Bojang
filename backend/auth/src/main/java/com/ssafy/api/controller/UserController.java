@@ -2,6 +2,7 @@ package com.ssafy.api.controller;
 
 
 import com.ssafy.api.request.UserUpdatePatchRequest;
+import com.ssafy.api.response.UserDeleteResponse;
 import com.ssafy.api.response.UserIdGetResponse;
 import com.ssafy.api.response.UserGetResponse;
 import com.ssafy.api.response.UserUpdatePatchResponse;
@@ -64,7 +65,8 @@ public class UserController {
 
 	@GetMapping("/info")
 	@PreAuthorize("hasRole('USER')")
-	@ApiOperation(value = "User 정보 반환", notes = "토큰 정보에 담긴 유저 반환", response = UserGetResponse.class)
+	@ApiOperation(value = "User 정보 반환", notes = "토큰 정보에 담긴 유저 반환", response =
+		                                                               UserGetResponse.class)
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK"),
 		@ApiResponse(code = 400, message = "Bad Request"),
@@ -118,7 +120,8 @@ public class UserController {
 		@ApiResponse(code = 404, message = "Not Found")
 	})
 	public ResponseEntity<? super UserUpdatePatchResponse> updateUserType(
-		@ApiIgnore @CurrentUser UserPrincipal userPrincipal, @ApiParam(value = "userType ID", example = "1") @RequestBody Long userTypeId) {
+		@ApiIgnore @CurrentUser UserPrincipal userPrincipal,
+		@ApiParam(value = "userType ID", example = "1") @RequestBody Long userTypeId) {
 
 		try {
 			String userId = userService.getUserIdByUserPrincipal(userPrincipal);
@@ -137,8 +140,9 @@ public class UserController {
 
 	@PatchMapping("/update")
 	@PreAuthorize("hasRole('USER')")
-	@ApiOperation(value = "User 정보 Update", notes = "모든 유저정보를 업데이트, Request Body에 모든 정보 필요", response =
-		                                                                  UserUpdatePatchResponse.class)
+	@ApiOperation(value = "User 정보 Update", notes = "모든 유저정보를 업데이트, Request Body에 모든 정보 필요",
+		response =
+		                                                                                         UserUpdatePatchResponse.class)
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK"),
 		@ApiResponse(code = 400, message = "Bad Request"),
@@ -165,39 +169,33 @@ public class UserController {
 			       .body(UserUpdatePatchResponse.of(200, "Success"));
 	}
 
-//	@DeleteMapping("/update")
-//	@PreAuthorize("hasRole('USER')")
-//	@ApiOperation(value = "User 정보 Update", notes = "모든 유저정보를 업데이트, Request Body에 모든 정보 필요", response =
-//		                                                                                         UserUpdatePatchResponse.class)
-//	@ApiResponses(value = {
-//		@ApiResponse(code = 200, message = "OK"),
-//		@ApiResponse(code = 400, message = "Bad Request"),
-//		@ApiResponse(code = 401, message = "Unauthorized"),
-//		@ApiResponse(code = 403, message = "Forbidden"),
-//		@ApiResponse(code = 404, message = "Not Found")
-//	})
-////
-//    public ResponseEntity<UserLoginPostRes> login(@RequestBody @ApiParam(value="로그인 정보",
-//    required = true) UserLoginPostReq loginInfo) {
-//        String userId = loginInfo.getId();
-//        String password = loginInfo.getPassword();
-//
-//        User user = userService.getUserByUserId(userId);
-//
-//        //해당하는 아이디를 찾지 못했을 때 실패 응답
-//        if(user == null){
-//            return ResponseEntity.status(404).body(UserLoginPostRes.of(404, "Invalid ID", null));
-//        }
-//
-//        // 로그인 요청한 유저로부터 입력된 패스워드 와 디비에 저장된 유저의 암호화된 패스워드가 같은지 확인.(유효한 패스워드인지 여부 확인)
-//        if(!passwordEncoder.matches(password, user.getPassword())) {
-//            // 유효하지 않는 패스워드인 경우, 로그인 실패로 응답.
-//            return ResponseEntity.status(401).body(UserLoginPostRes.of(401, "Invalid Password",
-//            null));
-//        }
-//
-//        // 유효한 패스워드가 맞는 경우, 로그인 성공으로 응답.(액세스 토큰을 포함하여 응답값 전달)
-//        return ResponseEntity.ok(UserLoginPostRes.of(200, "Success", JwtTokenUtil.getToken
-//        (userId)));
-//    }
+	@DeleteMapping("/delete")
+	@PreAuthorize("hasRole('USER')")
+	@ApiOperation(value = "User delete", notes = "토큰에 저장된 유저의 정보를 삭제/탈퇴한다. ", response =
+		                                                                          UserUpdatePatchResponse.class)
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK"),
+		@ApiResponse(code = 400, message = "Bad Request"),
+		@ApiResponse(code = 401, message = "Unauthorized"),
+		@ApiResponse(code = 403, message = "Forbidden"),
+		@ApiResponse(code = 404, message = "Not Found")
+	})
+	public ResponseEntity<? super UserDeleteResponse> deleteUser(
+		@ApiIgnore @CurrentUser UserPrincipal userPrincipal) {
+
+		try {
+			String userId = userService.getUserIdByUserPrincipal(userPrincipal);
+			userService.deleteUser(userId);
+		} catch (ResourceNotFoundException ex) {
+			return ResponseEntity.status(404)
+				       .body(UserUpdatePatchResponse.of(404, "유저 정보 조회 실패"));
+		} catch (BadRequestException ex) {
+			return ResponseEntity.status(400)
+				       .body(UserUpdatePatchResponse.of(400, ex.getMessage()));
+		}
+
+		return ResponseEntity.status(200)
+			       .body(UserUpdatePatchResponse.of(200, "Success"));
+	}
+
 }

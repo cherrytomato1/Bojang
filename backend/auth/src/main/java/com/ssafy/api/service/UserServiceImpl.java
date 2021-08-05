@@ -75,6 +75,15 @@ public class UserServiceImpl implements UserService {
 		return userRepository.save(existingUser);
 	}
 
+	@Override
+	public void deleteUser(String userId) {
+		try {
+			userRepository.deleteById(userId);
+		} catch (Exception ex) {
+			throw new BadRequestException(ex.getMessage());
+		}
+	}
+
 	/*
 		id에서 유저 객체 반환
     */
