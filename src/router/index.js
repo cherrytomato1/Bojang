@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Mainpage from '@/views/Mainpage'
 import StoreDetail from '@/views/StoreDetail'
+import InitPage from '@/views/InitPage'
+
 import OrderList from '@/components/mypage/OrderList'
 import UserInformationModify from '@/components/mypage/UserInformationModify'
 import FrequentStore from '@/components/mypage/FrequentStore'
@@ -12,6 +14,11 @@ import StoreInformationModify from '@/components/mypage/StoreInformationModify'
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/',
+    name: 'InitPage',
+    component: InitPage
+  },
   {
     path: '/mainpage',
     name: 'Mainpage',

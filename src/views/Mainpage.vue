@@ -1,9 +1,10 @@
 <template>
-  <v-container>
+  <div>
+    <Navbar />
     <StoreMap />
     <RecommendStore />
     <SelectStore />
-  </v-container>
+  </div>
 </template>
 
 <style scoped>
@@ -11,12 +12,14 @@
 </style>
 
 <script>
+import Navbar from '@/views/Navbar';
 import StoreMap from '@/components/mainpage/StoreMap';
 import RecommendStore from '@/components/mainpage/RecommendStore';
 import SelectStore from '@/components/mainpage/SelectStore';
 
 export default {
   components: {
+    Navbar,
     StoreMap,
     RecommendStore,
     SelectStore,

@@ -35,20 +35,20 @@
 
         <v-list-item-action>
           <v-btn icon>
-            <v-icon color="grey lighten-1">
-              mdi-information
+            <v-icon>
+              mdi-basket
             </v-icon>
           </v-btn>
+
+          <v-text-field
+            v-model="product.count"
+            type="number"
+            min="1"
+            max="9"
+            step="1"
+          />
         </v-list-item-action>
       </v-list-item>
-      <v-btn>
-        <v-icon
-          left
-        >
-          mdi-basket
-        </v-icon>
-        장바구니에 담기
-      </v-btn>
 
       <v-divider inset />
     </v-list>
@@ -83,40 +83,31 @@
 <script>
   export default {
     data: () => ({
-      files: [
-        {
-          color: 'blue',
-          icon: 'mdi-clipboard-text',
-          subtitle: 'Jan 20, 2014',
-          title: 'Vacation itinerary',
-        },
-        {
-          color: 'amber',
-          icon: 'mdi-gesture-tap-button',
-          subtitle: 'Jan 10, 2014',
-          title: 'Kitchen remodel',
-        },
-      ],
       products: [
         {
           name: '갈치',
           price: '1마리 10,000원 / 5마리 40,000원',
+          count: 0,
         },
         {
           name: '꽁치',
           price: '1마리 10,000원 / 5마리 40,000원',
+          count: 0,
         },
         {
           name: '한치',
           price: '1마리 10,000원 / 5마리 40,000원',
+          count: 0,
         },
         {
           name: '쥐치',
           price: '1마리 10,000원 / 5마리 40,000원',
+          count: 0,
         },
         {
           name: '자갈치',
           price: '1마리 10,000원 / 5마리 40,000원',
+          count: 0,
         },
       ],
     }),
