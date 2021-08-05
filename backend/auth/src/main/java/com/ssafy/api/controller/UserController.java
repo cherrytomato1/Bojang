@@ -85,6 +85,7 @@ public class UserController {
 	})
 	public ResponseEntity<UserGetResponse> getUser(
 		@ApiIgnore @CurrentUser UserPrincipal userPrincipal) {
+
 		User user;
 		try {
 			user = userService.getUser(userPrincipal.getUser().getId());
@@ -94,7 +95,7 @@ public class UserController {
 		return ResponseEntity.status(200).body(UserGetResponse.of(200, "Success", user));
 	}
 
-	@GetMapping("/userid")
+	@GetMapping("/userId")
 	@PreAuthorize("hasRole('USER')")
 	@ApiOperation(value = "User ID 반환", notes = "토큰 정보에 담긴 유저 ID 반환", response =
 		                                                                  UserIdGetResponse.class)
@@ -107,6 +108,7 @@ public class UserController {
 	})
 	public ResponseEntity<UserIdGetResponse> getUserId(
 		@ApiIgnore @CurrentUser UserPrincipal userPrincipal) {
+
 		String userId;
 		try {
 			userId = userService.getUserIdByUserPrincipal(userPrincipal);
@@ -130,6 +132,7 @@ public class UserController {
 	})
 	public ResponseEntity<UserIdVaidateResponse> getUserId(
 		@ApiIgnore @CurrentUser UserPrincipal userPrincipal, @ApiParam(value = "일치 여부를 확인할 유저 ID") @RequestBody String userId) {
+
 		String tokenUserId;
 		try {
 			tokenUserId = userService.getUserIdByUserPrincipal(userPrincipal);
