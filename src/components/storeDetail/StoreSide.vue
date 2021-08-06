@@ -3,6 +3,7 @@
     <v-btn
       elevation="5"
       x-large
+      to="mainpage"
     >
       <v-icon
         dark
@@ -56,7 +57,7 @@
         </template>
 
         <v-card>
-          <v-card-title class="text-h5 grey lighten-2">
+          <v-card-title class="grey lighten-2">
             단골가게 등록
           </v-card-title>
 

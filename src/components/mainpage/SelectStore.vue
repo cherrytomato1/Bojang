@@ -3,7 +3,6 @@
   <div
     class="color1 container"
   >
-    <h3>Select Store</h3>
     <v-sheet
       class="mx-auto"
       elevation="8"
@@ -62,14 +61,15 @@
             align="center"
             justify="center"
           >
-            <h3 class="text-h6">
-              Selected {{ model }}
-            </h3>
+            <h1>
+              {{ items[model].tabName }}
+            </h1>
             <v-btn
               color="orange"
               text
+              to="/storedetail"
             >
-              라이브 입장
+              <h2>라이브 입장</h2>
             </v-btn>
           </v-row>
         </v-sheet>

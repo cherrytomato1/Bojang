@@ -38,4 +38,8 @@ export default {
   top: 0;
   z-index: 2;
 }
+.text-h1{
+  color: #3ac569 !important;
+  font-family: 'Jua', sans-serif !important;
+}
 </style>

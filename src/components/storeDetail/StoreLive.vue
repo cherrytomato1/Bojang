@@ -17,10 +17,11 @@
       채팅창
     </v-card-subtitle>
 
-    <v-card-text class="text--primary">
-      <div>채팅내역</div>
-
-      <div>채팅내역</div>
+    <v-card-text
+      class="text--primary"
+    >
+      <div>채팅내역1</div>
+      <div>채팅내역2</div>
     </v-card-text>
 
     <v-card-actions>

@@ -1,45 +1,49 @@
 <template>
-  <v-card
-    color="color1"
-    max-width="1000"
-    class="align-center"
+  <v-layout
+    justify-center
+    align-center
   >
-    <v-card-title class="text-center justify-center py-6">
-      <h1 class="font-weight-bold text-h2 basil--text">
-        싸피시장
-      </h1>
-    </v-card-title>
-
-    <v-tabs
-      v-model="tab"
-      background-color="transparent"
-      color="basil"
-      grow
+    <v-card
+      color="color1"
+      max-width="1000"
+      class="align-center"
     >
-      <v-tab
-        v-for="item in items"
-        :key="item.tabName"
-      >
-        {{ item.tabName }}
-      </v-tab>
-    </v-tabs>
+      <v-card-title class="text-center justify-center py-6">
+        <h1 class="font-weight-bold basil--text">
+          싸피시장
+        </h1>
+      </v-card-title>
 
-    <v-tabs-items v-model="tab">
-      <v-tab-item
-        v-for="item in items"
-        :key="item.tabName"
+      <v-tabs
+        v-model="tab"
+        background-color="transparent"
+        color="basil"
+        grow
       >
-        <v-card
-          color="color3"
-          flat
+        <v-tab
+          v-for="item in items"
+          :key="item.tabName"
         >
-          <!-- <v-card-title class="text-center justify-center py-6">
+          {{ item.tabName }}
+        </v-tab>
+      </v-tabs>
+
+      <v-tabs-items v-model="tab">
+        <v-tab-item
+          v-for="item in items"
+          :key="item.tabName"
+        >
+          <v-card
+            color="color3"
+            flat
+          >
+            <!-- <v-card-title class="text-center justify-center py-6">
             <h1 class="font-weight-bold text-h2 basil--text">
               싸피시장
             </h1>
           </v-card-title> -->
 
-          <!-- <v-tabs
+            <!-- <v-tabs
             v-model="tab"
             background-color="transparent"
             color="basil"
@@ -53,27 +57,28 @@
             </v-tab>
           </v-tabs> -->
 
-          <v-tabs-items v-model="tab">
-            <v-tab-item
-              v-for="i in items"
-              :key="i.tabName"
-            >
-              <v-card
-                color="vll"
-                flat
+            <v-tabs-items v-model="tab">
+              <v-tab-item
+                v-for="i in items"
+                :key="i.tabName"
               >
-                <v-card-text>
-                  <v-img
-                    :src="i.image"
-                  />
-                </v-card-text>
-              </v-card>
-            </v-tab-item>
-          </v-tabs-items>
-        </v-card>
-      </v-tab-item>
-    </v-tabs-items>
-  </v-card>
+                <v-card
+                  color="color4"
+                  flat
+                >
+                  <v-card-text>
+                    <v-img
+                      :src="i.image"
+                    />
+                  </v-card-text>
+                </v-card>
+              </v-tab-item>
+            </v-tabs-items>
+          </v-card>
+        </v-tab-item>
+      </v-tabs-items>
+    </v-card>
+  </v-layout>
 </template>
 
 <style>

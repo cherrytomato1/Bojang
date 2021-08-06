@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="color1">
     <Navbar />
     <StoreMap />
-    <RecommendStore />
+    <!-- <RecommendStore /> -->
     <SelectStore />
   </div>
 </template>
@@ -21,7 +21,7 @@ export default {
   components: {
     Navbar,
     StoreMap,
-    RecommendStore,
+    // RecommendStore,
     SelectStore,
   },
 }
