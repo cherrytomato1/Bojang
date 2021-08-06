@@ -44,7 +44,7 @@ server:
 
 app:
   tokenSecret: TERECMINKI2532MINKIMINKI253TEREC
-  tokenExpirationMsec: 864000000
+  tokenExpirationMsec: 7200
   authorizedRedirectUris:
 #    redirect front-end url
     - http://localhost:8081/oauth2/redirect
