@@ -14,7 +14,7 @@
 <br/>
 ### 네비게이션 바
 
-### ![주문내역](./picture/nav1.png)
+### ![주문내역](./picture/nav1.PNG)
 
 
 
@@ -54,7 +54,7 @@
 
 
 
-![회원정보수정](./picture/nav2.png)
+![회원정보수정](./picture/nav2.PNG)
 
 ### 회원정보 수정
 
@@ -68,7 +68,7 @@
 
     
 
-![단골가게](./picture/nav3.png)
+![단골가게](./picture/nav3.PNG)
 
 ### 단골가게 관리
 
@@ -85,7 +85,7 @@
 
 ### 결제 프로세스
 
-![장바구니](./picture/nav4.png)
+![장바구니](./picture/nav4.PNG)
 
 
 #### 장바구니
@@ -100,7 +100,7 @@
 
 
 
-![주문 결제](./picture/nav5.png)
+![주문 결제](./picture/nav5.PNG)
 
 
 
@@ -116,7 +116,7 @@
 
 - 결제하기 버튼 클릭 -> 결제 완료  -> 주문상세 페이지로 이동
 
- ![주문상세보기](./picture/nav6.png)
+ ![주문상세보기](./picture/nav6.PNG)
 
 #### 주문 상세정보
 
