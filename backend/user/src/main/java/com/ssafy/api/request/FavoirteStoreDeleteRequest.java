@@ -7,12 +7,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel("FavoriteRegisterPostReq")
-public class FavoriteRegisterPostReq {
-
-    @ApiModelProperty(name = "유저ID")
-    String userId;
-    @ApiModelProperty(name = "가게ID")
+@ApiModel("FavoirteStoreDeleteRequest")
+public class FavoirteStoreDeleteRequest {
+    @ApiModelProperty("가게 아이디")
     String storeId;
-
 }
