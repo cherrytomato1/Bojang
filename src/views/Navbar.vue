@@ -4,54 +4,53 @@
     pa-0
   >
     <v-app-bar
-      color="vll accent-4"
+      color="color2 accent-4"
       height="65px"
     >
-      <!-- <div> -->
-      <!-- 로고 버튼으로 만듬(누르면 홈화면으로 이동하기 위해서) -->
-      <button class="pa-6">
-        <img
-          src="@/assets/logo.png"
-          style="width: 60px"
+      <button
+        class="pa-6"
+      >
+        <router-link
+          :to="{ name: 'Mainpage'}"
         >
+          <img
+            src="@/assets/logo.png"
+            style="width: 60px"
+          >
+        </router-link>
       </button>
-
       <v-toolbar-title>
         <h2>보 장</h2>
       </v-toolbar-title>
       <v-spacer />
-
-      <!-- <v-btn
-        text
-        @click="$router.push({name:'OrderList'})" -->
-      <!-- 라우팅 방법들 -->
       <router-link
-        :to="{ name: 'OrderList'}"
+        :to="{ name: 'OrderCheck'}"
         class="pa-5"
       >
-        고객님
+        마이페이지
       </router-link>
       <router-link
-        :to="{ name: 'UserInformationModify'}"
+        :to="{ name: 'FrequentStoreManage'}"
         class="pa-5"
       >
-        회원정보 테스트
+        단골가게
       </router-link>
-      <!-- <router :to="{ name: 'OrderList'}" exact> -->
-
-      <!-- </v-btn> -->
-
-      <button>
-        <!-- <router-link
-            :to="{ name: 'Login'}"
-          > -->
-        <img src="@/assets/kakao_login_medium.png">
-        <!-- </router-link> -->
-      </button>
+      <router-link
+        :to="{ name: 'Basket'}"
+        class="pa-5"
+      >
+        장바구니
+      </router-link>
+      <router-link
+        :to="{ name: 'InitPage'}"
+        class="pa-5"
+      >
+        로그아웃
+      </router-link>
     </v-app-bar>
     <v-card>
       <v-tabs
-        background-color="indigo"
+        background-color="color1"
         center-active
       >
         <v-tab>방이시장</v-tab>

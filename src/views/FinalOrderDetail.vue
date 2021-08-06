@@ -1,21 +1,22 @@
 <template>
-  <div class="color3">
+  <div>
     <Navbar />
     <v-container>
-      <OrderPayment />
+      <OrderDetail />
     </v-container>
   </div>
 </template>
 
 <script>
 import Navbar from '@/views/Navbar';
-import OrderPayment from '@/components/payment/OrderPayment.vue';
+
+import OrderDetail from '@/components/payment/OrderDetail.vue';
 
 export default {
-  name: 'Payment',
+  name: 'FinalOrderDetail',
 
   components: {
-    OrderPayment,
+    OrderDetail,
     Navbar,
   },
 }

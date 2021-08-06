@@ -1,5 +1,7 @@
 <template>
-  <v-app>
+  <v-app
+    class="pa-2 color1"
+  >
     <v-container>
       <v-row>
         <v-col
@@ -51,11 +53,14 @@
     <!-- outlined 적용이 잘 안되는데 다시 적용해보기 -->
     <v-container>
       <v-row>
+        <!-- <v-list-item> -->
         <v-col
           cols="4"
         >
           <!-- 주문 날짜 불러오기 -->
-          <v-text>2021.07.23 주문</v-text>
+          <v-text>
+            2021.07.23 주문
+          </v-text>
         </v-col>
         <v-col
           cols="2"
@@ -63,8 +68,7 @@
           <v-row
             row="2"
           >
-            <!-- 주문 날짜 불러오기 -->
-            <v-text>싸피시장</v-text>
+            <p>싸피시장</p>
           </v-row>
         </v-col>
 
@@ -91,6 +95,7 @@
             결제 취소
           </v-btn>
         </v-col>
+        <!-- </v-list-item> -->
       </v-row>
     </v-container>
     <v-form>
@@ -101,7 +106,7 @@
           >
             <!-- size mx-auto가 안되네 추후 설정 -->
             <img
-              src="@/assets/logo.png"
+              src="@/assets/fish_store.png"
               alt="가게 사진"
               style="width:60px"
             >
@@ -112,24 +117,24 @@
           >
             <!-- 입력한 필드가 아닌 데이터를 가져와야됨 변경필요 -->
             <v-text>
-              가게이름<br>
-              제품 명<br>
-              수량: 1 <br>
+              민기네 수산<br>
+              고등어<br>
+              수량: 13 <br>
             </v-text>
           </v-col>
           <v-col
             cols="2"
           >
             <v-text>
-              개당 가격<br>
-              주문 일자<br>
+              2000원<br>
+              2021.07.23<br>
             </v-text>
           </v-col>
           <v-col
             cols="4"
           >
             <v-text>
-              요청사항<br>
+              요청사항 : 고등어 손질 부탁드려요!<br>
             </v-text>
           </v-col>
         </v-row>
@@ -141,7 +146,7 @@
           >
             <!-- size mx-auto가 안되네 추후 설정 -->
             <img
-              src="@/assets/logo.png"
+              src="@/assets/fruit.png"
               alt="가게 사진"
               style="width:60px"
             >
@@ -152,8 +157,8 @@
           >
             <!-- 입력한 필드가 아닌 데이터를 가져와야됨 변경필요 -->
             <v-text>
-              가게이름<br>
-              제품 명<br>
+              수민이네 과일<br>
+              사과<br>
               수량: 1 <br>
             </v-text>
           </v-col>
@@ -161,15 +166,15 @@
             cols="2"
           >
             <v-text>
-              개당 가격<br>
-              주문 일자<br>
+              5000원<br>
+              2021.07.23<br>
             </v-text>
           </v-col>
           <v-col
             cols="4"
           >
             <v-text>
-              요청사항<br>
+              요청사항 : 많이 주세요<br>
             </v-text>
           </v-col>
         </v-row>
@@ -180,8 +185,11 @@
         cols="12"
         offset="9"
       >
+        <br>
+        <br>
         <v-btn
           color="success"
+          to="/finalorderdetail"
         >
           주문 상세보기
         </v-btn>
@@ -198,5 +206,21 @@ export default {
 </script>
 
 <style>
-
+.color1{
+  background-color: #cff0da !important;
+}
+.color2{
+  background-color: #88dba3 !important;
+}
+.color3{
+  background-color: #dadbdb !important;
+}
+.color4{
+  background-color: #3ac569 !important;
+}
+#app{
+  font-family: 'Stylish', sans-serif;
+  font-family: 'Jua', sans-serif;
+  font-family: 'Yeon Sung', cursive;
+}
 </style>

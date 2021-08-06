@@ -54,7 +54,7 @@
                 >
                   <!-- size mx-auto가 안되네 추후 설정 -->
                   <img
-                    src="@/assets/logo.png"
+                    src="@/assets/fish1.png"
                     alt="가게 사진"
                     style="width:60px"
                   >
@@ -70,7 +70,7 @@
                   offset="4"
                 >
                   <br>
-                  <v-text> 1 </v-text>
+                  <v-text> 13 </v-text>
                 </v-col>
                 <v-col
                   cols="2"
@@ -180,6 +180,7 @@
             <br>
             <v-btn
               color="light-blue"
+              to="/ordercheck"
             >
               <v-text> 주문 목록 돌아가기</v-text>
             </v-btn>

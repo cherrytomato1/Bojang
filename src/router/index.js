@@ -4,16 +4,16 @@ import Mainpage from '@/views/Mainpage'
 import StoreDetail from '@/views/StoreDetail'
 import InitPage from '@/views/InitPage'
 
-import OrderList from '@/components/mypage/OrderList'
-import UserInformationModify from '@/components/mypage/UserInformationModify'
-import FrequentStore from '@/components/mypage/FrequentStore'
-import StoreInformationModify from '@/components/mypage/StoreInformationModify'
+import Basket from '@/views/Basket'
+import OrderCheck from '@/views/OrderCheck'
+import UserMypage from '@/views/UserMypage'
+import FrequentStoreManage from '@/views/FrequentStoreManage'
+import Payment from '@/views/Payment'
+import FinalOrderDetail from '@/views/FinalOrderDetail'
 
-// import Home from '@/views/home/components/Home'
-// import Login from '@/views/home/components/Login'
-// import OauthHandler from '@/views/home/components/OauthHandler'
-// import NotFound from '@/views/error/NotFound'
-// import {createWebHistory, createRouter} from 'vue-router';
+import StoreInformationModify from '@/components/mypage/StoreInformationModify'
+import OrderPayment from '@/components/payment/OrderPayment'
+
 
 ``
 Vue.use(VueRouter)
@@ -35,53 +35,46 @@ const routes = [
     component: StoreDetail
   },
   {
-    path: '/orderlist',
-    name: 'OrderList',
-    component: OrderList
+    path: '/ordercheck',
+    name: 'OrderCheck',
+    component: OrderCheck
   },
   {
-    path: '/mypage/userinformationmodify',
-    name: 'UserInformationModify',
-    component: UserInformationModify
+    path: '/basket',
+    name: 'Basket',
+    component: Basket
   },
   {
-    path: '/mypage/frequentstore',
-    name: 'FrequentStore',
-    component: FrequentStore
+    path: '/frequentstoremanage',
+    name: 'FrequentStoreManage',
+    component: FrequentStoreManage
   },
   {
     path: '/mypage/storeinformationmodify',
     name: 'StoreInformationModify',
     component: StoreInformationModify
   },
-//   {
-//     path: '/',
-//     redirect: '/home'
-// },
-// {
-//     path: '/home',
-//     name: 'Home',
-//     component: Home
-//     // component: () => import('@/views/home/components/Home'),
-// },
-// {
-//     path: '/login',
-//     name: 'Login',
-//     component: Login
-//     // component: () => import('@/views/home/components/Login')
-// },
-// {
-//     path: '/oauth2/redirect',
-//     name: 'OauthHandler',
-//     component: OauthHandler
-//     // component: () => import('@/views/home/components/OauthHandler'),
-// },
-// {
-//     path: "/:catchAll(.*)",
-//     name: 'NotFound',
-//     component: NotFound
-//     // component: () => import('@/views/error/NotFound')
-// }
+  {
+    path: '/usermypage',
+    name: 'UserMypage',
+    component: UserMypage
+  },
+  {
+    path: '/orderpayment',
+    name: 'OrderPayment',
+    component: OrderPayment
+  },
+  {
+    path: '/payment',
+    name: 'Payment',
+    component: Payment
+  },
+  {
+    path: '/finalorderdetail',
+    name: 'FinalOrderDetail',
+    component: FinalOrderDetail
+  },
+
 ]
 
 const router = new VueRouter({
