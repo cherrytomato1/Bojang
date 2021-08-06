@@ -15,3 +15,7 @@
 ## Server
 
 - [Auth Server](./auth/README.md)
+
+## Structure
+![img_1.png](img_1.png)
+- MariaDB ERD
