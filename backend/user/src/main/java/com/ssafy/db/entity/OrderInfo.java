@@ -8,12 +8,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
-public class OrderList {
+public class OrderInfo {
 
     @Id
     @GenericGenerator(name="Id",strategy = "com.ssafy.db.util.OrderIdGenerator")
@@ -35,6 +37,14 @@ public class OrderList {
     @ManyToOne
     private User user;
 
+    @OneToMany(mappedBy = "orderInfo",cascade = CascadeType.ALL)
+    private List<OrderItem> orderItemList = new ArrayList<>();
+
+
+    public void addOrderItem(OrderItem orderItem){
+        orderItemList.add(orderItem);
+        orderItem.setOrderInfo(this);
+    }
 
 
 

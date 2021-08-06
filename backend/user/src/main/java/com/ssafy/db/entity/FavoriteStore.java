@@ -20,4 +20,6 @@ public class FavoriteStore {
 
     @ManyToOne
     private Store store;
+
+
 }

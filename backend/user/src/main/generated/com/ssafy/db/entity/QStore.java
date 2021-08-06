@@ -30,6 +30,8 @@ public class QStore extends EntityPathBase<Store> {
 
     public final StringPath image = createString("image");
 
+    public final ListPath<Item, QItem> itemList = this.<Item, QItem>createList("itemList", Item.class, QItem.class, PathInits.DIRECT2);
+
     public final QMarket market;
 
     public final StringPath name = createString("name");

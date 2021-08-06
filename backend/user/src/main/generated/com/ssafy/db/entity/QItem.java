@@ -34,11 +34,11 @@ public class QItem extends EntityPathBase<Item> {
 
     public final BooleanPath onSale = createBoolean("onSale");
 
-    public final QPrice price;
+    public final NumberPath<Long> price = createNumber("price", Long.class);
 
     public final DateTimePath<java.time.LocalDateTime> registerTime = createDateTime("registerTime", java.time.LocalDateTime.class);
 
-    public final QStore storeId;
+    public final QStore store;
 
     public QItem(String variable) {
         this(Item.class, forVariable(variable), INITS);
@@ -59,8 +59,7 @@ public class QItem extends EntityPathBase<Item> {
     public QItem(Class<? extends Item> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.itemType = inits.isInitialized("itemType") ? new QItemType(forProperty("itemType")) : null;
-        this.price = inits.isInitialized("price") ? new QPrice(forProperty("price")) : null;
-        this.storeId = inits.isInitialized("storeId") ? new QStore(forProperty("storeId"), inits.get("storeId")) : null;
+        this.store = inits.isInitialized("store") ? new QStore(forProperty("store"), inits.get("store")) : null;
     }
 
 }

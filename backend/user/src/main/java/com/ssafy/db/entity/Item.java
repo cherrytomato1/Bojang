@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class Item {
 
     @Id
-    @GenericGenerator(name="Id",strategy = "com.ssafy.db.util.IdGenerator")
+    @GenericGenerator(name = "Id", strategy = "com.ssafy.db.util.IdGenerator")
     @GeneratedValue(generator = "Id")
     private String id;
 
@@ -32,12 +32,11 @@ public class Item {
     @Column(name = "on_sale")
     private boolean onSale;
 
+    private Long price;
+
     @CreatedDate
     @Column(name = "register_time")
     private LocalDateTime registerTime;
-
-    @ManyToOne
-    private Price price;
 
 
     @ManyToOne
@@ -45,7 +44,7 @@ public class Item {
 
 
     @ManyToOne
-    private Store storeId;
+    private Store store;
 
 
 }

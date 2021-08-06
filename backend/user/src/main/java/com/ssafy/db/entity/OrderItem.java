@@ -17,7 +17,7 @@ public class OrderItem {
     private String id;
 
     @ManyToOne
-    private OrderList order;
+    private OrderInfo orderInfo;
 
     @ManyToOne
     private Item item;
@@ -31,9 +31,9 @@ public class OrderItem {
     @Column(name = "pickStatus")
     private boolean pickStatus;
 
-    public static OrderItem of (OrderList order, Item item){
+    public static OrderItem of (OrderInfo order, Item item){
         OrderItem orderItem = new OrderItem();
-        orderItem.setOrder(order);
+        orderItem.setOrderInfo(order);
         orderItem.setItem(item);
         return orderItem;
     }

@@ -30,7 +30,7 @@ public class QOrderItem extends EntityPathBase<OrderItem> {
 
     public final QItem item;
 
-    public final QOrderList order;
+    public final QOrderInfo orderInfo;
 
     public final BooleanPath pickStatus = createBoolean("pickStatus");
 
@@ -53,7 +53,7 @@ public class QOrderItem extends EntityPathBase<OrderItem> {
     public QOrderItem(Class<? extends OrderItem> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.item = inits.isInitialized("item") ? new QItem(forProperty("item"), inits.get("item")) : null;
-        this.order = inits.isInitialized("order") ? new QOrderList(forProperty("order"), inits.get("order")) : null;
+        this.orderInfo = inits.isInitialized("orderInfo") ? new QOrderInfo(forProperty("orderInfo"), inits.get("orderInfo")) : null;
     }
 
 }

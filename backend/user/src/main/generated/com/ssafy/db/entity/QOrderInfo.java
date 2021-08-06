@@ -11,18 +11,20 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QOrderList is a Querydsl query type for OrderList
+ * QOrderInfo is a Querydsl query type for OrderInfo
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QOrderList extends EntityPathBase<OrderList> {
+public class QOrderInfo extends EntityPathBase<OrderInfo> {
 
-    private static final long serialVersionUID = -19827830L;
+    private static final long serialVersionUID = -19912806L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QOrderList orderList = new QOrderList("orderList");
+    public static final QOrderInfo orderInfo = new QOrderInfo("orderInfo");
 
     public final StringPath id = createString("id");
+
+    public final ListPath<OrderItem, QOrderItem> orderItemList = this.<OrderItem, QOrderItem>createList("orderItemList", OrderItem.class, QOrderItem.class, PathInits.DIRECT2);
 
     public final QOrderStatus orderStatus;
 
@@ -34,23 +36,23 @@ public class QOrderList extends EntityPathBase<OrderList> {
 
     public final QUser user;
 
-    public QOrderList(String variable) {
-        this(OrderList.class, forVariable(variable), INITS);
+    public QOrderInfo(String variable) {
+        this(OrderInfo.class, forVariable(variable), INITS);
     }
 
-    public QOrderList(Path<? extends OrderList> path) {
+    public QOrderInfo(Path<? extends OrderInfo> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QOrderList(PathMetadata metadata) {
+    public QOrderInfo(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QOrderList(PathMetadata metadata, PathInits inits) {
-        this(OrderList.class, metadata, inits);
+    public QOrderInfo(PathMetadata metadata, PathInits inits) {
+        this(OrderInfo.class, metadata, inits);
     }
 
-    public QOrderList(Class<? extends OrderList> type, PathMetadata metadata, PathInits inits) {
+    public QOrderInfo(Class<? extends OrderInfo> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.orderStatus = inits.isInitialized("orderStatus") ? new QOrderStatus(forProperty("orderStatus")) : null;
         this.payType = inits.isInitialized("payType") ? new QPayType(forProperty("payType")) : null;

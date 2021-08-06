@@ -3,9 +3,12 @@ package com.ssafy.db.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.checkerframework.checker.units.qual.C;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -38,4 +41,14 @@ public class Store {
 
 	@ManyToOne
 	private StoreType storeType;
+
+
+	@OneToMany(mappedBy = "store",cascade = CascadeType.ALL)
+	private List<Item> itemList = new ArrayList<>();
+
+	public void addItem(Item item){
+		itemList.add(item);
+		item.setStore(this);
+	}
+
 }

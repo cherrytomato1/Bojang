@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 @Getter @Setter
@@ -15,4 +16,6 @@ public class BankType {
 
 	@Column(name = "name")
 	private String name;
+
+
 }

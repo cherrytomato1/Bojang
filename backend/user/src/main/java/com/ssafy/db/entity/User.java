@@ -7,6 +7,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,31 +21,36 @@ public class User {
     @Id
     @GenericGenerator(name="userId",strategy = "com.ssafy.db.util.IdGenerator")
     @GeneratedValue(generator = "userId")
-    String id;
+    private String id;
 
     @Column(name = "name", nullable = false, length = 10)
-    String name;
-
-    @Column(name = "zip_code", length = 5)
-    Integer zipCode;
-
-    @Column(name = "address", length = 200)
-    String address;
-
-    @Column(name = "address_detail", length = 200)
-    String addressDetail;
+    private String name;
 
     @Column(name = "account_number", length = 200)
-    String accountNumber;
+    private String accountNumber;
 
     //	@Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
-    LocalDateTime registerTime;
+    private LocalDateTime registerTime;
 
     @ManyToOne
-    BankType bankType;
+    private BankType bankType;
 
     @ManyToOne
-    UserType userType;
+    private UserType userType;
+
+    @ManyToOne
+    private Market market;
+
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<OrderInfo> orderInfoList = new ArrayList<>();
+
+    public void addOrderInfo(OrderInfo orderInfo){
+        orderInfoList.add(orderInfo);
+        orderInfo.setUser(this);
+    }
+
+
 
 }
