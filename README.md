@@ -14,7 +14,7 @@
 <br/>
 ### 네비게이션 바
 
-### ![주문내역](C:\Users\multicampus\Desktop\8team_PJT\S05P12A508\리드미 작성\주문내역.PNG)
+### ![주문내역](./picture/nav1.png)
 
 
 
@@ -54,7 +54,7 @@
 
 
 
-![회원정보수정](C:\Users\multicampus\Desktop\8team_PJT\S05P12A508\리드미 작성\회원정보수정.PNG)
+![회원정보수정](./picture/nav2.png)
 
 ### 회원정보 수정
 
@@ -68,7 +68,7 @@
 
     
 
-![단골가게](C:\Users\multicampus\Desktop\8team_PJT\S05P12A508\리드미 작성\단골가게.PNG)
+![단골가게](./picture/nav3.png)
 
 ### 단골가게 관리
 
@@ -85,7 +85,8 @@
 
 ### 결제 프로세스
 
-![장바구니](C:\Users\multicampus\Desktop\8team_PJT\S05P12A508\리드미 작성\장바구니.PNG)
+![장바구니](./picture/nav4.png)
+
 
 #### 장바구니
 
@@ -99,7 +100,7 @@
 
 
 
-![주문 결제](C:\Users\multicampus\Desktop\8team_PJT\S05P12A508\리드미 작성\주문 결제.PNG)
+![주문 결제](./picture/nav5.png)
 
 
 
@@ -115,7 +116,7 @@
 
 - 결제하기 버튼 클릭 -> 결제 완료  -> 주문상세 페이지로 이동
 
- ![주문상세보기](C:\Users\multicampus\Desktop\8team_PJT\S05P12A508\리드미 작성\주문상세보기.PNG)
+ ![주문상세보기](./picture/nav6.png)
 
 #### 주문 상세정보
 
