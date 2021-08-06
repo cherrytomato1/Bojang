@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <v-app class="color5">
     <Navbar />
     <v-container>
       <ShoppingBasket />
       <!-- <OrderPayment />
       <OrderDetail /> -->
     </v-container>
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -28,5 +28,19 @@ export default {
 </script>
 
 <style>
-
+.color1{
+  background-color: #cff0da !important;
+}
+.color2{
+  background-color: #88dba3 !important;
+}
+.color3{
+  background-color: #dadbdb !important;
+}
+.color4{
+  background-color: #3ac569 !important;
+}
+.color5{
+  background-color: #fFFFF3 !important;
+}
 </style>

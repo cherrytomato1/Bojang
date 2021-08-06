@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-app class="color5">
     <Navbar />
     <v-container>
       <v-row>
@@ -15,7 +15,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </div>
+  </v-app>
 </template>
 
 <style scoped>

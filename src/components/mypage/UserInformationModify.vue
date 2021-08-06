@@ -1,5 +1,5 @@
 <template>
-  <v-main>
+  <v-app class="color5">
     <v-container>
       <h1>
         회원 정보 수정
@@ -46,7 +46,7 @@
         </v-row>
       </v-form>
     </v-container>
-  </v-main>
+  </v-app>
 </template>
 
 <script>
@@ -56,5 +56,19 @@ export default {
 </script>
 
 <style>
-
+.color1{
+  background-color: #cff0da !important;
+}
+.color2{
+  background-color: #88dba3 !important;
+}
+.color3{
+  background-color: #dadbdb !important;
+}
+.color4{
+  background-color: #3ac569 !important;
+}
+.color5{
+  background-color: #fFFFF3 !important;
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
   <!-- checkedStore를 가운데 배치. 가게번호 -1,+1을 양쪽에 배치. -->
   <div
-    class="color1 container"
+    class="color5 container"
   >
     <v-sheet
       class="mx-auto"

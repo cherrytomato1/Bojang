@@ -1,6 +1,6 @@
 <template>
   <v-app
-    class="pa-2 color1"
+    class="pa-2 color5"
   >
     <v-container>
       <v-row>

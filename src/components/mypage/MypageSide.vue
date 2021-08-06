@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="color5">
     <v-container>
       <!-- <v-container class="justify-content-center align-item-center"> -->
       <span>

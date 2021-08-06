@@ -28,6 +28,9 @@ export default {
 .color4{
   background-color: #3ac569 !important;
 }
+.color5{
+  background-color: #fFFFF3 !important;
+}
 #app{
   font-family: 'Stylish', sans-serif;
   font-family: 'Jua', sans-serif;

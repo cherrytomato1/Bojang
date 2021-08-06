@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <v-app class="color5">
     <Navbar />
     <v-container>
       <OrderDetail />
     </v-container>
-  </div>
+  </v-app>
 </template>
 
 <script>

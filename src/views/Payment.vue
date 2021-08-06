@@ -1,5 +1,5 @@
 <template>
-  <div class="color3">
+  <div class="color5">
     <Navbar />
     <v-container>
       <OrderPayment />

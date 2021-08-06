@@ -1,5 +1,5 @@
 <template>
-  <v-app class="color1">
+  <v-app class="color5">
     <v-container>
       <!-- grid로 조절했는데 아직 한줄로 안됨 조절해보기-->
       <v-row>

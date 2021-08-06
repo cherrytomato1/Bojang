@@ -1,5 +1,5 @@
 <template>
-  <div class="color1">
+  <div class="color5">
     <Navbar />
     <v-container>
       <v-row>

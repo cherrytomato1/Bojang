@@ -1,10 +1,10 @@
 <template>
-  <div class="color1">
+  <v-app class="color5">
     <Navbar />
     <StoreMap />
     <!-- <RecommendStore /> -->
     <SelectStore />
-  </div>
+  </v-app>
 </template>
 
 <style scoped>
