@@ -1,0 +1,50 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 140869874402-r66ginn10qsd0hn7d473g2mabsm63vdv.apps.googleusercontent.com
+            redirect-uri: "{baseUrl}/oauth2/callback/{registrationId}"
+            client-secret: l59nHML1uf8nty9Scb2HzI0N
+            scope:
+              - email
+              - profile
+          kakao:
+            client-id: da987b589f4e73f15a6e43d3f7f0efbd
+            redirect-uri: "{baseUrl}/oauth2/callback/{registrationId}"
+            authorization-grant-type: authorization_code
+            client-secret: HNQGszRSGjiAbkCXVEOprShd14N5X2ia
+            scope:
+              - profile_nickname
+              - profile_image
+#           client authentication
+            client-authentication-method: POST
+#            client-name: Kakao
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
+#  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/testDB?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+#    username: root
+#    password: x
+#
+#  jpa:
+#    hibernate.ddl-auto: update
+#    generate-ddl: true
+#    show-sql: true
+
+server:
+  port: 8080
+
+app:
+  tokenSecret: TERECMINKI2532MINKIMINKI253TEREC
+  tokenExpirationMsec: 7200
+  authorizedRedirectUris:
+#    redirect front-end url
+    - http://localhost:8081/oauth2/redirect
