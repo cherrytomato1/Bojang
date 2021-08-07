@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public interface OrderListRepository extends JpaRepository<OrderInfo,String> {
+public interface OrderInfoRepository extends JpaRepository<OrderInfo,String> {
     List<OrderInfo> findByUser(User user);
 
     List<OrderInfo> findByRegisterTimeBetween(LocalDateTime start, LocalDateTime end);

@@ -19,23 +19,23 @@ class OrderInfoRepositoryTest {
     UserRepository userRepository;
 
     @Autowired
-    OrderListRepository orderListRepository;
+    OrderInfoRepository orderInfoRepository;
 
 
     // 사용자의 전체 주문 리스트
     @Test
     public void getOrderList() {
         User user = userRepository.findById("S99b735248a08").get();
-        List<OrderInfo> list = orderListRepository.findByUser(user);
+        List<OrderInfo> list = orderInfoRepository.findByUser(user);
         System.out.println(list.size());
     }
 
     // 사용자의 주문 리스트 1개
     @Test
     public void test() {
-        OrderInfo orderInfo = orderListRepository.findById("S5121721f5efd").get();
+        OrderInfo orderInfo = orderInfoRepository.findById("S5121721f5efd").get();
         orderInfo.setRegisterTime(LocalDateTime.of(2020, 5, 5, 3, 1));
-        orderListRepository.save(orderInfo);
+        orderInfoRepository.save(orderInfo);
     }
 
     // 주문 리스트 저장
@@ -45,7 +45,7 @@ class OrderInfoRepositoryTest {
         OrderInfo orderInfo = new OrderInfo();
         orderInfo.setUser(user);
         orderInfo.setPrice(30000);
-        orderListRepository.save(orderInfo);
+        orderInfoRepository.save(orderInfo);
     }
 
     //주문 리스트 6개월
@@ -54,7 +54,7 @@ class OrderInfoRepositoryTest {
         User user = userRepository.findById("S99b735248a08").get();
         LocalDateTime endDatetime = LocalDateTime.now();
         LocalDateTime startDatetime = endDatetime.minusMonths(6);
-        List<OrderInfo> list = orderListRepository.findByRegisterTimeBetweenAndUser(startDatetime, endDatetime, user);
+        List<OrderInfo> list = orderInfoRepository.findByRegisterTimeBetweenAndUser(startDatetime, endDatetime, user);
         System.out.println(list.size());
     }
 
@@ -65,7 +65,7 @@ class OrderInfoRepositoryTest {
         int year = 2020;
         LocalDateTime start = LocalDateTime.of(year, 1, 1, 0, 0, 0);
         LocalDateTime end = LocalDateTime.of(year, 12, 31, 23, 59, 59);
-        List<OrderInfo> list = orderListRepository.findByRegisterTimeBetweenAndUser(start, end, user);
+        List<OrderInfo> list = orderInfoRepository.findByRegisterTimeBetweenAndUser(start, end, user);
         System.out.println(list.size());
     }
 
