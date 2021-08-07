@@ -18,8 +18,8 @@ import java.util.List;
 public class OrderInfo {
 
     @Id
-    @GenericGenerator(name="Id",strategy = "com.ssafy.db.util.OrderIdGenerator")
-    @GeneratedValue(generator = "Id")
+    @GenericGenerator(name="orderId",strategy = "com.ssafy.db.util.OrderIdGenerator")
+    @GeneratedValue(generator = "orderId")
     private String id;
 
     @CreatedDate
