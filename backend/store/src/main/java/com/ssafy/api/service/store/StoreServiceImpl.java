@@ -52,6 +52,16 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    public Store getStoreInfo(String storeId) {
+        Optional<Store> storeOptional = storeRepositiory.findById(storeId);
+        if (storeOptional.isPresent()) {
+            Store store = storeOptional.get();
+            return store;
+        }
+        return null;
+    }
+
+    @Override
     public String getStoreId(String userId) {
         Optional<Store> storeOptional = storeRepositiory.findByUser_Id(userId);
         if (storeOptional.isPresent()) {

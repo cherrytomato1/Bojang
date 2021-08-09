@@ -1,5 +1,6 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.request.store.StoreCategoryGetRequest;
 import com.ssafy.api.response.store.StoreGetResponse;
 import com.ssafy.api.response.store.StoreListGetResponse;
 import com.ssafy.api.response.store.StorePostResponse;
@@ -30,6 +31,19 @@ public class StoreController {
             return ResponseEntity.ok(StoreGetResponse.of(HttpStatus.OK.value(), "Success", storeService.getStore(userId)));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(404).body(StoreGetResponse.of(404, "가게 정보 조회 실패", null));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BaseResponseBody.of(HttpStatus.INTERNAL_SERVER_ERROR.value(), "조회 실패"));
+        }
+    }
+
+    @GetMapping("/{storeId}")
+    public ResponseEntity<?> getStoreInfo(String storeId) {
+        try {
+            return ResponseEntity.ok(StoreGetResponse.of(200, "Success", storeService.getStoreInfo(storeId)));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(404).body(StoreGetResponse.of(404, "가게 정보 조회 실패", null));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BaseResponseBody.of(HttpStatus.INTERNAL_SERVER_ERROR.value(), "조회 실패"));
         }
     }
 
@@ -67,7 +81,16 @@ public class StoreController {
         }
     }
 
-
+    @GetMapping("/category")
+    public ResponseEntity<?> getStoreType(StoreCategoryGetRequest request) {
+        try {
+            return ResponseEntity.ok(StoreListGetResponse.of(200, "Success", storeService.getStoreTypeList(request.getMarketId(), request.getStoreTypeId())));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(404).body(StoreGetResponse.of(404, "가게 정보 조회 실패", null));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BaseResponseBody.of(HttpStatus.INTERNAL_SERVER_ERROR.value(), "조회 실패"));
+        }
+    }
 
 
 }

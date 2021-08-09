@@ -11,6 +11,8 @@ public interface StoreService {
 
     Store getStore(String userId);
 
+    Store getStoreInfo(String storeId);
+
     String getStoreId(String userId);
 
     List<Item> getStoreItemList(String storeId);
