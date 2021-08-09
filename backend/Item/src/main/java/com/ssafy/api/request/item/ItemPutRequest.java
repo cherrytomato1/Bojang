@@ -18,7 +18,9 @@ public class ItemPutRequest {
 	@ApiModelProperty(name = "상품 가격", example = "10000")
 	Long price;
 
-	@ApiModelProperty(name = "상품 종류", example = "1")
+	@ApiModelProperty(name = "상품 종류", required = true, example = "1")
 	Long itemType;
+
+
 
 }

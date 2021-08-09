@@ -8,13 +8,16 @@ import com.ssafy.api.service.item.ItemService;
 import com.ssafy.api.service.store.StoreService;
 import com.ssafy.common.exception.handler.AuthException;
 import com.ssafy.common.exception.handler.ResourceNotFoundException;
+import com.ssafy.common.exception.handler.RestTemplateException;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.common.util.RestUtil;
 import com.ssafy.db.entity.Item;
 import com.ssafy.db.entity.Store;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/api/item")
@@ -33,15 +37,55 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ItemController {
 
-	RestUtil restUtil;
+	final RestUtil restUtil;
 
-	ItemService itemService;
+	final ItemService itemService;
 
-	StoreService storeService;
+	final StoreService storeService;
 
 	@PutMapping("/{storeId}")
 	public ResponseEntity<? super ItemPutResponse> putItem(
-		@RequestHeader("Authorization") String token, @RequestBody ItemPutRequest itemPutRequest,
+		@ApiIgnore @RequestHeader("Authorization") String token, @RequestBody ItemPutRequest itemPutRequest,
+		@PathVariable("storeId") String storeId) {
+		try {
+			String userId = restUtil.getUserId(token);
+//			Store targetStore = storeService.getStoreByUserId(userId);
+			Store targetStore = restUtil.getStoreByStoreId(storeId);
+
+			storeService.validateStoreId(storeId, targetStore);
+			itemService.putItemInStore(itemPutRequest, targetStore);
+		} catch (AuthException ex) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+				       .body(ItemPutResponse.of(401, ex.getMessage()));
+		} catch (ResourceNotFoundException | RestTemplateException ex) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+				       .body(ItemPutResponse.of(404, ex.getMessage()));
+		}
+		return ResponseEntity.status(HttpStatus.OK)
+			       .body(ItemPutResponse.of(200, "Success"));
+	}
+
+	@DeleteMapping("/{itemId}")
+	public ResponseEntity<? super ItemDeleteResponse> deleteItem(
+		@ApiIgnore @RequestHeader("Authorization") String token,
+		@PathVariable("itemId") String itemId) {
+		try {
+			restUtil.getUserId(token);
+			itemService.deleteItemByItemId(itemId);
+		} catch (AuthException ex) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+				       .body(ItemDeleteResponse.of(401, ex.getMessage()));
+		} catch (ResourceNotFoundException ex) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+				       .body(ItemDeleteResponse.of(404, ex.getMessage()));
+		}
+		return ResponseEntity.status(HttpStatus.OK)
+			       .body(ItemDeleteResponse.of(200, "Success"));
+	}
+
+	@PatchMapping("/{storeId}")
+	public ResponseEntity<? super ItemPutResponse> updateItem(
+		@ApiIgnore @RequestHeader("Authorization") String token, @RequestBody ItemPutRequest itemPutRequest,
 		@PathVariable("storeId") String storeId) {
 		try {
 			String userId = restUtil.getUserId(token);
@@ -60,47 +104,6 @@ public class ItemController {
 		return ResponseEntity.status(HttpStatus.OK)
 			       .body(ItemPutResponse.of(200, "Success"));
 	}
-
-	@DeleteMapping("/{itemId}")
-	public ResponseEntity<? super ItemDeleteResponse> deleteItem(
-		@RequestHeader("Authorization") String token,
-		@PathVariable("itemId") String itemId) {
-		try {
-			restUtil.getUserId(token);
-			itemService.deleteItemByItemId(itemId);
-		} catch (AuthException ex) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-				       .body(ItemDeleteResponse.of(401, ex.getMessage()));
-		} catch (ResourceNotFoundException ex) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-				       .body(ItemDeleteResponse.of(404, ex.getMessage()));
-		}
-		return ResponseEntity.status(HttpStatus.OK)
-			       .body(ItemDeleteResponse.of(200, "Success"));
-	}
-
-//	@PatchMapping("/{store-id}")
-//	public ResponseEntity<? super ItemPutResponse> putItem(
-//		@RequestHeader("Authorization") String token, @RequestBody ItemPutRequest itemPutRequest,
-//		@PathVariable("store-id") String storeId) {
-//		try {
-//			String userId = restUtil.getUserId(token);
-////			Store targetStore = storeService.getStoreByUserId(userId);
-//			Store targetStore = restUtil.getStoreByStoreId(storeId);
-//
-//			storeService.validateStoreId(storeId, targetStore);
-//			itemService.putItemInStore(itemPutRequest, targetStore);
-//		} catch (AuthException ex) {
-//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-//				       .body(ItemPutResponse.of(401, ex.getMessage()));
-//		} catch (ResourceNotFoundException ex) {
-//			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-//				       .body(ItemPutResponse.of(404, ex.getMessage()));
-//		}
-//		return ResponseEntity.status(HttpStatus.OK)
-//			       .body(ItemPutResponse.of(200, "Success"));
-//
-//	}
 
 	@GetMapping("/{storeId}")
 	public ResponseEntity<? super ItemListGetResponse> getItemList(
