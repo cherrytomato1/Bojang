@@ -72,7 +72,7 @@ public class UserController {
 			       .body(AuthUserProfileGetResponse.of(200, "Success", authUser));
 	}
 
-	@GetMapping("/info")
+	@GetMapping("/")
 	@PreAuthorize("hasRole('USER')")
 	@ApiOperation(value = "User 정보 반환", notes = "토큰 정보에 담긴 유저 반환", response =
 		                                                               UserGetResponse.class)
@@ -95,7 +95,7 @@ public class UserController {
 		return ResponseEntity.status(200).body(UserGetResponse.of(200, "Success", user));
 	}
 
-	@GetMapping("/userId")
+	@GetMapping("/id")
 	@PreAuthorize("hasRole('USER')")
 	@ApiOperation(value = "User ID 반환", notes = "토큰 정보에 담긴 유저 ID 반환", response =
 		                                                                  UserIdGetResponse.class)
@@ -119,10 +119,10 @@ public class UserController {
 		return ResponseEntity.status(200).body(UserIdGetResponse.of(200, "Success", userId));
 	}
 
-	@PostMapping("/validateId")
+	@PostMapping("/validate-id")
 	@PreAuthorize("hasRole('USER')")
 	@ApiOperation(value = "User ID 토큰 일치 여부 확인", notes = "토큰 정보에 담긴 유저 ID 반환", response =
-		                                                                  UserIdVaidateResponse.class)
+		                                                                           UserIdVaidateResponse.class)
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK"),
 		@ApiResponse(code = 400, message = "Bad Request"),
@@ -131,7 +131,8 @@ public class UserController {
 		@ApiResponse(code = 404, message = "Not Found")
 	})
 	public ResponseEntity<? super UserIdVaidateResponse> getUserId(
-		@ApiIgnore @CurrentUser UserPrincipal userPrincipal, @ApiParam(value = "일치 여부를 확인할 유저 ID") @RequestBody String userId) {
+		@ApiIgnore @CurrentUser UserPrincipal userPrincipal,
+		@ApiParam(value = "일치 여부를 확인할 유저 ID") @RequestBody String userId) {
 
 		String tokenUserId;
 		try {
@@ -148,7 +149,7 @@ public class UserController {
 	}
 
 
-	@PatchMapping("/updateUserType")
+	@PatchMapping("/type")
 	@PreAuthorize("hasRole('USER')")
 	@ApiOperation(value = "UserType 정보 Update", notes = "유저 Type 업데이트", response =
 		                                                                    UserUpdatePatchResponse.class)
@@ -178,7 +179,7 @@ public class UserController {
 			       .body(UserUpdatePatchResponse.of(200, "Success"));
 	}
 
-	@PatchMapping("/update")
+	@PatchMapping("/")
 	@PreAuthorize("hasRole('USER')")
 	@ApiOperation(value = "User 정보 Update", notes = "모든 유저정보를 업데이트, Request Body에 모든 정보 필요",
 		response =
@@ -209,7 +210,7 @@ public class UserController {
 			       .body(UserUpdatePatchResponse.of(200, "Success"));
 	}
 
-	@DeleteMapping("/delete")
+	@DeleteMapping("/")
 	@PreAuthorize("hasRole('USER')")
 	@ApiOperation(value = "User delete", notes = "토큰에 저장된 유저의 정보를 삭제/탈퇴한다. ", response =
 		                                                                          UserDeleteResponse.class)
