@@ -44,8 +44,8 @@ server:
   port: 8080
 
 app:
-  tokenSecret: MINKIMINKI2532MINKIMINKI2532MINK
-  tokenExpirationMsec: 864000000
+  tokenSecret: TERECMINKI2532MINKIMINKI253TEREC
+  tokenExpirationMsec: 7200
   authorizedRedirectUris:
 #    redirect target front uri
     - http://localhost:8081/oauth2/redirect
