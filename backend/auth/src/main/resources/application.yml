@@ -18,7 +18,7 @@ spring:
             scope:
               - profile_nickname
               - profile_image
-#           client authentication
+#           if method isn't POST return invalid_token_response
             client-authentication-method: POST
 #            client-name: Kakao
         provider:
@@ -26,6 +26,7 @@ spring:
             authorization-uri: https://kauth.kakao.com/oauth/authorize
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
+#           Use Kakao Id instead of name for UserDetails attribute
             user-name-attribute: id
 
 #  datasource:
@@ -46,5 +47,5 @@ app:
   tokenSecret: TERECMINKI2532MINKIMINKI253TEREC
   tokenExpirationMsec: 60480000
   authorizedRedirectUris:
-#    redirect front-end url
+#    redirect target front-end uri
     - http://localhost:8081/oauth2/redirect

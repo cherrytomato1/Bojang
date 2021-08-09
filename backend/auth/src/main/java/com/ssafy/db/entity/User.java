@@ -25,18 +25,6 @@ public class User {
 	@Column(name = "name", nullable = false, length = 15)
 	String name;
 
-	@Column(name = "zip_code", length = 5)
-	Integer zipCode;
-
-	@Column(name = "address", length = 200)
-	String address;
-
-	@Column(name = "address_detail", length = 200)
-	String addressDetail;
-
-	@Column(name = "account_number", length = 200)
-	String accountNumber;
-
 	//	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
 	LocalDateTime registerTime;
@@ -44,10 +32,19 @@ public class User {
 	@Column(name = "phone_number", length = 15)
 	String phoneNumber;
 
+	//판매자 전용
+	@Column(name = "account_number", length = 200)
+	String accountNumber;
+
+	//판매자 전용
 	@ManyToOne
 	BankType bankType;
 
 	@ManyToOne
 	UserType userType;
+
+	//픽업 매니저 전용
+	@ManyToOne
+	Market market;
 
 }
