@@ -4,5 +4,5 @@ import com.ssafy.db.entity.Item;
 import java.util.List;
 
 public interface ItemService {
-	List<Item> getItemList();
+	List<Item> getItemList(String storeId);
 }

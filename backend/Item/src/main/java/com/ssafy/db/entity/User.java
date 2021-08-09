@@ -18,39 +18,36 @@ import java.util.List;
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class User {
-    @Id
-    @GenericGenerator(name="userId",strategy = "com.ssafy.db.util.IdGenerator")
-    @GeneratedValue(generator = "userId")
-    private String id;
 
-    @Column(name = "name", nullable = false, length = 10)
-    private String name;
+	@Id
+	@GenericGenerator(name = "userId", strategy = "com.ssafy.db.util.IdGenerator")
+	@GeneratedValue(generator = "userId")
+	private String id;
 
-    @Column(name = "account_number", length = 200)
-    private String accountNumber;
+	@Column(name = "name", nullable = false, length = 10)
+	private String name;
 
-    //	@Temporal(TemporalType.TIMESTAMP)
-    @CreatedDate
-    private LocalDateTime registerTime;
+	@Column(name = "account_number", length = 200)
+	private String accountNumber;
 
-    @ManyToOne
-    private BankType bankType;
+	//	@Temporal(TemporalType.TIMESTAMP)
+	@CreatedDate
+	private LocalDateTime registerTime;
 
-    @ManyToOne
-    private UserType userType;
+	@ManyToOne
+	private BankType bankType;
 
-    @ManyToOne
-    private Market market;
+	@ManyToOne
+	private UserType userType;
 
+	@ManyToOne
+	private Market market;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private List<OrderInfo> orderInfoList = new ArrayList<>();
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<OrderInfo> orderInfoList = new ArrayList<>();
 
-    public void addOrderInfo(OrderInfo orderInfo){
-        orderInfoList.add(orderInfo);
-        orderInfo.setUser(this);
-    }
-
-
-
+	public void addOrderInfo(OrderInfo orderInfo) {
+		orderInfoList.add(orderInfo);
+		orderInfo.setUser(this);
+	}
 }
