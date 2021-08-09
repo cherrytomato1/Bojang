@@ -32,6 +32,9 @@ public class User {
 	@CreatedDate
 	LocalDateTime registerTime;
 
+	@Column(name = "phone_number", length = 15)
+	String phoneNumber;
+
 	//판매자 전용
 	@ManyToOne
 	BankType bankType;
