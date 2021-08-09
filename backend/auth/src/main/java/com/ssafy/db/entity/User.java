@@ -25,15 +25,6 @@ public class User {
 	@Column(name = "name", nullable = false, length = 15)
 	String name;
 
-	@Column(name = "zip_code", length = 5)
-	Integer zipCode;
-
-	@Column(name = "address", length = 200)
-	String address;
-
-	@Column(name = "address_detail", length = 200)
-	String addressDetail;
-
 	@Column(name = "account_number", length = 200)
 	String accountNumber;
 
@@ -41,10 +32,15 @@ public class User {
 	@CreatedDate
 	LocalDateTime registerTime;
 
+	//판매자 전용
 	@ManyToOne
 	BankType bankType;
 
 	@ManyToOne
 	UserType userType;
+
+	//픽업매니저 전용
+	@ManyToOne
+	Market market;
 
 }

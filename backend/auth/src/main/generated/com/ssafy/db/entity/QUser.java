@@ -24,10 +24,6 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath accountNumber = createString("accountNumber");
 
-    public final StringPath address = createString("address");
-
-    public final StringPath addressDetail = createString("addressDetail");
-
     public final QBankType bankType;
 
     public final StringPath id = createString("id");
@@ -37,8 +33,6 @@ public class QUser extends EntityPathBase<User> {
     public final DateTimePath<java.time.LocalDateTime> registerTime = createDateTime("registerTime", java.time.LocalDateTime.class);
 
     public final QUserType userType;
-
-    public final NumberPath<Integer> zipCode = createNumber("zipCode", Integer.class);
 
     public QUser(String variable) {
         this(User.class, forVariable(variable), INITS);
