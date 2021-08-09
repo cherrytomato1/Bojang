@@ -17,13 +17,19 @@ public interface StoreService {
 
     List<Store> searchStore(String storeName, Long marketId);
 
-    String storeImgUpload(MultipartFile file, String storeId);
+    String storeImgUpload(MultipartFile file, String userId);
 
     Store updateStore(StoreUpdatePatchRequest request);
 
     List<Store> getStoreTypeList(Long marketId, Long storeTypeId);
 
     List<Store> getMarketList(Long marketId);
+
+    Store updateComment(String userId,String comment);
+
+
+
+
 
 
 }

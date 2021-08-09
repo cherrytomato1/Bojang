@@ -79,18 +79,18 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public String storeImgUpload(MultipartFile file, String storeId) {
+    public String storeImgUpload(MultipartFile file, String userId) {
         UUID uuid = UUID.randomUUID();
         String fileName = uuid + "_" + StringUtils.cleanPath(file.getOriginalFilename());
         try {
             // 파일명에 부적합 문자가 있는지 확인한다.
             if (fileName.contains(".."))
                 throw new FileUploadException("파일명에 부적합 문자가 포함되어 있습니다. " + fileName);
-            Optional<Store> storeOptional = storeRepositiory.findById(storeId);
+            Optional<Store> storeOptional = storeRepositiory.findByUser_Id(userId);
             if (storeOptional.isPresent()) {
                 Path targetLocation = this.fileLocation.resolve(fileName);
                 Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-                Store store = storeRepositiory.findById(storeId).get();
+                Store store = storeOptional.get();
                 store.setImage(fileName);
                 storeRepositiory.save(store);
                 return fileName;
@@ -145,5 +145,14 @@ public class StoreServiceImpl implements StoreService {
         return storeRepositiory.findByMarket_Id(marketId);
     }
 
-
+    @Override
+    public Store updateComment(String userId, String comment) {
+        Optional<Store> storeOptional = storeRepositiory.findByUser_Id(userId);
+        if (storeOptional.isPresent()) {
+            Store store = storeOptional.get();
+            store.setComment(comment);
+            return storeRepositiory.save(store);
+        }
+        return null;
+    }
 }
