@@ -1,5 +1,7 @@
 package com.ssafy.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -12,6 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@Builder
 @EntityListeners(AuditingEntityListener.class)
 public class Item {
 
@@ -38,11 +41,10 @@ public class Item {
     @Column(name = "register_time")
     private LocalDateTime registerTime;
 
-
     @ManyToOne
     private ItemType itemType;
 
-
+    @JsonIgnore
     @ManyToOne
     private Store store;
 
