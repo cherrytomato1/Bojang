@@ -17,9 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
 
-	ItemRepository itemRepository;
+	final ItemRepository itemRepository;
 
-	ItemTypeRepository itemTypeRepository;
+	final ItemTypeRepository itemTypeRepository;
 
 	@Override
 	public List<Item> getItemListByStoreId(String storeId) {
@@ -30,10 +30,11 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public void putItemInStore(ItemPutRequest itemPutRequest, Store targetStore) {
 		ItemType itemType = getItemTypeByItemTypeId(itemPutRequest.getItemType());
+		Boolean onSale = itemPutRequest.getOnSale();
 		Item item = Item.builder().name(itemPutRequest.getName())
 			            .content(itemPutRequest.getContent())
 			            .itemType(itemType).onSale(true).price(itemPutRequest.getPrice())
-			            .store(targetStore).build();
+			            .store(targetStore).onSale(onSale == null ? false : onSale).build();
 		itemRepository.save(item);
 	}
 

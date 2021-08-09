@@ -4,6 +4,7 @@ import com.ssafy.common.exception.handler.AuthException;
 import com.ssafy.common.exception.handler.ResourceNotFoundException;
 import com.ssafy.common.exception.handler.RestTemplateException;
 import com.ssafy.db.entity.Store;
+import java.net.ConnectException;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
@@ -49,6 +50,8 @@ public class RestUtil {
 				throw new RestTemplateException(url, ex.getMessage(), ex.getStatusCode().value());
 			}
 			throw new ResourceNotFoundException("store", "storeId", ex.getMessage());
+		} catch (Exception ex) {
+			throw new RestTemplateException(url, ex.getMessage(), 500);
 		}
 		return store;
 	}

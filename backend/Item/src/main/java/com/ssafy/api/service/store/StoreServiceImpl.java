@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class StoreServiceImpl implements StoreService {
 
-	StoreRepositiory storeRepositiory;
+	final StoreRepositiory storeRepositiory;
 
 	@Override
 	public Store getStoreByUserId(String userId) {

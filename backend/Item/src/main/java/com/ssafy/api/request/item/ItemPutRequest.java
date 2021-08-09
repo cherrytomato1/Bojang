@@ -21,6 +21,7 @@ public class ItemPutRequest {
 	@ApiModelProperty(name = "상품 종류", required = true, example = "1")
 	Long itemType;
 
-
+	@ApiModelProperty(name = "판매중", example = "1")
+	Boolean onSale;
 
 }
