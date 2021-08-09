@@ -19,8 +19,8 @@ class MarketRepositoryTest {
     @Test
     public void createMarket() {
         Market market = new Market();
-        market.setId(1L);
-        market.setName("싸피시장");
+        market.setId(5L);
+        market.setName("민락골목시장");
         marketRepository.save(market);
     }
 

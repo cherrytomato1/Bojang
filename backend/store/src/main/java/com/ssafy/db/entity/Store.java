@@ -1,6 +1,7 @@
 package com.ssafy.db.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -17,6 +18,7 @@ public class Store {
 	@GeneratedValue(generator = "Id")
 	private String id;
 
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@OneToOne
 	private User user;
 

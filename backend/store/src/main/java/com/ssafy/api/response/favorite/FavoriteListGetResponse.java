@@ -15,13 +15,13 @@ import java.util.List;
 public class FavoriteListGetResponse extends BaseResponseBody {
 
     @ApiModelProperty(name="관심 가게 리스트")
-    List<FavoriteStore> list;
+    List<FavoriteStore> favoriteStoreList;
 
     public static FavoriteListGetResponse of(Integer statusCode, String message, List<FavoriteStore> list){
         FavoriteListGetResponse response = new FavoriteListGetResponse();
         response.setStatusCode(statusCode);
         response.setMessage(message);
-        response.setList(list);
+        response.setFavoriteStoreList(list);
         return response;
     }
 }

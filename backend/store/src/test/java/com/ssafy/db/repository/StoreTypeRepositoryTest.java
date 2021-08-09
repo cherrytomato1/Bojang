@@ -17,8 +17,8 @@ class StoreTypeRepositoryTest {
     @Test
     public void createStoreType() {
         StoreType storeType = new StoreType();
-        storeType.setId(2L);
-        storeType.setName("축산물");
+        storeType.setId(7L);
+        storeType.setName("기타");
         storeTypeRepository.save(storeType);
     }
 

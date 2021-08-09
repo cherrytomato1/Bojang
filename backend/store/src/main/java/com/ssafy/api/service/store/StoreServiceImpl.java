@@ -5,6 +5,7 @@ import com.ssafy.common.exception.handler.FileUploadException;
 import com.ssafy.config.FileUploadConfig;
 import com.ssafy.db.entity.Item;
 import com.ssafy.db.entity.Store;
+import com.ssafy.db.mapping.store.StoreMapping;
 import com.ssafy.db.repository.ItemRepository;
 import com.ssafy.db.repository.StoreRepositiory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,8 +84,8 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public List<Store> searchStore(String storeName, Long MarketId) {
-        List<Store> storeList = storeRepositiory.findByNameContainingAndMarket_Id(storeName, MarketId);
+    public List<StoreMapping> searchStore(String storeName, Long MarketId) {
+        List<StoreMapping> storeList = storeRepositiory.findByNameContainingAndMarket_Id(storeName, MarketId);
         return storeList;
     }
 
@@ -146,12 +147,12 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public List<Store> getStoreTypeList(Long marketId, Long storeTypeId) {
+    public List<StoreMapping> getStoreTypeList(Long marketId, Long storeTypeId) {
         return storeRepositiory.findByMarket_IdAndStoreType_Id(marketId, storeTypeId);
     }
 
     @Override
-    public List<Store> getMarketList(Long marketId) {
+    public List<StoreMapping> getMarketList(Long marketId) {
         return storeRepositiory.findByMarket_Id(marketId);
     }
 

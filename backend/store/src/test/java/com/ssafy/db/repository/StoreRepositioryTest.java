@@ -4,6 +4,7 @@ import com.ssafy.db.entity.Market;
 import com.ssafy.db.entity.Store;
 import com.ssafy.db.entity.StoreType;
 import com.ssafy.db.entity.User;
+import com.ssafy.db.mapping.store.StoreMapping;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,8 +67,8 @@ class StoreRepositioryTest {
 
     @Test
     public void findByName() {
-        List<Store> list = storeRepositiory.findByNameContaining("가게");
-        for (Store store : list) {
+        List<StoreMapping> list = storeRepositiory.findByNameContaining("가게");
+        for (StoreMapping store : list) {
             System.out.println(store.getId());
             System.out.println(store.getName());
         }
