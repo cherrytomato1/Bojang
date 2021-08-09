@@ -233,7 +233,6 @@ public class UserController {
 			return ResponseEntity.status(400)
 				       .body(UserUpdatePatchResponse.of(400, ex.getMessage()));
 		}
-
 		return ResponseEntity.status(200)
 			       .body(UserUpdatePatchResponse.of(200, "Success"));
 	}

@@ -48,4 +48,4 @@ app:
   tokenExpirationMsec: 60480000
   authorizedRedirectUris:
 #    redirect target front-end uri
-    - http://localhost:8081/oauth2/redirect
+    - http://localhost:80/oauth2/redirect
