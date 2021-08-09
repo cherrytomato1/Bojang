@@ -33,10 +33,15 @@
             class="justify-center align-center"
             @click="login"
           >
-            <!-- <router-link
-        :to="{ name: 'Login'}"
-      > -->
-            <img src="@/assets/kakao_login_large.png">
+            <!-- <div id="app"> -->
+              <!-- <h2>For Kakao Vue</h2> -->
+              <!-- <img alt="kakao logo" src="@/assets/kakao_login_large.png"
+              @click="loginWithKakao"
+               /> -->
+              <a :href="kakaoLoginLink" alt="kakao login">
+                <img alt="kakao logo" src="@/assets/kakao_login_large.png" />
+              </a>
+            <!-- </div> -->
             <!-- </router-link> -->
           </button>
         </div>
@@ -110,7 +115,16 @@
 
 <script>
 export default {
+  name: "App",
+  computed: {
+    kakaoLoginLink() {
+      // return `https://kauth.kakao.com/oauth/authorize?client_id=${this.client_id}&redirect_uri=${this.redirect_uri}&response_type=code`;
+      return `http://localhost:80/oauth2/authorize/kakao?redirect_uri=http://localhost:80/oauth2/redirect`;
+    },
+  },
   data: () => ({
+    client_id: "d8d2a25fb9a3d72d3564ed9c5d33c6b3",
+    redirect_uri: "http://localhost:80/oauth2/redirect",
     log: false,
     name: "OOO",
     valid: true,
@@ -132,7 +146,7 @@ export default {
   }),
   methods: {
     login () {
-      this.log = true
+      this.log = false
     },
     validate () {
       this.$refs.form.validate()
