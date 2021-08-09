@@ -16,7 +16,7 @@ public class RestUtil {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set("Authorization",token);
         String id = "";
-        String url = "http://localhost:8080/api/user/userId";
+        String url = "http://localhost:8080/api/user/id";
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity entity = new HttpEntity<>(null,httpHeaders);
         try {
