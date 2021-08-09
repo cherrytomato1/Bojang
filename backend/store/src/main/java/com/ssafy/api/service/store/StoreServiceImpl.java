@@ -1,6 +1,5 @@
 package com.ssafy.api.service.store;
 
-import com.ssafy.api.request.store.StoreUpdatePatchRequest;
 import com.ssafy.common.exception.handler.FileUploadException;
 import com.ssafy.config.FileUploadConfig;
 import com.ssafy.db.entity.Item;
@@ -110,40 +109,6 @@ public class StoreServiceImpl implements StoreService {
             throw new FileUploadException("[" + fileName + "] 파일 업로드에 실패하였습니다. 다시 시도하십시오.", e);
         }
         throw new FileUploadException("[" + fileName + "] 파일 업로드에 실패하였습니다. 다시 시도하십시오.");
-    }
-
-    @Override
-    public Store updateStore(StoreUpdatePatchRequest request) {
-
-        Optional<Store> storeOptional = storeRepositiory.findById(request.getStoreId());
-        if (storeOptional.isPresent()) {
-            Store store = storeOptional.get();
-            if (request.getName() != null) {
-                store.setName(request.getName());
-            }
-            if (request.getComment() != null) {
-                store.setComment(request.getComment());
-            }
-            if (request.getAddress() != null) {
-                store.setAddress(request.getAddress());
-            }
-            if (request.getFile() != null) {
-                MultipartFile file = request.getFile();
-                UUID uuid = UUID.randomUUID();
-                String fileName = uuid + "_" + StringUtils.cleanPath(file.getOriginalFilename());
-                try {
-                    if (fileName.contains(".."))
-                        throw new FileUploadException("파일명에 부적합 문자가 포함되어 있습니다. " + fileName);
-                    Path targetLocation = this.fileLocation.resolve(fileName);
-                    Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-                    store.setImage(fileName);
-                } catch (Exception e) {
-                    throw new FileUploadException("[" + fileName + "] 파일 업로드에 실패하였습니다. 다시 시도하십시오.", e);
-                }
-            }
-            return storeRepositiory.save(store);
-        }
-        return null;
     }
 
     @Override

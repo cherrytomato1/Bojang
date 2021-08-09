@@ -10,12 +10,12 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@ApiModel(value = "판매 금액",description = "시작일만 입력하면 해당 날짜 하나만 가져옴")
+@ApiModel("SalesGetRequest")
 public class SalesGetRequest {
-    @ApiModelProperty(name = "start",example = "2021-08-01")
+    @ApiModelProperty(name = "시작일",example = "2021-08-01",notes = "start 값만 있으면 해당 일의 판매 금액만 반환")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     LocalDate start;
-    @ApiModelProperty(name = "end",example = "2021-08-09")
+    @ApiModelProperty(name = "종료일",example = "2021-08-09")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     LocalDate end;
 }

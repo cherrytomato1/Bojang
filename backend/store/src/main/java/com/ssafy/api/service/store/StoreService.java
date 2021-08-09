@@ -1,6 +1,5 @@
 package com.ssafy.api.service.store;
 
-import com.ssafy.api.request.store.StoreUpdatePatchRequest;
 import com.ssafy.db.entity.Item;
 import com.ssafy.db.entity.Store;
 import com.ssafy.db.mapping.store.StoreMapping;
@@ -22,17 +21,12 @@ public interface StoreService {
 
     String storeImgUpload(MultipartFile file, String userId);
 
-    Store updateStore(StoreUpdatePatchRequest request);
 
     List<StoreMapping> getStoreTypeList(Long marketId, Long storeTypeId);
 
     List<StoreMapping> getMarketList(Long marketId);
 
-    Store updateComment(String userId,String comment);
-
-
-
-
+    Store updateComment(String userId, String comment);
 
 
 }

@@ -14,7 +14,7 @@ import java.util.List;
 @ApiModel("FavoriteListGetResponse")
 public class FavoriteListGetResponse extends BaseResponseBody {
 
-    @ApiModelProperty(name="관심 가게 리스트")
+    @ApiModelProperty(name="favoriteStoreList")
     List<FavoriteStore> favoriteStoreList;
 
     public static FavoriteListGetResponse of(Integer statusCode, String message, List<FavoriteStore> list){

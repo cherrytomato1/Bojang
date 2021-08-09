@@ -24,13 +24,11 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath accountNumber = createString("accountNumber");
 
-    public final StringPath address = createString("address");
-
-    public final StringPath addressDetail = createString("addressDetail");
-
     public final QBankType bankType;
 
     public final StringPath id = createString("id");
+
+    public final QMarket market;
 
     public final StringPath name = createString("name");
 
@@ -39,8 +37,6 @@ public class QUser extends EntityPathBase<User> {
     public final DateTimePath<java.time.LocalDateTime> registerTime = createDateTime("registerTime", java.time.LocalDateTime.class);
 
     public final QUserType userType;
-
-    public final NumberPath<Integer> zipCode = createNumber("zipCode", Integer.class);
 
     public QUser(String variable) {
         this(User.class, forVariable(variable), INITS);
@@ -61,6 +57,7 @@ public class QUser extends EntityPathBase<User> {
     public QUser(Class<? extends User> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.bankType = inits.isInitialized("bankType") ? new QBankType(forProperty("bankType")) : null;
+        this.market = inits.isInitialized("market") ? new QMarket(forProperty("market")) : null;
         this.userType = inits.isInitialized("userType") ? new QUserType(forProperty("userType")) : null;
     }
 
