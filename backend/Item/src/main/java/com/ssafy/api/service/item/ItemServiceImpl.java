@@ -78,7 +78,8 @@ public class ItemServiceImpl implements ItemService {
 	public void deleteItemByItemId(String itemId, String userId) {
 		try {
 			Item item = getItemByItemId(itemId);
-			if (!userId.equals(item.getStore().getId())) {
+			if (!userId.equals(item.getStore().getUser().getId())) {
+				System.out.println(userId + " " + item.getStore().getUser().getId());
 				throw new AuthException("삭제가 허가되지 않은 사용자/상품입니다");
 			}
 

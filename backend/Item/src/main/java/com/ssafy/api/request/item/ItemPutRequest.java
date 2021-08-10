@@ -9,13 +9,13 @@ import lombok.Setter;
 @Setter
 @ApiModel("ItemPutRequest")
 public class ItemPutRequest {
-	@ApiModelProperty(name = "상품 이름", example = "사과")
+	@ApiModelProperty(name = "상품 이름", required = true, example = "사과")
 	String name;
 
 	@ApiModelProperty(name = "상품 설명", example = "싱싱한 사과입니다")
 	String content;
 
-	@ApiModelProperty(name = "상품 가격", example = "10000")
+	@ApiModelProperty(name = "상품 가격", required = true, example = "10000")
 	Long price;
 
 	@ApiModelProperty(name = "상품 이미지 url", example = "이미지 링크")
@@ -24,7 +24,7 @@ public class ItemPutRequest {
 	@ApiModelProperty(name = "상품 종류", required = true, example = "1")
 	Long itemType;
 
-	@ApiModelProperty(name = "판매중", example = "1")
+	@ApiModelProperty(name = "판매중", example = "true")
 	Boolean onSale;
 
 }

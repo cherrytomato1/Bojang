@@ -52,8 +52,8 @@ public class ItemController {
 			String userId = restUtil.getUserId(token);
 //			Store targetStore = storeService.getStoreByUserId(userId);
 			Store targetStore = restUtil.getStoreByStoreId(storeId);
-
-			storeService.validateStoreByUserId(userId, targetStore);
+//          현재 store 서버에서 USER 반환하지 않음
+//			storeService.validateStoreByUserId(userId, targetStore);
 			itemService.putItemInStore(itemPutRequest, targetStore);
 		} catch (AuthException ex) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
