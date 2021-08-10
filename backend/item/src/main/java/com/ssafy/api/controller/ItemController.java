@@ -45,7 +45,8 @@ public class ItemController {
 
 	@PutMapping("/{storeId}")
 	public ResponseEntity<? super ItemPutResponse> putItem(
-		@ApiIgnore @RequestHeader("Authorization") String token, @RequestBody ItemPutRequest itemPutRequest,
+		@ApiIgnore @RequestHeader("Authorization") String token,
+		@RequestBody ItemPutRequest itemPutRequest,
 		@PathVariable("storeId") String storeId) {
 		try {
 			String userId = restUtil.getUserId(token);
@@ -85,7 +86,8 @@ public class ItemController {
 
 	@PatchMapping("/{storeId}")
 	public ResponseEntity<? super ItemPatchResponse> updateItem(
-		@ApiIgnore @RequestHeader("Authorization") String token, @RequestBody ItemPatchRequest itemPatchRequest,
+		@ApiIgnore @RequestHeader("Authorization") String token,
+		@RequestBody ItemPatchRequest itemPatchRequest,
 		@PathVariable("storeId") String storeId) {
 		try {
 			String userId = restUtil.getUserId(token);
