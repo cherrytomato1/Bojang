@@ -11,7 +11,7 @@
 라이브 입장 버튼을 눌러 상점에 들어갈 수 있다.<br/>
 ![picture](./picture/FE_5.png)<br/>
 왼쪽 사이드바에서 시장으로 돌아가거나, 단골등록, 사장님 호출과 같은 기능을 수행할 수 있다.
-<br/>
+<br/>  
 ### 네비게이션 바
 
 ### ![주문내역](C:\Users\multicampus\Desktop\8team_PJT\S05P12A508\리드미 작성\주문내역.PNG)
