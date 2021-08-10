@@ -28,6 +28,6 @@ public class Sales {
     @Column(name = "register_time", nullable = false)
     private LocalDate registerTime;
 
-    @Column(name = "amount", nullable = false)
-    private Integer amount;
+    @Column(name = "sum", nullable = false)
+    private Integer sum;
 }

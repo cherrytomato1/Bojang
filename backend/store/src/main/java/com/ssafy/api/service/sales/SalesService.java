@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface SalesService {
-    Sales updateSales(String userId,LocalDate now, Integer amount);
+    Sales updateSales(String userId,LocalDate now, Integer sum);
 
     List<SalesMapping> getSales(String userId);
 

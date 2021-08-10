@@ -67,7 +67,7 @@ public class SalesController {
             String userId = restUtil.getUserId(token);
             if (request.getEnd() == null) {
                 Sales sales = salesService.getDateSales(userId, request.getStart());
-                return ResponseEntity.ok(SalesGetResponse.of(200, "Success", sales.getRegisterTime(), sales.getAmount()));
+                return ResponseEntity.ok(SalesGetResponse.of(200, "Success", sales.getRegisterTime(), sales.getSum()));
             } else {
                 return ResponseEntity.ok(SalesGetListResponse.of(200, "Success", salesService.getDateSales(userId, request.getStart(), request.getEnd())));
             }
@@ -88,10 +88,10 @@ public class SalesController {
             @ApiResponse(code = 403, message = "Forbidden"),
             @ApiResponse(code = 404, message = "Not Found")
     })
-    public ResponseEntity<BaseResponseBody> updateSales(@RequestHeader("Authorization") @ApiIgnore String token,@RequestBody @ApiParam(value = "판매 금액",example = "3000") Integer amount) {
+    public ResponseEntity<BaseResponseBody> updateSales(@RequestHeader("Authorization") @ApiIgnore String token,@RequestBody @ApiParam(value = "판매 금액",example = "3000") Integer sum) {
         try {
             String userId = restUtil.getUserId(token);
-            salesService.updateSales(userId, LocalDate.now(), amount);
+            salesService.updateSales(userId, LocalDate.now(), sum);
             return ResponseEntity.ok(BaseResponseBody.of(200, "Success"));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(404).body(StoreGetResponse.of(404, "조회 실패", null));

@@ -21,20 +21,20 @@ public class SalesServiceImpl implements SalesService {
     StoreRepositiory storeRepositiory;
 
     @Override
-    public Sales updateSales(String userId, LocalDate now, Integer amount) {
+    public Sales updateSales(String userId, LocalDate now, Integer sum) {
         Optional<Store> storeOptional = storeRepositiory.findByUser_Id(userId);
         if (storeOptional.isPresent()) {
             Store store = storeOptional.get();
             Optional<Sales> salesOptional = salesRepository.findByStore_IdAndRegisterTime(store.getId(), now);
             if (salesOptional.isPresent()) {
                 Sales sales = salesOptional.get();
-                if (amount > 0)
-                    sales.setAmount(sales.getAmount() + amount);
+                if (sum > 0)
+                    sales.setSum(sales.getSum() + sum);
                 return salesRepository.save(sales);
             } else {
                 Sales sales = new Sales();
                 sales.setStore(store);
-                sales.setAmount(amount);
+                sales.setSum(sum);
                 return salesRepository.save(sales);
             }
         }
