@@ -44,6 +44,7 @@ public class Store {
 	private StoreType storeType;
 
 
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@OneToMany(mappedBy = "store",cascade = CascadeType.ALL)
 	private List<Item> itemList = new ArrayList<>();
 
