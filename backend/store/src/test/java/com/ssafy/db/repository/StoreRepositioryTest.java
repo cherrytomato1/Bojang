@@ -33,13 +33,13 @@ class StoreRepositioryTest {
     public void createStore() {
         Store store = new Store();
 
-        store.setName("싸피가게");
-        store.setSection(1);
+        store.setName("민기수산");
+        store.setSection(3);
         store.setComment("싸게 팝니다~");
-        store.setAddress("싸피시 싸피동 123-1");
-        User user = userRepository.findById("S46fd7ccf483e").get();
+        store.setAddress("싸피시 싸피동 123-123");
+        User user = userRepository.findById("S407bb1fe0026").get();
         Market market = marketRepository.findById(1L).get();
-        StoreType storeType = storeTypeRepository.findById(1L).get();
+        StoreType storeType = storeTypeRepository.findById(3L).get();
         store.setMarket(market);
         store.setStoreType(storeType);
         store.setUser(user);
