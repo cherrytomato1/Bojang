@@ -1,9 +1,7 @@
 package com.ssafy;
 
-import com.ssafy.config.FileUploadConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -14,9 +12,6 @@ import java.nio.charset.Charset;
 
 @EnableJpaAuditing
 @SpringBootApplication
-@EnableConfigurationProperties({
-        FileUploadConfig.class
-})
 public class ItemApplication {
 
     public static void main(String[] args) {
