@@ -39,7 +39,8 @@
               @click="loginWithKakao"
                /> -->
               <a :href="kakaoLoginLink" alt="kakao login">
-                <img alt="kakao logo" src="@/assets/kakao_login_large.png" />
+                <!-- <img alt="kakao logo" src="@/assets/kakao_login_large.png" /> -->
+                <Login />
               </a>
             <!-- </div> -->
             <!-- </router-link> -->
@@ -114,12 +115,28 @@
 </style>
 
 <script>
+import Login from "@/components/login/Login.vue";
+
 export default {
   name: "App",
+  components: {
+        Login,
+    },
+  created() {
+      const Token = localStorage.getItem("token");
+      console.log("Token", Token);
+      if (Token) {
+          this.$store.dispatch("token/setIsLogin", true);
+          this.$store.dispatch("token/setToken", Token);
+      } else {
+          this.$store.dispatch("token/setIsLogin", false);
+      }
+  },
   computed: {
     kakaoLoginLink() {
       // return `https://kauth.kakao.com/oauth/authorize?client_id=${this.client_id}&redirect_uri=${this.redirect_uri}&response_type=code`;
-      return `http://localhost:80/oauth2/authorize/kakao?redirect_uri=http://localhost:80/oauth2/redirect`;
+      // return `http://localhost:80/oauth2/authorize/kakao?redirect_uri=http://localhost:80/oauth2/redirect`;
+      return `http://localhost:8080/oauth2/authorize/kakao?redirect_uri=http://localhost:80/oauth2/redirect`;
     },
   },
   data: () => ({

@@ -5,14 +5,16 @@ import router from './router'
 
 Vue.config.productionTip = false
 
+window.Kakao.init('d8d2a25fb9a3d72d3564ed9c5d33c6b3');
+
 new Vue({
   vuetify,
   router,
   render: h => h(App)
 }).$mount('#app')
 
-// window.Kakao.init('d8d2a25fb9a3d72d3564ed9c5d33c6b3');
-
+      // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+      // Kakao.init('d8d2a25fb9a3d72d3564ed9c5d33c6b3');
 
 
 

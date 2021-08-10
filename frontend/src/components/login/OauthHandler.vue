@@ -1,5 +1,8 @@
 <template>
-    <div>Oauth</div>
+    <div>
+      Oauth
+      <h2>test</h2>
+    </div>
 </template>
 <script>
 // import { onMounted } from '@vue/runtime-core'
@@ -22,10 +25,10 @@ export default {
             this.$store.dispatch("token/setIsLogin", true);
             console.log(this.$store.getters["token/getToken"]);
 
-            this.$router.push({ name: "Home" });
+            this.$router.push({ name: "Mainpage" });
         } else {
             console.log("token is not found ");
-            this.$router.push("/");
+            this.$router.push({ name: "InitPage"});
         }
     },
 };

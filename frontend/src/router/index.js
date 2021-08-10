@@ -14,6 +14,7 @@ import FinalOrderDetail from '@/views/FinalOrderDetail'
 import StoreInformationModify from '@/components/mypage/StoreInformationModify'
 import OrderPayment from '@/components/payment/OrderPayment'
 import OauthHandler from '@/components/login/OauthHandler'
+import Login from '@/components/login/Login'
 
 
 ``
@@ -79,6 +80,11 @@ const routes = [
     path: '/oauth2/redirect',
     name: 'OauthHandler',
     component: OauthHandler,
+},
+{
+  path: '/login',
+  name: 'Login',
+  component: Login
 },
 
 ]
