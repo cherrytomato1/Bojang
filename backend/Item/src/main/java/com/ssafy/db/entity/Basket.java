@@ -16,7 +16,7 @@ public class Basket {
     private String id;
 
     @Column(name = "amount")
-    private int amount;
+    private Long amount;
 
     @ManyToOne
     private Item item;

@@ -72,7 +72,7 @@ public class UserController {
 			       .body(AuthUserProfileGetResponse.of(200, "Success", authUser));
 	}
 
-	@GetMapping("/")
+	@GetMapping("")
 	@PreAuthorize("hasRole('USER')")
 	@ApiOperation(value = "User 정보 반환", notes = "토큰 정보에 담긴 유저 반환", response =
 		                                                               UserGetResponse.class)
@@ -179,7 +179,7 @@ public class UserController {
 			       .body(UserUpdatePatchResponse.of(200, "Success"));
 	}
 
-	@PatchMapping("/")
+	@PatchMapping("")
 	@PreAuthorize("hasRole('USER')")
 	@ApiOperation(value = "User 정보 Update", notes = "모든 유저정보를 업데이트, Request Body에 모든 정보 필요",
 		response =
@@ -210,7 +210,7 @@ public class UserController {
 			       .body(UserUpdatePatchResponse.of(200, "Success"));
 	}
 
-	@DeleteMapping("/")
+	@DeleteMapping("")
 	@PreAuthorize("hasRole('USER')")
 	@ApiOperation(value = "User delete", notes = "토큰에 저장된 유저의 정보를 삭제/탈퇴한다. ", response =
 		                                                                          UserDeleteResponse.class)

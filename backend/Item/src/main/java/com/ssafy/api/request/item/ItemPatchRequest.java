@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel("ItemPutRequest")
+@ApiModel("ItemPatchRequest")
 public class ItemPatchRequest {
 	@ApiModelProperty(name = "상품 아이디")
 	String itemId;

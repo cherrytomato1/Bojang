@@ -5,6 +5,7 @@ import com.ssafy.common.exception.handler.AuthException;
 import com.ssafy.common.exception.handler.ResourceNotFoundException;
 import com.ssafy.common.exception.handler.RestTemplateException;
 import com.ssafy.db.entity.Store;
+import com.ssafy.db.entity.User;
 import java.net.ConnectException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
@@ -38,6 +39,30 @@ public class RestUtil {
 		}
 	}
 
+	public User getUserByToken(String token) {
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.set("Authorization", token);
+		String url = "http://localhost:8080/api/user";
+
+		RestTemplate restTemplate = new RestTemplate();
+		HttpEntity<HttpHeaders> entity = new HttpEntity<>(null, httpHeaders);
+		User user;
+		try {
+			ResponseEntity<Map> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity,
+				Map.class);
+			Map<String, Object> responseBody = objectMapper.convertValue(responseEntity.getBody(), Map.class);
+			user = objectMapper.convertValue(responseBody.get("user"), User.class);
+		} catch (final HttpClientErrorException ex) {
+			if (ex.getStatusCode().is5xxServerError()) {
+				throw new RestTemplateException(url, ex.getMessage(), ex.getStatusCode().value());
+			}
+			throw new ResourceNotFoundException("user", "token", ex.getMessage());
+		} catch (Exception ex) {
+			throw new RestTemplateException(url, ex.getMessage(), 500);
+		}
+		return user;
+	}
+
 	public Store getStoreByStoreId(String storeId) {
 		String url = "http://localhost:8081/api/store/" + storeId;
 		Store store;
@@ -50,13 +75,8 @@ public class RestUtil {
 				Map.class);
 //			Map<String, Object> responseBody = responseEntity.getBody();
 			Map<String, Object> responseBody = objectMapper.convertValue(responseEntity.getBody(), Map.class);
-			Map map = (Map) responseBody.get("store");
-			map.forEach((key, value)
-				            -> System.out.println("key: " + key + ", value: " + value));;
 			store = objectMapper.convertValue(responseBody.get("store"), Store.class);
 
-			System.out.println(store.toString());
-//			store = (Store) responseBody.get("store");
 		} catch (final HttpClientErrorException ex) {
 			if (ex.getStatusCode().is5xxServerError()) {
 				throw new RestTemplateException(url, ex.getMessage(), ex.getStatusCode().value());
