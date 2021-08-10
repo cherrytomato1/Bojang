@@ -8,6 +8,7 @@ import com.ssafy.api.service.item.ItemService;
 import com.ssafy.common.exception.handler.AuthException;
 import com.ssafy.common.exception.handler.ResourceNotFoundException;
 import com.ssafy.common.exception.handler.RestTemplateException;
+import com.ssafy.common.model.dto.BasketResponseDto;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.common.util.RestUtil;
 import com.ssafy.db.entity.Basket;
@@ -59,15 +60,15 @@ public class BasketController {
 	@GetMapping("")
 	public ResponseEntity<? extends BaseResponseBody> getBasketList(
 		@ApiIgnore @RequestHeader("Authorization") String token) {
-		List<Basket> basketList;
+		List<BasketResponseDto> basketDtoList;
 		try {
 			String userId = restUtil.getUserId(token);
-			basketList = basketService.getBasketListByUserId(userId);
+			basketDtoList = basketService.getBasketDtoListByUserId(userId);
 		} catch (AuthException ex) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
 				       .body(BasketListGetResponse.of(401, "사용자 인증 실패 !", null));
 		}
 		return ResponseEntity.status(HttpStatus.OK)
-			              .body(BasketListGetResponse.of(200, "Success", basketList));
+			              .body(BasketListGetResponse.of(200, "Success", basketDtoList));
 	}
 }

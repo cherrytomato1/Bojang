@@ -1,5 +1,6 @@
 package com.ssafy.api.response.basket;
 
+import com.ssafy.common.model.dto.BasketResponseDto;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Basket;
 import com.ssafy.db.entity.Item;
@@ -11,9 +12,9 @@ import lombok.Setter;
 @Setter
 public class BasketListGetResponse extends BaseResponseBody {
 
-	List<Basket> BasketList;
+	List<BasketResponseDto> BasketList;
 
-	public static BasketListGetResponse of(Integer statusCode, String message, List<Basket> list) {
+	public static BasketListGetResponse of(Integer statusCode, String message, List<BasketResponseDto> list) {
 		BasketListGetResponse itemListGetResponse = new BasketListGetResponse();
 		itemListGetResponse.setStatusCode(statusCode);
 		itemListGetResponse.setMessage(message);
