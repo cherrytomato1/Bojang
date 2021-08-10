@@ -5,6 +5,7 @@ import com.ssafy.db.entity.Basket;
 import com.ssafy.db.entity.Item;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.BasketRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +25,10 @@ public class BasketServiceImpl implements BasketService {
 		basket.setAmount(amount);
 
 		basketRepository.save(basket);
+	}
+
+	@Override
+	public List<Basket> getBasketListByUserId(String userId) {
+		return basketRepository.findAllByUserId(userId);
 	}
 }
