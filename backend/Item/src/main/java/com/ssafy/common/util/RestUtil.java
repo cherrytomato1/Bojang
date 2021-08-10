@@ -1,0 +1,89 @@
+package com.ssafy.common.util;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssafy.common.exception.handler.AuthException;
+import com.ssafy.common.exception.handler.ResourceNotFoundException;
+import com.ssafy.common.exception.handler.RestTemplateException;
+import com.ssafy.db.entity.Store;
+import java.net.ConnectException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.*;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.Map;
+
+@Component
+@RequiredArgsConstructor
+public class RestUtil {
+
+	final ObjectMapper objectMapper;
+
+	public String getUserId(String token) {
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.set("Authorization", token);
+		String id;
+		String url = "http://localhost:8080/api/user/id";
+		RestTemplate restTemplate = new RestTemplate();
+		HttpEntity<HttpHeaders> entity = new HttpEntity<>(null, httpHeaders);
+		try {
+			ResponseEntity<Map> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity,
+				Map.class);
+			Map<String, String> map = responseEntity.getBody();
+			id = map.get("userId");
+			return id;
+		} catch (final HttpClientErrorException e) {
+			throw new AuthException(e.getMessage());
+		}
+	}
+
+	public Store getStoreByStoreId(String storeId) {
+		String url = "http://localhost:8081/api/store/" + storeId;
+		Store store;
+
+		RestTemplate restTemplate = new RestTemplate();
+		HttpEntity entity = new HttpEntity<>(null);
+
+		try {
+			ResponseEntity<Map> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity,
+				Map.class);
+//			Map<String, Object> responseBody = responseEntity.getBody();
+			Map<String, Object> responseBody = objectMapper.convertValue(responseEntity.getBody(), Map.class);
+			Map map = (Map) responseBody.get("store");
+			map.forEach((key, value)
+				            -> System.out.println("key: " + key + ", value: " + value));;
+			store = objectMapper.convertValue(responseBody.get("store"), Store.class);
+
+			System.out.println(store.toString());
+//			store = (Store) responseBody.get("store");
+		} catch (final HttpClientErrorException ex) {
+			if (ex.getStatusCode().is5xxServerError()) {
+				throw new RestTemplateException(url, ex.getMessage(), ex.getStatusCode().value());
+			}
+			throw new ResourceNotFoundException("store", "storeId", ex.getMessage());
+		} catch (Exception ex) {
+			throw new RestTemplateException(url, ex.getMessage(), 500);
+		}
+		return store;
+	}
+
+//	public void patchStore(Store store) {
+//		String url = "http://localhost:8081/api/store/";
+//
+//		RestTemplate restTemplate = new RestTemplate();
+//		HttpEntity entity = new HttpEntity<>(store);
+//
+//
+//		try {
+//			ResponseEntity<Map> responseEntity = restTemplate.exchange(url, HttpMethod.PATCH, entity,
+//				Map.class);
+//
+//		} catch (final HttpClientErrorException ex) {
+//			if (ex.getStatusCode().is5xxServerError()) {
+//				throw new RestTemplateException(url, ex.getMessage(), ex.getStatusCode().value());
+//			}
+//			throw new ResourceNotFoundException("store", "storeId", ex.getMessage());
+//		}
+//	}
+}
