@@ -2,12 +2,14 @@ package com.ssafy.api.controller;
 
 import com.ssafy.api.request.basket.BasketPutRequest;
 import com.ssafy.api.request.item.ItemPutRequest;
+import com.ssafy.api.response.basket.BasketPutResponse;
 import com.ssafy.api.response.item.ItemPutResponse;
 import com.ssafy.api.service.basket.BasketService;
 import com.ssafy.api.service.item.ItemService;
 import com.ssafy.common.exception.handler.AuthException;
 import com.ssafy.common.exception.handler.ResourceNotFoundException;
 import com.ssafy.common.exception.handler.RestTemplateException;
+import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.common.util.RestUtil;
 import com.ssafy.db.entity.Item;
 import com.ssafy.db.entity.Store;
@@ -34,8 +36,8 @@ public class BasketController {
 
 	final RestUtil restUtil;
 
-	@PutMapping("/")
-	public ResponseEntity<? super ItemPutResponse> putItemIntBasket(
+	@PutMapping("")
+	public ResponseEntity<? extends BaseResponseBody> putItemIntBasket(
 		@ApiIgnore @RequestHeader("Authorization") String token,
 		@RequestBody BasketPutRequest basketPutRequest) {
 		try {
@@ -45,12 +47,12 @@ public class BasketController {
 			basketService.putItemInBasket(user, item, basketPutRequest.getAmount());
 		} catch (AuthException ex) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-				       .body(ItemPutResponse.of(401, ex.getMessage()));
+				       .body(BasketPutResponse.of(401, ex.getMessage()));
 		} catch (ResourceNotFoundException | RestTemplateException ex) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-				       .body(ItemPutResponse.of(404, ex.getMessage()));
+				       .body(BasketPutResponse.of(404, ex.getMessage()));
 		}
 		return ResponseEntity.status(HttpStatus.OK)
-			       .body(ItemPutResponse.of(200, "Success"));
+			       .body(BasketPutResponse.of(200, "Success"));
 	}
 }
