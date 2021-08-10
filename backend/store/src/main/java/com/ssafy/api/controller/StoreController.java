@@ -57,7 +57,7 @@ public class StoreController {
             @ApiResponse(code = 403, message = "Forbidden"),
             @ApiResponse(code = 404, message = "Not Found")
     })
-    public ResponseEntity<StoreGetResponse> getStoreInfo(@ApiParam(value = "가게 ID") String storeId) {
+    public ResponseEntity<StoreGetResponse> getStoreInfo(@PathVariable @ApiParam(value = "가게 ID") String storeId) {
         try {
             return ResponseEntity.ok(StoreGetResponse.of(200, "Success", storeService.getStoreInfo(storeId)));
         } catch (ResourceNotFoundException e) {
