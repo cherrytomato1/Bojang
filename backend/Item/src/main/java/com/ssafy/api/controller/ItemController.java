@@ -93,7 +93,7 @@ public class ItemController {
 			String userId = restUtil.getUserId(token);
 			Store targetStore = restUtil.getStoreByStoreId(storeId);
 
-			storeService.validateStoreByUserId(userId, targetStore);
+//			storeService.validateStoreByUserId(userId, targetStore);
 			itemService.patchItemInStore(itemPatchRequest, targetStore);
 		} catch (AuthException ex) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
