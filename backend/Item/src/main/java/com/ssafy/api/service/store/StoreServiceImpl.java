@@ -21,8 +21,8 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	@Override
-	public boolean validateStoreId(String storeId, Store store) {
-		if (storeId.equals(store.getId())) {
+	public boolean validateStoreByUserId(String userId, Store store) {
+		if (userId.equals(store.getUser().getId())) {
 			throw new AuthException("허가되지 않은 접근입니다.");
 		}
 		return true;

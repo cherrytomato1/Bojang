@@ -1,5 +1,6 @@
 package com.ssafy.api.service.item;
 
+import com.ssafy.api.request.item.ItemPatchRequest;
 import com.ssafy.api.request.item.ItemPutRequest;
 import com.ssafy.db.entity.Item;
 import com.ssafy.db.entity.ItemType;
@@ -9,7 +10,11 @@ import java.util.List;
 public interface ItemService {
 	List<Item> getItemListByStoreId(String storeId);
 
+	Item getItemByItemId(String itemId);
+
 	void putItemInStore(ItemPutRequest itemPutRequest, Store targetStore);
+
+	void patchItemInStore(ItemPatchRequest itemPatchRequest, Store targetStore);
 
 	ItemType getItemTypeByItemTypeId(Long itemTypeId);
 

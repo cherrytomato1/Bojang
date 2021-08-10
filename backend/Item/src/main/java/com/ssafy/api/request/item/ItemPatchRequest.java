@@ -8,7 +8,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @ApiModel("ItemPutRequest")
-public class ItemPutRequest {
+public class ItemPatchRequest {
+	@ApiModelProperty(name = "상품 아이디")
+	String itemId;
+
 	@ApiModelProperty(name = "상품 이름", example = "사과")
 	String name;
 

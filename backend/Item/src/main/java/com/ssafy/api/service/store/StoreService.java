@@ -6,5 +6,5 @@ public interface StoreService {
 
 	Store getStoreByUserId(String userId);
 
-	boolean validateStoreId(String storeId, Store store);
+	boolean validateStoreByUserId(String userId, Store store);
 }

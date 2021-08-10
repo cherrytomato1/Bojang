@@ -1,8 +1,10 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.request.item.ItemPatchRequest;
 import com.ssafy.api.request.item.ItemPutRequest;
 import com.ssafy.api.response.item.ItemDeleteResponse;
 import com.ssafy.api.response.item.ItemListGetResponse;
+import com.ssafy.api.response.item.ItemPatchResponse;
 import com.ssafy.api.response.item.ItemPutResponse;
 import com.ssafy.api.service.item.ItemService;
 import com.ssafy.api.service.store.StoreService;
@@ -14,10 +16,8 @@ import com.ssafy.common.util.RestUtil;
 import com.ssafy.db.entity.Item;
 import com.ssafy.db.entity.Store;
 import java.util.List;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -52,7 +52,7 @@ public class ItemController {
 //			Store targetStore = storeService.getStoreByUserId(userId);
 			Store targetStore = restUtil.getStoreByStoreId(storeId);
 
-			storeService.validateStoreId(storeId, targetStore);
+			storeService.validateStoreByUserId(userId, targetStore);
 			itemService.putItemInStore(itemPutRequest, targetStore);
 		} catch (AuthException ex) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -84,25 +84,24 @@ public class ItemController {
 	}
 
 	@PatchMapping("/{storeId}")
-	public ResponseEntity<? super ItemPutResponse> updateItem(
-		@ApiIgnore @RequestHeader("Authorization") String token, @RequestBody ItemPutRequest itemPutRequest,
+	public ResponseEntity<? super ItemPatchResponse> updateItem(
+		@ApiIgnore @RequestHeader("Authorization") String token, @RequestBody ItemPatchRequest itemPatchRequest,
 		@PathVariable("storeId") String storeId) {
 		try {
 			String userId = restUtil.getUserId(token);
-//			Store targetStore = storeService.getStoreByUserId(userId);
 			Store targetStore = restUtil.getStoreByStoreId(storeId);
 
-			storeService.validateStoreId(storeId, targetStore);
-			itemService.putItemInStore(itemPutRequest, targetStore);
+			storeService.validateStoreByUserId(userId, targetStore);
+			itemService.patchItemInStore(itemPatchRequest, targetStore);
 		} catch (AuthException ex) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-				       .body(ItemPutResponse.of(401, ex.getMessage()));
-		} catch (ResourceNotFoundException ex) {
+				       .body(ItemPatchResponse.of(401, ex.getMessage()));
+		} catch (ResourceNotFoundException | RestTemplateException ex) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-				       .body(ItemPutResponse.of(404, ex.getMessage()));
+				       .body(ItemPatchResponse.of(404, ex.getMessage()));
 		}
 		return ResponseEntity.status(HttpStatus.OK)
-			       .body(ItemPutResponse.of(200, "Success"));
+			       .body(ItemPatchResponse.of(200, "Success"));
 	}
 
 	@GetMapping("/{storeId}")
