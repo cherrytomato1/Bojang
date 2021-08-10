@@ -18,5 +18,5 @@ public interface ItemService {
 
 	ItemType getItemTypeByItemTypeId(Long itemTypeId);
 
-	void deleteItemByItemId(String itemId);
+	void deleteItemByItemId(String itemId, String userId);
 }

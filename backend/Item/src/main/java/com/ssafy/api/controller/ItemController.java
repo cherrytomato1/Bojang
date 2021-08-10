@@ -70,12 +70,12 @@ public class ItemController {
 		@ApiIgnore @RequestHeader("Authorization") String token,
 		@PathVariable("itemId") String itemId) {
 		try {
-			restUtil.getUserId(token);
-			itemService.deleteItemByItemId(itemId);
+			String userId = restUtil.getUserId(token);
+			itemService.deleteItemByItemId(itemId, userId);
 		} catch (AuthException ex) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
 				       .body(ItemDeleteResponse.of(401, ex.getMessage()));
-		} catch (ResourceNotFoundException ex) {
+		} catch (ResourceNotFoundException | RestTemplateException ex) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 				       .body(ItemDeleteResponse.of(404, ex.getMessage()));
 		}
@@ -112,7 +112,7 @@ public class ItemController {
 			itemList = itemService.getItemListByStoreId(storeId);
 		} catch (ResourceNotFoundException ex) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-				       .body(ItemListGetResponse.of(404, "아이템 목록 조회 실패", null));
+				       .body(ItemListGetResponse.of(404, "가게 조회 실패", null));
 		} catch (Exception ex) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 				       .body(BaseResponseBody.of(400, "아이템 목록 조회 실패"));

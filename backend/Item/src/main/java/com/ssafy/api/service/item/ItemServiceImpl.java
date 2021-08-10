@@ -75,9 +75,15 @@ public class ItemServiceImpl implements ItemService {
 
 	@Transactional
 	@Override
-	public void deleteItemByItemId(String itemId) {
+	public void deleteItemByItemId(String itemId, String userId) {
 		try {
-			itemRepository.deleteById(itemId);
+			Item item = getItemByItemId(itemId);
+			if (!userId.equals(item.getStore().getId())) {
+				throw new AuthException("삭제가 허가되지 않은 사용자/상품입니다");
+			}
+
+			itemRepository.delete(item);
+//			itemRepository.deleteById(itemId);
 		} catch (EmptyResultDataAccessException ex) {
 			throw new ResourceNotFoundException("item", "itemId", itemId);
 		}
