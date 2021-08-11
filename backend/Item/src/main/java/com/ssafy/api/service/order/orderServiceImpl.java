@@ -17,7 +17,6 @@ import com.ssafy.db.repository.OrderItemRepository;
 import com.ssafy.db.repository.OrderStatusRepository;
 import com.ssafy.db.repository.PayTypeRepository;
 import java.util.ArrayList;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,9 +51,6 @@ public class OrderServiceImpl implements OrderService {
 			                      .payType(getPayTypeById(orderPostRequest.getPayTypeId()))
 			                      .orderStatus(getNewOrderStatus()).build();
 
-//		OrderInfo orderInfo = new OrderInfo();
-//		orderInfo.set
-
 		int totalPrice = 0;
 		for (OrderItemRequestDto orderItemDto : orderPostRequest.getOrderItemList()) {
 			Item item = getItemByOrderItemId(orderItemDto.getItemId());
@@ -74,7 +70,6 @@ public class OrderServiceImpl implements OrderService {
 		orderInfo.setPrice(totalPrice);
 
 		orderInfo = orderInfoRepository.save(orderInfo);
-//		String orderInfoId = orderInfo.getId();
 		restUtil.sendBillingRequestByOrderInfoId(orderInfo.getId(), token);
 	}
 
