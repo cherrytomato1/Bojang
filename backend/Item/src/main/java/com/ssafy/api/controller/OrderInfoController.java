@@ -1,11 +1,13 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.api.request.orderinfo.OrderInfoPatchRequest;
 import com.ssafy.api.response.orderInfo.OrderInfoGetResponse;
 import com.ssafy.api.response.orderInfo.OrderInfoListGetResponse;
 import com.ssafy.api.service.orderInfo.OrderInfoService;
 import com.ssafy.common.exception.handler.AuthException;
 import com.ssafy.common.exception.handler.ResourceNotFoundException;
 import com.ssafy.common.exception.handler.RestTemplateException;
+import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.common.util.RestUtil;
 import com.ssafy.db.entity.OrderInfo;
 import com.ssafy.db.entity.User;
@@ -105,9 +107,39 @@ public class OrderInfoController {
         } catch (ResourceNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(OrderInfoListGetResponse.of(404, "주문내역 조회 실패", null));
-        }  catch (Exception ex) {
+        } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(OrderInfoListGetResponse.of(500, "주문내역 조회 실패", null));
+        }
+    }
+
+    @PatchMapping("/check")
+    @ApiOperation(value = "픽업 매니저의 주문내역 상태 변경", response = BaseResponseBody.class)
+    public ResponseEntity<BaseResponseBody> checkStatus(@ApiIgnore @RequestHeader("Authorization") String token, OrderInfoPatchRequest infoPatchRequest) {
+        if (infoPatchRequest.getOrderStatusId() < 4L || infoPatchRequest.getOrderStatusId() <= 0L) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(BaseResponseBody.of(400, "주문 상태 ID 확인"));
+        }
+        if (infoPatchRequest.getOrderInfoId() == null || infoPatchRequest.getOrderStatusId() == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(BaseResponseBody.of(400, "주문 목록 ID or 주문 상태 ID 확인"));
+        }
+        try {
+            User user = restUtil.getUserByToken(token);
+            if (user.getUserType().getId() == 3L) {
+                OrderInfo orderInfo = orderInfoService.patchOrderInfoStatus(infoPatchRequest);
+                return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+            } else
+                return ResponseEntity.status(400).body(BaseResponseBody.of(400, "픽업 매니저가 아닙니다!"));
+        } catch (AuthException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(BaseResponseBody.of(401, ex.getMessage()));
+        } catch (ResourceNotFoundException | RestTemplateException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(BaseResponseBody.of(404, ex.getMessage()));
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(BaseResponseBody.of(500, "조회 실패"));
         }
     }
 }
