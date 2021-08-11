@@ -2,19 +2,19 @@ import Vue from 'vue'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import router from './router'
+import store from './store/store';
 
 Vue.config.productionTip = false
-
-window.Kakao.init('d8d2a25fb9a3d72d3564ed9c5d33c6b3');
 
 new Vue({
   vuetify,
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')
 
-      // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
-      // Kakao.init('d8d2a25fb9a3d72d3564ed9c5d33c6b3');
+// window.Kakao.init('d8d2a25fb9a3d72d3564ed9c5d33c6b3');
+
 
 
 
