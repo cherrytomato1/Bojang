@@ -50,6 +50,7 @@
     </v-app-bar>
     <v-card>
       <v-tabs
+        v-model="tab"
         background-color="color1"
         center-active
       >
@@ -69,10 +70,21 @@ import {mapGetters} from "vuex";
 
 export default {
   name: 'Navbar',
+  data() {
+    return{
+      tab: null,
+    }
+  },
+
   computed:{
     ...mapGetters(["markets"])
   },
-
+  watch:{
+    tab: function (val){ // 선택한 탭 변경될 경우
+      this.$store.commit("setMarket",this.$store.getters.markets[val]);
+      // console.log(this.$store.getters.market);
+    }
+  },
   created() {
      this.$store.dispatch("getMarkets");
   }
