@@ -105,6 +105,9 @@ public class OrderInfoController {
         } catch (ResourceNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(OrderInfoListGetResponse.of(404, "주문내역 조회 실패", null));
+        }  catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(OrderInfoListGetResponse.of(500, "주문내역 조회 실패", null));
         }
     }
 }

@@ -25,7 +25,7 @@ class SalesRepositoryTest {
     public void createSales() {
         Sales sales = new Sales();
         sales.setStore(storeRepositiory.findById("Sa926f12a1a24").get());
-        sales.setAmount(20000);
+        sales.setSum(20000);
         salesRepository.save(sales);
     }
 
@@ -39,7 +39,7 @@ class SalesRepositoryTest {
     @Test
     public void findNowSales() {
         Sales list = salesRepository.findByStore_IdAndRegisterTime("Sa926f12a1a24", LocalDate.now()).get();
-        System.out.println(list.getAmount());
+        System.out.println(list.getSum());
     }
 
     @Test

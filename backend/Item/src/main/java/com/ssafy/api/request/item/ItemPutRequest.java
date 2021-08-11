@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -18,13 +19,13 @@ public class ItemPutRequest {
 	@ApiModelProperty(name = "상품 가격", required = true, example = "10000")
 	Long price;
 
-	@ApiModelProperty(name = "상품 이미지 url", example = "이미지 링크")
-	String image;
-
 	@ApiModelProperty(name = "상품 종류", required = true, example = "1")
 	Long itemType;
 
 	@ApiModelProperty(name = "판매중", example = "true")
 	Boolean onSale;
+
+	@ApiModelProperty(name = "이미지 파일")
+	MultipartFile file;
 
 }

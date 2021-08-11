@@ -3,7 +3,6 @@ package com.ssafy.db.repository;
 import com.ssafy.db.entity.Sales;
 import com.ssafy.db.mapping.sales.SalesMapping;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
 import java.util.List;

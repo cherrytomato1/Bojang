@@ -22,13 +22,13 @@ public class QSales extends EntityPathBase<Sales> {
 
     public static final QSales sales = new QSales("sales");
 
-    public final NumberPath<Integer> amount = createNumber("amount", Integer.class);
-
     public final StringPath id = createString("id");
 
     public final DatePath<java.time.LocalDate> registerTime = createDate("registerTime", java.time.LocalDate.class);
 
     public final QStore store;
+
+    public final NumberPath<Integer> sum = createNumber("sum", Integer.class);
 
     public QSales(String variable) {
         this(Sales.class, forVariable(variable), INITS);
