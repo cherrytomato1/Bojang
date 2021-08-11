@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 @CrossOrigin("*")
@@ -163,4 +164,24 @@ public class ItemController {
 		return ResponseEntity.status(HttpStatus.OK)
 			       .body(ItemListGetResponse.of(200, "Success", itemList));
 	}
+
+	@PatchMapping("/image")
+	public ResponseEntity<? super ItemPatchResponse> uploadItemImage(@ApiIgnore @RequestHeader("Authorization") String token, MultipartFile file, String itemid) {
+
+		try {
+			String userId = restUtil.getUserId(token);
+			System.out.println(">>>>>>>>>" + itemid);
+			itemService.itemImgUpload(file, itemid);
+			return ResponseEntity.status(HttpStatus.OK).body(ItemPatchResponse.of(200, "Success"));
+		} catch (AuthException ex) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+				       .body(ItemPatchResponse.of(401, ex.getMessage()));
+		} catch (ResourceNotFoundException | RestTemplateException ex) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+				       .body(ItemPatchResponse.of(404, ex.getMessage()));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BaseResponseBody.of(HttpStatus.INTERNAL_SERVER_ERROR.value(), "조회 실패"));
+		}
+	}
+
 }
