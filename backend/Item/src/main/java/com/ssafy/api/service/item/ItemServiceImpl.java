@@ -23,7 +23,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -78,10 +77,10 @@ public class ItemServiceImpl implements ItemService {
                         .store(targetStore).onSale(onSale == null ? false : onSale)
                         .image(fileName).build();
                 itemRepository.save(item);
-                return;
             } catch (Exception e) {
                 throw new FileUploadException("[" + fileName + "] 파일 업로드에 실패하였습니다. 다시 시도하십시오.", e);
             }
+            throw new FileUploadException("[" + fileName + "] 파일 업로드에 실패하였습니다. 다시 시도하십시오.");
         } else {
             ItemType itemType = getItemTypeByItemTypeId(itemPutRequest.getItemType());
             Boolean onSale = itemPutRequest.getOnSale();
@@ -93,6 +92,7 @@ public class ItemServiceImpl implements ItemService {
             itemRepository.save(item);
             return;
         }
+
     }
 
     @Transactional
@@ -103,11 +103,25 @@ public class ItemServiceImpl implements ItemService {
             throw new AuthException("가게에 등록되어 있는 아이템이 아닙니다.");
         }
 
+        if(itemPatchRequest.getFile() != null){
+            UUID uuid = UUID.randomUUID();
+            String fileName = uuid + "_" + StringUtils.cleanPath(itemPatchRequest.getFile().getOriginalFilename());
+            try {
+                // 파일명에 부적합 문자가 있는지 확인한다.
+                if (fileName.contains(".."))
+                    throw new FileUploadException("파일명에 부적합 문자가 포함되어 있습니다. " + fileName);
+                Path targetLocation = this.fileLocation.resolve(fileName);
+                Files.copy(itemPatchRequest.getFile().getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+                item.setImage(fileName);
+            }catch (Exception e) {
+                throw new FileUploadException("[" + fileName + "] 파일 업로드에 실패하였습니다. 다시 시도하십시오.", e);
+            }
+        }
+
         ItemType itemType = getItemTypeByItemTypeId(itemPatchRequest.getItemType());
         item.setItemType(itemType);
         item.setContent(itemPatchRequest.getContent());
         item.setName(itemPatchRequest.getName());
-        item.setImage(itemPatchRequest.getImage());
         item.setPrice(itemPatchRequest.getPrice());
         item.setOnSale(itemPatchRequest.getOnSale());
 
@@ -129,7 +143,6 @@ public class ItemServiceImpl implements ItemService {
                 System.out.println(userId + " " + item.getStore().getUser().getId());
                 throw new AuthException("삭제가 허가되지 않은 사용자/상품입니다");
             }
-
             itemRepository.delete(item);
 //			itemRepository.deleteById(itemId);
         } catch (EmptyResultDataAccessException ex) {
@@ -138,26 +151,25 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void itemImgUpload(MultipartFile file, String itemId) {
+    public void itemImgUpload(MultipartFile file, String itemId, Store targetStore) {
+        Item item = getItemByItemId(itemId);
+        if (!item.getStore().equals(targetStore)) {
+            throw new AuthException("가게에 등록되어 있는 아이템이 아닙니다.");
+        }
         UUID uuid = UUID.randomUUID();
         String fileName = uuid + "_" + StringUtils.cleanPath(file.getOriginalFilename());
         try {
             // 파일명에 부적합 문자가 있는지 확인한다.
             if (fileName.contains(".."))
                 throw new FileUploadException("파일명에 부적합 문자가 포함되어 있습니다. " + fileName);
-            Optional<Item> itemOptional = itemRepository.findById(itemId);
-            if (itemOptional.isPresent()) {
-                Path targetLocation = this.fileLocation.resolve(fileName);
-                Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-                Item item = itemOptional.get();
-                item.setImage(fileName);
-                itemRepository.save(item);
-                return;
-            }
+            Path targetLocation = this.fileLocation.resolve(fileName);
+            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            item.setImage(fileName);
+            itemRepository.save(item);
+            return;
         } catch (Exception e) {
             throw new FileUploadException("[" + fileName + "] 파일 업로드에 실패하였습니다. 다시 시도하십시오.", e);
         }
-        throw new FileUploadException("[" + fileName + "] 파일 업로드에 실패하였습니다. 다시 시도하십시오.");
     }
 
 }
