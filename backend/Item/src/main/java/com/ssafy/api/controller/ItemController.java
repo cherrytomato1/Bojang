@@ -24,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -35,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/item")
 @Slf4j
@@ -90,7 +92,7 @@ public class ItemController {
 	@DeleteMapping("/{itemId}")
 	public ResponseEntity<? super ItemDeleteResponse> deleteItem(
 		@ApiIgnore @RequestHeader("Authorization") String token,
-		@ApiParam(value = "삭제할 상점 ID", required = true) @PathVariable("itemId") String itemId) {
+		@ApiParam(value = "삭제할 아이템 ID", required = true) @PathVariable("itemId") String itemId) {
 		try {
 			String userId = restUtil.getUserId(token);
 			itemService.deleteItemByItemId(itemId, userId);

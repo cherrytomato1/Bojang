@@ -24,6 +24,8 @@ public class QOrderInfo extends EntityPathBase<OrderInfo> {
 
     public final StringPath id = createString("id");
 
+    public final QMarket market;
+
     public final ListPath<OrderItem, QOrderItem> orderItemList = this.<OrderItem, QOrderItem>createList("orderItemList", OrderItem.class, QOrderItem.class, PathInits.DIRECT2);
 
     public final QOrderStatus orderStatus;
@@ -54,6 +56,7 @@ public class QOrderInfo extends EntityPathBase<OrderInfo> {
 
     public QOrderInfo(Class<? extends OrderInfo> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.market = inits.isInitialized("market") ? new QMarket(forProperty("market")) : null;
         this.orderStatus = inits.isInitialized("orderStatus") ? new QOrderStatus(forProperty("orderStatus")) : null;
         this.payType = inits.isInitialized("payType") ? new QPayType(forProperty("payType")) : null;
         this.user = inits.isInitialized("user") ? new QUser(forProperty("user"), inits.get("user")) : null;
