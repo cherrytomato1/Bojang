@@ -112,7 +112,7 @@ public class BasketController {
 
 	@ApiOperation(value = "장바구니 ID list로 해당 장바구니 삭제", notes = "장바구니 ID List로 해당 장바구니 아이템 Delete",
 		response =
-		                                                                                              BasketDeleteResponse.class)
+			BasketDeleteResponse.class)
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK"),
 		@ApiResponse(code = 400, message = "Bad Request"),
