@@ -7,6 +7,7 @@ import com.ssafy.common.exception.handler.RestTemplateException;
 import com.ssafy.db.entity.Store;
 import com.ssafy.db.entity.User;
 import java.net.ConnectException;
+import java.util.HashMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
@@ -50,7 +51,8 @@ public class RestUtil {
 		try {
 			ResponseEntity<Map> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity,
 				Map.class);
-			Map<String, Object> responseBody = objectMapper.convertValue(responseEntity.getBody(), Map.class);
+			Map<String, Object> responseBody = objectMapper.convertValue(responseEntity.getBody(),
+				Map.class);
 			user = objectMapper.convertValue(responseBody.get("user"), User.class);
 		} catch (final HttpClientErrorException ex) {
 			if (ex.getStatusCode().is5xxServerError()) {
@@ -74,7 +76,8 @@ public class RestUtil {
 			ResponseEntity<Map> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity,
 				Map.class);
 //			Map<String, Object> responseBody = responseEntity.getBody();
-			Map<String, Object> responseBody = objectMapper.convertValue(responseEntity.getBody(), Map.class);
+			Map<String, Object> responseBody = objectMapper.convertValue(responseEntity.getBody(),
+				Map.class);
 			store = objectMapper.convertValue(responseBody.get("store"), Store.class);
 
 		} catch (final HttpClientErrorException ex) {
@@ -88,6 +91,25 @@ public class RestUtil {
 		return store;
 	}
 
+	public void sendBillingRequestByOrderInfoId(String orderInfoId, String token) {
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.set("Authorization", token);
+
+		String url = "http://localhost:8083/api/billing/";
+		RestTemplate restTemplate = new RestTemplate();
+		Map<String, String> paramMap = new HashMap<>();
+		paramMap.put("orderInfoId", orderInfoId);
+		HttpEntity<Map<String, String>> entity = new HttpEntity<>(paramMap, httpHeaders);
+
+		try {
+			restTemplate.exchange(url, HttpMethod.POST, entity, Map.class);
+//			Map<String, Object> responseBody = objectMapper.convertValue(responseEntity.getBody(),
+//			Map.class);
+		} catch (final HttpClientErrorException ex) {
+			throw new RestTemplateException(url, ex.getMessage(), ex.getStatusCode().value());
+		}
+	}
+
 //	public void patchStore(Store store) {
 //		String url = "http://localhost:8081/api/store/";
 //
@@ -96,7 +118,8 @@ public class RestUtil {
 //
 //
 //		try {
-//			ResponseEntity<Map> responseEntity = restTemplate.exchange(url, HttpMethod.PATCH, entity,
+//			ResponseEntity<Map> responseEntity = restTemplate.exchange(url, HttpMethod.PATCH,
+//			entity,
 //				Map.class);
 //
 //		} catch (final HttpClientErrorException ex) {
