@@ -20,6 +20,7 @@ public class BillingController {
 
     @PostMapping
     public ResponseEntity<BaseResponseBody> billing(String orderInfoId) {
+        System.out.println(">>>>>>>>>>>>>>>>>" + orderInfoId);
         if (orderInfoId == null) {
             return ResponseEntity.status(404).body(BaseResponseBody.of(404, "주문 번호 오류"));
         }

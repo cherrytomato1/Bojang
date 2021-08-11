@@ -92,7 +92,7 @@ public class ItemController {
 	@DeleteMapping("/{itemId}")
 	public ResponseEntity<? super ItemDeleteResponse> deleteItem(
 		@ApiIgnore @RequestHeader("Authorization") String token,
-		@ApiParam(value = "삭제할 상점 ID", required = true) @PathVariable("itemId") String itemId) {
+		@ApiParam(value = "삭제할 아이템 ID", required = true) @PathVariable("itemId") String itemId) {
 		try {
 			String userId = restUtil.getUserId(token);
 			itemService.deleteItemByItemId(itemId, userId);

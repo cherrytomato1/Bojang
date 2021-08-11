@@ -1,7 +1,5 @@
 package com.ssafy.common.model.dto;
 
-import com.ssafy.db.entity.Basket;
-import com.ssafy.db.entity.Store;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,11 +9,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BasketResponseDto {
+public class OrderItemRequestDto {
 
-	Basket basket;
+	String itemId;
 
-	String storeId;
+	Long amount;
 
-	String storeName;
+	String comment;
 }

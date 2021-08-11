@@ -11,6 +11,8 @@ import java.util.HashMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -97,9 +99,9 @@ public class RestUtil {
 
 		String url = "http://localhost:8083/api/billing/";
 		RestTemplate restTemplate = new RestTemplate();
-		Map<String, String> paramMap = new HashMap<>();
-		paramMap.put("orderInfoId", orderInfoId);
-		HttpEntity<Map<String, String>> entity = new HttpEntity<>(paramMap, httpHeaders);
+		MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<>();
+		paramMap.add("orderInfoId", orderInfoId);
+		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(paramMap, httpHeaders);
 
 		try {
 			restTemplate.exchange(url, HttpMethod.POST, entity, Map.class);
