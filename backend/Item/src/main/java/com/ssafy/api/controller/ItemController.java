@@ -15,6 +15,10 @@ import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.common.util.RestUtil;
 import com.ssafy.db.entity.Item;
 import com.ssafy.db.entity.Store;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,11 +47,19 @@ public class ItemController {
 
 	final StoreService storeService;
 
+	@ApiOperation(value = "판매 상품 put", notes = "판매 상품 추가", response =
+		                                                       ItemPutResponse.class)
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK"),
+		@ApiResponse(code = 400, message = "Bad Request"),
+		@ApiResponse(code = 401, message = "Unauthorized"),
+		@ApiResponse(code = 404, message = "Not Found")
+	})
 	@PutMapping("/{storeId}")
 	public ResponseEntity<? super ItemPutResponse> putItem(
 		@ApiIgnore @RequestHeader("Authorization") String token,
-		@RequestBody ItemPutRequest itemPutRequest,
-		@PathVariable("storeId") String storeId) {
+		@ApiParam(value = "추가할 상품 정보", required = true) @RequestBody ItemPutRequest itemPutRequest,
+		@ApiParam(value = "추가할 상점 ID", required = true) @PathVariable("storeId") String storeId) {
 		try {
 			String userId = restUtil.getUserId(token);
 //			Store targetStore = storeService.getStoreByUserId(userId);
@@ -66,10 +78,19 @@ public class ItemController {
 			       .body(ItemPutResponse.of(200, "Success"));
 	}
 
+	@ApiOperation(value = "판매 상품 Delete", notes = "판매 상품 삭제", response =
+		                                                          ItemDeleteResponse.class)
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK"),
+		@ApiResponse(code = 400, message = "Bad Request"),
+		@ApiResponse(code = 401, message = "Unauthorized"),
+		@ApiResponse(code = 403, message = "Forbidden"),
+		@ApiResponse(code = 404, message = "Not Found")
+	})
 	@DeleteMapping("/{itemId}")
 	public ResponseEntity<? super ItemDeleteResponse> deleteItem(
 		@ApiIgnore @RequestHeader("Authorization") String token,
-		@PathVariable("itemId") String itemId) {
+		@ApiParam(value = "삭제할 상점 ID", required = true) @PathVariable("itemId") String itemId) {
 		try {
 			String userId = restUtil.getUserId(token);
 			itemService.deleteItemByItemId(itemId, userId);
@@ -84,11 +105,20 @@ public class ItemController {
 			       .body(ItemDeleteResponse.of(200, "Success"));
 	}
 
+	@ApiOperation(value = "판매 상품 Update", notes = "판매 상품 업데이트", response =
+		                                                            ItemPatchResponse.class)
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK"),
+		@ApiResponse(code = 400, message = "Bad Request"),
+		@ApiResponse(code = 401, message = "Unauthorized"),
+		@ApiResponse(code = 403, message = "Forbidden"),
+		@ApiResponse(code = 404, message = "Not Found")
+	})
 	@PatchMapping("/{storeId}")
 	public ResponseEntity<? super ItemPatchResponse> updateItem(
 		@ApiIgnore @RequestHeader("Authorization") String token,
-		@RequestBody ItemPatchRequest itemPatchRequest,
-		@PathVariable("storeId") String storeId) {
+		@ApiParam(value = "업데이트할 상품 정보", required = true) @RequestBody ItemPatchRequest itemPatchRequest,
+		@ApiParam(value = "상점 ID", required = true) @PathVariable("storeId") String storeId) {
 		try {
 			String userId = restUtil.getUserId(token);
 			Store targetStore = restUtil.getStoreByStoreId(storeId);
@@ -106,9 +136,18 @@ public class ItemController {
 			       .body(ItemPatchResponse.of(200, "Success"));
 	}
 
+	@ApiOperation(value = "판매 상품 리스트 Get", notes = "판매 상품 리스트 받기", response =
+		                                                               ItemListGetResponse.class)
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK"),
+		@ApiResponse(code = 400, message = "Bad Request"),
+		@ApiResponse(code = 403, message = "Forbidden"),
+		@ApiResponse(code = 404, message = "Not Found")
+	})
+
 	@GetMapping("/{storeId}")
 	public ResponseEntity<? super ItemListGetResponse> getItemList(
-		@PathVariable("storeId") String storeId) {
+		@ApiParam(value = "조회할 상점 ID", required = true) @PathVariable("storeId") String storeId) {
 		List<Item> itemList;
 		try {
 			itemList = itemService.getItemListByStoreId(storeId);
