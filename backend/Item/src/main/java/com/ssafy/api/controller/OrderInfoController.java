@@ -80,4 +80,31 @@ public class OrderInfoController {
                     .body(OrderInfoGetResponse.of(400, "주문내역 조회 실패", null));
         }
     }
+
+    @GetMapping("/market")
+    @ApiOperation(value = "픽업 매니저의 주문내역 조회", notes = "해당 픽업매니저의 시장 주문 내역 조회", response = OrderInfoListGetResponse.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 401, message = "Unauthorized"),
+            @ApiResponse(code = 403, message = "Forbidden"),
+            @ApiResponse(code = 404, message = "Not Found")
+    })
+    public ResponseEntity<OrderInfoListGetResponse> getMarketOrderInfo(@ApiIgnore @RequestHeader("Authorization") String token) {
+        List<OrderInfo> orderInfoList = null;
+        try {
+            User user = restUtil.getUserByToken(token);
+            if (user.getUserType().getId() == 3L) {
+                orderInfoList = orderInfoService.getMarketInfoList(user.getMarket().getId());
+                return ResponseEntity.ok(OrderInfoListGetResponse.of(200, "픽업 리스트", orderInfoList));
+            } else
+                return ResponseEntity.status(400).body(OrderInfoListGetResponse.of(400, "픽업 매니저가 아닙니다!", null));
+        } catch (AuthException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(OrderInfoListGetResponse.of(401, ex.getMessage(), null));
+        } catch (ResourceNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(OrderInfoListGetResponse.of(404, "주문내역 조회 실패", null));
+        }
+    }
 }

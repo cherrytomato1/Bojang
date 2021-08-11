@@ -11,4 +11,6 @@ public interface OrderInfoService {
 
     List<OrderInfo> getOrderInfoList(User user, Integer year);
 
+    List<OrderInfo> getMarketInfoList(Long marketId);
+
 }

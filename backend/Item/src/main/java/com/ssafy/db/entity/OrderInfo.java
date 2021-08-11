@@ -42,6 +42,9 @@ public class OrderInfo {
     @OneToMany(mappedBy = "orderInfo",cascade = CascadeType.ALL)
     private List<OrderItem> orderItemList = new ArrayList<>();
 
+    @ManyToOne
+    private Market market;
+
 
     public void addOrderItem(OrderItem orderItem){
         orderItemList.add(orderItem);
