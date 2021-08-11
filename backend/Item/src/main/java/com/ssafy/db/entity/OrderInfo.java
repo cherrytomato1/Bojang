@@ -1,5 +1,6 @@
 package com.ssafy.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -34,11 +35,15 @@ public class OrderInfo {
     @ManyToOne
     private PayType payType;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     private User user;
 
     @OneToMany(mappedBy = "orderInfo",cascade = CascadeType.ALL)
     private List<OrderItem> orderItemList = new ArrayList<>();
+
+    @ManyToOne
+    private Market market;
 
 
     public void addOrderItem(OrderItem orderItem){

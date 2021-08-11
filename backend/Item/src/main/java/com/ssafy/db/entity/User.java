@@ -43,13 +43,13 @@ public class User {
     private Market market;
 
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private List<OrderInfo> orderInfoList = new ArrayList<>();
-
-    public void addOrderInfo(OrderInfo orderInfo){
-        orderInfoList.add(orderInfo);
-        orderInfo.setUser(this);
-    }
+//    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+//    private List<OrderInfo> orderInfoList = new ArrayList<>();
+//
+//    public void addOrderInfo(OrderInfo orderInfo){
+//        orderInfoList.add(orderInfo);
+//        orderInfo.setUser(this);
+//    }
 
 
 
