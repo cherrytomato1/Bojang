@@ -32,8 +32,6 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath name = createString("name");
 
-    public final ListPath<OrderInfo, QOrderInfo> orderInfoList = this.<OrderInfo, QOrderInfo>createList("orderInfoList", OrderInfo.class, QOrderInfo.class, PathInits.DIRECT2);
-
     public final DateTimePath<java.time.LocalDateTime> registerTime = createDateTime("registerTime", java.time.LocalDateTime.class);
 
     public final QUserType userType;

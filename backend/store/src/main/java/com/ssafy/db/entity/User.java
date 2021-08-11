@@ -1,14 +1,20 @@
 package com.ssafy.db.entity;
 
-import lombok.*;
+import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -43,13 +49,13 @@ public class User {
     private Market market;
 
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private List<OrderInfo> orderInfoList = new ArrayList<>();
-
-    public void addOrderInfo(OrderInfo orderInfo){
-        orderInfoList.add(orderInfo);
-        orderInfo.setUser(this);
-    }
+//    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+//    private List<OrderInfo> orderInfoList = new ArrayList<>();
+//
+//    public void addOrderInfo(OrderInfo orderInfo){
+//        orderInfoList.add(orderInfo);
+//        orderInfo.setUser(this);
+//    }
 
 
 

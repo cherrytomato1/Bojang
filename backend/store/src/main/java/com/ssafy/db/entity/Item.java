@@ -1,17 +1,29 @@
 package com.ssafy.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
-
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @EntityListeners(AuditingEntityListener.class)
 public class Item {
 
@@ -38,12 +50,11 @@ public class Item {
     @Column(name = "register_time")
     private LocalDateTime registerTime;
 
-
     @ManyToOne
     private ItemType itemType;
 
-
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     private Store store;
 
 

@@ -1,10 +1,14 @@
 package com.ssafy.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
 
 @Entity
 @Getter
@@ -16,6 +20,7 @@ public class OrderItem {
     @GeneratedValue(generator = "Id")
     private String id;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     private OrderInfo orderInfo;
 
