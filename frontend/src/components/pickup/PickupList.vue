@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="color5">
     <v-main>
       <v-container>
         <v-row>
@@ -120,7 +120,7 @@
 
 <script>
 export default {
-  name: 'Pickup',
+  name: 'PickupList',
 }
 </script>
 

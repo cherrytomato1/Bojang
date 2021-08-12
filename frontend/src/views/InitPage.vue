@@ -21,42 +21,40 @@
           보 장
         </p>
       </v-layout>
+
       <!-- v-if로 로그인 상태 확인 -->
       <v-layout
         justify-center
       >
         <div
-          v-if="log==false"
           class="justify-center align-center"
         >
+          <!-- <div
+          v-if="log==false"
+          class="justify-center align-center"
+        > -->
           <button
             class="justify-center align-center"
             @click="login"
           >
-            <!-- <div id="app"> -->
-            <!-- <h2>For Kakao Vue</h2> -->
-            <!-- <img alt="kakao logo" src="@/assets/kakao_login_large.png"
-              @click="loginWithKakao"
-               /> -->
             <a
               :href="kakaoLoginLink"
               alt="kakao login"
             >
               <img
+                class="justify-center"
                 alt="kakao logo"
                 src="@/assets/kakao_login_large.png"
               >
             </a>
-            <!-- </div> -->
-            <!-- </router-link> -->
           </button>
-        </div>
-        <!-- v-else 로그인 되어있을 경우 -->
-        <div v-if="log">
-          <h1>
-            <!-- {{ name }} 고객님 -->
+          <!-- </div> -->
+          <!-- v-else 로그인 되어있을 경우 -->
+          <!-- <div v-if="log"> -->
+          <!-- {{ name }} 고객님 -->
+          <!-- <h1>
             로그인 되었습니다.
-          </h1>
+          </h1> -->
           <v-container>
             <v-form
               ref="form"
@@ -158,7 +156,21 @@ export default {
     validate () {
       this.$refs.form.validate()
       if (this.$refs.form.validate()){
-        this.$router.push('/mainpage')
+        // mainpage로 이동
+        if (this.types="손님") {
+          this.$router.push('/')
+        }
+        // if문으로 하면 이동은 되는데 마지막 if문으로 이동이 대부분
+        // 분기를 다른 방식으로 할 순 없을까?
+        else if (this.types="시장상인") {
+            this.$router.push('/basket')
+        }
+        else if (this.types="픽업 매니저") {
+          this.$router.push('/usermypage')
+        }
+        // else {
+        //   this.$router.push('/usermypage')
+        // }
       }
     },
     reset () {
