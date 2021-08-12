@@ -32,6 +32,9 @@ public class User {
     @Column(name = "name", nullable = false, length = 10)
     private String name;
 
+    @Column(name = "phone_number", length = 15)
+    private String phoneNumber;
+
     @Column(name = "account_number", length = 200)
     private String accountNumber;
 
