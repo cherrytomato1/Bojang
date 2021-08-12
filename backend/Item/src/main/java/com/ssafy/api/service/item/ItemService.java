@@ -22,7 +22,7 @@ public interface ItemService {
 
 	void deleteItemByItemId(String itemId, String userId);
 
-	void itemImgUpload(MultipartFile file,String itemId);
+	void itemImgUpload(MultipartFile file,String itemId,Store targetStore);
 
 
 }
