@@ -31,6 +31,7 @@ export default new Vuex.Store({
     },
     getIsLogin: (state) => {
         return state.isLogin;
+    },
     stores(state){
       return state.stores;
     },
@@ -56,13 +57,14 @@ export default new Vuex.Store({
         state.isLogin = true;
     } else {
         state.isLogin = false;
+    }
+    },
     setStores(state, payload) {
       state.stores = payload;
     },
     setStore(state, payload){
       state.store = payload;
     }
-    },
   },
   actions: { // 비동기 처리
     getMarkets(context) {
