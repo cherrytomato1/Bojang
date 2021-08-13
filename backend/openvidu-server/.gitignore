@@ -1,4 +1,5 @@
 /target/
 *.factorypath
+!openvidu-java-client-1.1.0.jar
 
 /src/main/resources/static/dashboard/
