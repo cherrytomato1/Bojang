@@ -32,6 +32,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath name = createString("name");
 
+    public final StringPath phoneNumber = createString("phoneNumber");
+
     public final DateTimePath<java.time.LocalDateTime> registerTime = createDateTime("registerTime", java.time.LocalDateTime.class);
 
     public final QUserType userType;

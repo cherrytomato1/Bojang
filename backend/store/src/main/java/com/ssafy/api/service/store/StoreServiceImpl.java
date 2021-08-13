@@ -1,5 +1,6 @@
 package com.ssafy.api.service.store;
 
+import com.ssafy.common.exception.handler.FileDownloadException;
 import com.ssafy.common.exception.handler.FileUploadException;
 import com.ssafy.config.FileUploadConfig;
 import com.ssafy.db.entity.Item;
@@ -8,10 +9,13 @@ import com.ssafy.db.mapping.store.StoreMapping;
 import com.ssafy.db.repository.ItemRepository;
 import com.ssafy.db.repository.StoreRepositiory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -130,5 +134,20 @@ public class StoreServiceImpl implements StoreService {
             return storeRepositiory.save(store);
         }
         return null;
+    }
+
+    @Override
+    public Resource loadFileAsResource(String fileName) {
+        try {
+            Path filePath = this.fileLocation.resolve(fileName).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+            if(resource.exists()) {
+                return resource;
+            }else {
+                throw new FileDownloadException(fileName + " 파일을 찾을 수 없습니다.");
+            }
+        }catch(MalformedURLException e) {
+            throw new FileDownloadException(fileName + " 파일을 찾을 수 없습니다.", e);
+        }
     }
 }
