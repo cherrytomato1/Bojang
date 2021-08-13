@@ -5,6 +5,7 @@ import com.ssafy.api.request.item.ItemPutRequest;
 import com.ssafy.db.entity.Item;
 import com.ssafy.db.entity.ItemType;
 import com.ssafy.db.entity.Store;
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -24,5 +25,6 @@ public interface ItemService {
 
 	void itemImgUpload(MultipartFile file,String itemId,Store targetStore);
 
+	Resource loadFileAsResource(String fileName);
 
 }
