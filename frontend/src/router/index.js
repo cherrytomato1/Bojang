@@ -7,6 +7,7 @@ import InitPage from '@/views/InitPage'
 import Basket from '@/views/Basket'
 import OrderCheck from '@/views/OrderCheck'
 import UserMypage from '@/views/UserMypage'
+import StoreMypage from '@/views/StoreMypage'
 import FrequentStoreManage from '@/views/FrequentStoreManage'
 import Payment from '@/views/Payment'
 import FinalOrderDetail from '@/views/FinalOrderDetail'
@@ -14,6 +15,7 @@ import FinalOrderDetail from '@/views/FinalOrderDetail'
 import StoreInformationModify from '@/components/mypage/StoreInformationModify'
 import OrderPayment from '@/components/payment/OrderPayment'
 import OauthHandler from '@/components/login/OauthHandler'
+import Pickup from '@/views/Pickup'
 
 
 ``
@@ -61,6 +63,11 @@ const routes = [
     component: UserMypage
   },
   {
+    path: '/storemypage',
+    name: 'StoreMypage',
+    component: StoreMypage
+  },
+  {
     path: '/orderpayment',
     name: 'OrderPayment',
     component: OrderPayment
@@ -69,6 +76,11 @@ const routes = [
     path: '/payment',
     name: 'Payment',
     component: Payment
+  },
+  {
+    path: '/pickup',
+    name: 'Pickup',
+    component: Pickup
   },
   {
     path: '/finalorderdetail',
