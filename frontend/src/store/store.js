@@ -12,6 +12,9 @@ export default new Vuex.Store({
     token: '',
     isLogin: false,
     frequentStore: [], // 전체 마켓들
+    stores: [], // (마켓, 카테고리 내)전체 가게들
+    store: [], // 마켓에서 선택된 가게
+
   },
   getters: {
     markets(state){
@@ -28,6 +31,11 @@ export default new Vuex.Store({
     },
     getIsLogin: (state) => {
         return state.isLogin;
+    stores(state){
+      return state.stores;
+    },
+    store(state){
+      return state.store;
     }
   },
   mutations: { // state 값 변경하는 함수.
@@ -48,6 +56,11 @@ export default new Vuex.Store({
         state.isLogin = true;
     } else {
         state.isLogin = false;
+    setStores(state, payload) {
+      state.stores = payload;
+    },
+    setStore(state, payload){
+      state.store = payload;
     }
     },
   },
@@ -59,7 +72,27 @@ export default new Vuex.Store({
           context.commit("setMarkets", data.data.marketList);
         })
         .catch(() => {
-          alert("수행 중 오류가 발생했습니다.");
+          alert("getMarkets 오류 발생");
+        });
+    },
+    getStores(context,payload) { // ​/api​/store​/category 해당 마켓의 카테고리별 가게 리스트
+      http
+        .get(payload)
+        .then(( data ) => {
+          context.commit("setStores", data.data.storeList);
+        })
+        .catch(() => {
+          alert("getStores 오류 발생");
+        });
+    },
+    getStore(context,payload) { // ​​/api​/store​/{storeId} 해당 ID의 가게 정보
+      http
+        .get(payload)
+        .then(( data ) => {
+          context.commit("setStore", data.data.store);
+        })
+        .catch(() => {
+          alert("getStore 오류 발생");
         });
     },
     getFrequentStore(context) {

@@ -3,7 +3,9 @@
     <Navbar />
     <StoreMap />
     <!-- <RecommendStore /> -->
-    <SelectStore />
+
+    <!-- 가게가 선택되었을 때 표시하기 위함 -->
+    <SelectStore v-if="!$store.getters.store" />
   </v-app>
 </template>
 

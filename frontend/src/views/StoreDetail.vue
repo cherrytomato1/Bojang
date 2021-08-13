@@ -41,6 +41,10 @@ export default {
     StoreLive,
     StoreProducts,
   },
+  created() {
+    this.$store.dispatch("getStore",`/api/store/${this.$route.query.storeId}`);
+  },
+
 }
 </script>
 
