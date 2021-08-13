@@ -22,17 +22,15 @@
         </p>
       </v-layout>
 
-      <!-- v-if로 로그인 상태 확인 -->
+
       <v-layout
         justify-center
       >
+        <!-- {{ $store.state.token }} -->
         <div
+          v-if="$store.state.token==''"
           class="justify-center align-center"
         >
-          <!-- <div
-          v-if="log==false"
-          class="justify-center align-center"
-        > -->
           <button
             class="justify-center align-center"
             @click="login"
@@ -48,15 +46,12 @@
               >
             </a>
           </button>
-          <!-- </div> -->
-          <!-- v-else 로그인 되어있을 경우 -->
-          <!-- <div v-if="log"> -->
-          <!-- {{ name }} 고객님 -->
-          <!-- <h1>
-            로그인 되었습니다.
-          </h1> -->
+        </div>
+
+        <div v-else>
           <v-container>
             <v-form
+
               ref="form"
               v-model="valid"
               lazy-validation
@@ -83,7 +78,6 @@
                 label="고객 유형"
                 required
               />
-
 
               <v-btn
                 v-if="validate"
@@ -118,6 +112,10 @@
 </style>
 
 <script>
+import axios from 'axios';
+import store from '@/store/store';
+// import Vuex from 'vuex';
+
 export default {
   name: "App",
   data: () => ({
@@ -129,6 +127,7 @@ export default {
     name: '',
     nameRules: [
       v => !!v || '이름을 입력해 주세요.',
+      v => (v && v.length <= 10) || 'Name must be less than 10 characters',
     ],
     phone: '',
     phoneRules: [
@@ -156,23 +155,84 @@ export default {
     validate () {
       this.$refs.form.validate()
       if (this.$refs.form.validate()){
-        // mainpage로 이동
-        if (this.types="손님") {
+      //   axios({
+      //   method: 'patch',
+      //   url: `http://localhost:8080/api/user`,
+      // })
+      // // userType
+      //   .then(function (userType) {
+      //     console.log(userType)
+      //   })
+        // console.log(store.state.token)
+        // const Token = store.state.getters("getToken", token);
+        const Token = store.state.token;
+        console.log("token", Token);
+        const headers = {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + Token,
+        };
+        // console.log(headers);
+
+        // axios
+        //   .get(`http://localhost:8080/api/user`, {
+        //     // name: this.name,
+        //     // phoneNumber: this.phoneNumber,
+        //     // userType: this.userType,
+        //     headers: headers,
+        //   })
+        //   .then(({ data }) => {
+        //     if (data == "success") {
+        //       console.log("update................", data);
+        //       alert("수정 완료!!!");
+        //     } else {
+        //       alert("수정 중 오류 발생");
+        //     }
+        //   })
+        //   .catch(() => {
+        //     alert("오류 발생");
+        //     // this.$router.push('/usermypage')
+
+        //   });
+
+
+      // console.log(this.name)
+      // console.log(this.phone)
+      // console.log(this.select)
+        if (this.select="손님") {
           this.$router.push('/')
         }
-        // if문으로 하면 이동은 되는데 마지막 if문으로 이동이 대부분
-        // 분기를 다른 방식으로 할 순 없을까?
-        else if (this.types="시장상인") {
-            this.$router.push('/basket')
+        if (this.select="시장상인") {
+          this.$router.push('/basket')
         }
-        else if (this.types="픽업 매니저") {
+        if (this.select="픽업 매니저") {
           this.$router.push('/usermypage')
         }
-        // else {
-        //   this.$router.push('/usermypage')
-        // }
       }
     },
+    // 기존 code
+    // validate () {
+    //   this.$refs.form.validate()
+    //   if (this.$refs.form.validate()){
+    //     // mainpage로 이동
+    //     if (this.types="손님") {
+    //       // console.log(this.types)
+    //       this.$router.push('/')
+    //     }
+    //     // if문으로 하면 이동은 되는데 마지막 if문으로 이동이 대부분
+    //     // 분기를 다른 방식으로 할 순 없을까?
+    //     else if (this.types="시장상인") {
+    //       // console.log(this.types)
+    //       this.$router.push('/basket')
+    //     }
+    //     else if (this.types="픽업 매니저") {
+    //       // console.log(this.types)
+    //       this.$router.push('/usermypage')
+    //     }
+    //     // else {
+    //     //   this.$router.push('/usermypage')
+    //     // }
+    //   }
+    // },
     reset () {
       this.$refs.form.reset()
     },

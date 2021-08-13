@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Mainpage from '@/views/Mainpage'
 import StoreDetail from '@/views/StoreDetail'
+import StoreManager from '@/views/StoreManager'
 import InitPage from '@/views/InitPage'
 
 import Basket from '@/views/Basket'
@@ -36,6 +37,11 @@ const routes = [
     path: '/storedetail',
     name: 'StoreDetail',
     component: StoreDetail
+  },
+  {
+    path: '/storemanager',
+    name: 'StoreManager',
+    component: StoreManager
   },
   {
     path: '/ordercheck',

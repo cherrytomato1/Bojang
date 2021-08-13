@@ -14,6 +14,7 @@ import StoreBar from '@/components/storeManager/StoreBar';
 import StoreManagerView from '@/components/storeManager/StoreManagerView';
 
 export default {
+  name: 'StoreManager',
   components: {
     StoreBar,
     StoreManagerView,

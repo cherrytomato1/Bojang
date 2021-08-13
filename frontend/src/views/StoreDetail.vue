@@ -34,6 +34,7 @@ import StoreLive from '@/components/storeDetail/StoreLive';
 import StoreProducts from '@/components/storeDetail/StoreProducts';
 
 export default {
+  name: 'StoreDetail',
   components: {
     Navbar,
     StoreSide,
