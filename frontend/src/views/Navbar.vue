@@ -86,7 +86,7 @@ export default {
     }
   },
   created() {
-     this.$store.dispatch("getMarkets");
+    this.$store.dispatch("getMarkets");
   }
 
 };
