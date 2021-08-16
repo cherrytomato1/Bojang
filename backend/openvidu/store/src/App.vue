@@ -31,6 +31,9 @@
           value="Leave session"
         />
       </div>
+      <div>
+        <button @click="toggleCamera()">toggleCamera</button>
+      </div>
       <div id="main-video" class="col-md-6">
         <user-video :stream-manager="mainStreamManager" />
       </div>
@@ -90,6 +93,7 @@ export default {
       publisher: undefined,
       subscribers: [],
       chats: [],
+      isFrontCamera: false,
       sendMsg: '',
 
       mySessionId: 'SessionA',
@@ -98,6 +102,38 @@ export default {
   },
 
   methods: {
+    toggleCamera() {
+      this.OV.getDevices().then((devices) => {
+        // Getting only the video devices
+        var videoDevices = devices.filter((device) => device.kind === 'videoinput');
+        console.log(videoDevices);
+        if (videoDevices && videoDevices.length > 1) {
+          // Creating a new publisher with specific videoSource
+          // In mobile devices the default and first camera is the front one
+          var newPublisher = this.OV.initPublisher('html-element-id', {
+            videoSource: this.isFrontCamera ? videoDevices[1].deviceId : videoDevices[0].deviceId,
+            publishAudio: true,
+            publishVideo: true,
+            mirror: this.isFrontCamera, // Setting mirror enable if front camera is selected
+          });
+
+          // Changing isFrontCamera value
+          this.isFrontCamera = !this.isFrontCamera;
+
+          // Unpublishing the old publisher
+          this.session.unpublish(this.mainStreamManager);
+
+          // Assigning the new publisher to our global variable 'publisher'
+          this.publisher = newPublisher;
+
+          this.mainStreamManager = this.publisher;
+
+          // --- Publish your stream ---
+
+          this.session.publish(this.mainStreamManager);
+        }
+      });
+    },
     chat_on_scroll() {
       this.$refs.chatDisplay.scrollTop = this.$refs.chatDisplay.scrollHeight;
     },
