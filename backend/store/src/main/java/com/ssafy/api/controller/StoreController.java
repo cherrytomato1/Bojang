@@ -90,7 +90,7 @@ public class StoreController {
         }
     }
 
-    @PatchMapping("/commnet")
+    @PatchMapping("/comment")
     @ApiOperation(value = "판매자의 가게 정보 UPDATE", notes = "store 객체 반환", response = StorePostResponse.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
