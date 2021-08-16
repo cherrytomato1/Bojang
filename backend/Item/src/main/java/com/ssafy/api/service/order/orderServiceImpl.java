@@ -61,6 +61,7 @@ public class OrderServiceImpl implements OrderService {
 			orderItem.setComment(orderItemDto.getComment());
 			orderItem.setItem(item);
 			orderItem.setPickStatus(false);
+			orderItem.setAmount(orderItemDto.getAmount());
 			orderItemRepository.save(orderItem);
 
 			orderInfo.addOrderItem(orderItem);

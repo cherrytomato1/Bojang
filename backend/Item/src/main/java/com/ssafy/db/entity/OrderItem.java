@@ -28,7 +28,7 @@ public class OrderItem {
     private String comment;
 
     @Column(name = "amount")
-    private int amount;
+    private Long amount;
 
     @Column(name = "pickStatus")
     private boolean pickStatus;
