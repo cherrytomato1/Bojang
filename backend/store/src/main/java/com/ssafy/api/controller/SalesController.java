@@ -1,6 +1,7 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.chart.SalesGetRequest;
+import com.ssafy.api.request.sales.SalesUpdatePutRequest;
 import com.ssafy.api.response.sales.SalesGetListResponse;
 import com.ssafy.api.response.sales.SalesGetResponse;
 import com.ssafy.api.response.sales.SalesUpdateResponse;
@@ -14,7 +15,6 @@ import com.ssafy.db.entity.Sales;
 import com.ssafy.db.entity.Store;
 import com.ssafy.db.repository.StoreRepositiory;
 import io.swagger.annotations.*;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,11 +31,11 @@ import java.time.LocalDate;
 @RequestMapping("/api/sales")
 public class SalesController {
 
-	RestUtil restUtil;
+	final RestUtil restUtil;
 
-	SalesService salesService;
+	final SalesService salesService;
 
-	StoreService storeService;
+	final StoreService storeService;
 
 	@GetMapping()
 	@ApiOperation(value = "판매자의 전체 판매 내역", notes = "sales 리스트 반환", response =
@@ -64,7 +64,7 @@ public class SalesController {
 	@GetMapping("/date")
 	@ApiOperation(value = "판매자의 날짜별 판매 내역", notes = "start만 보내면 해당 요일, end 까지 보내면 start부터 end 사이의 "
 		                                                + "sales 리스트 반환", response =
-		                                                                                                             SalesGetListResponse.class)
+			                                                                  SalesGetListResponse.class)
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK"),
 		@ApiResponse(code = 400, message = "Bad Request"),
@@ -93,7 +93,7 @@ public class SalesController {
 		}
 	}
 
-	@PostMapping()
+	@PutMapping()
 	@ApiOperation(value = "판매자의 판매 금액 UPDATE", notes = "성공 여부 반환", response =
 		                                                               SalesUpdateResponse.class)
 	@ApiResponses(value = {
@@ -104,16 +104,19 @@ public class SalesController {
 		@ApiResponse(code = 404, message = "Not Found")
 	})
 	public ResponseEntity<? extends BaseResponseBody> updateSales(
-		@RequestBody @ApiParam(value = "가게 아이디")String storeId,
-		@RequestBody @ApiParam(value = "판매 금액", example = "3000") Integer sum) {
+		@RequestBody SalesUpdatePutRequest salesUpdatePutRequest) {
 		try {
-			Store targetStore = storeService.getStoreInfo(storeId);
-			salesService.updateSales(targetStore, LocalDate.now(), sum);
+			System.out.println(salesUpdatePutRequest.getStoreId());
+			Store targetStore = storeService.getStoreInfo(salesUpdatePutRequest.getStoreId());
+			salesService.updateSales(targetStore, LocalDate.now(), salesUpdatePutRequest.getSum());
 			return ResponseEntity.ok(SalesUpdateResponse.of(200, "Success"));
 		} catch (ResourceNotFoundException e) {
 			return ResponseEntity.status(404).body(StoreGetResponse.of(404, "조회 실패", null));
+		} catch (IllegalArgumentException ex) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(SalesUpdateResponse.of(400,
+				ex.getMessage()));
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
 				SalesUpdateResponse.of(HttpStatus.INTERNAL_SERVER_ERROR.value(), "조회 실패"));
 		}

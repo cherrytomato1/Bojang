@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SalesServiceImpl implements SalesService {
@@ -21,6 +22,7 @@ public class SalesServiceImpl implements SalesService {
 	@Autowired
 	StoreRepositiory storeRepositiory;
 
+	@Transactional
 	@Override
 	public Sales updateSales(Store targetStore, LocalDate now, Integer sum) {
 		if (sum <= 0) {
