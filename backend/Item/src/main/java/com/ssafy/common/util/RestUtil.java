@@ -24,11 +24,13 @@ public class RestUtil {
 
 	final ObjectMapper objectMapper;
 
+	final String TOKEN_KEY = "Authorization";
+
 	public String getUserId(String token) {
 		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.set("Authorization", token);
+		httpHeaders.set(TOKEN_KEY, token);
 		String id;
-		String url = "http://localhost:8080/api/user/id";
+		String url = "http://localhost:8085/api/user/id";
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<HttpHeaders> entity = new HttpEntity<>(null, httpHeaders);
 		try {
@@ -44,8 +46,8 @@ public class RestUtil {
 
 	public User getUserByToken(String token) {
 		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.set("Authorization", token);
-		String url = "http://localhost:8080/api/user";
+		httpHeaders.set(TOKEN_KEY, token);
+		String url = "http://localhost:8085/api/user";
 
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<HttpHeaders> entity = new HttpEntity<>(null, httpHeaders);
@@ -95,7 +97,7 @@ public class RestUtil {
 
 	public void sendBillingRequestByOrderInfoId(String orderInfoId, String token) {
 		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.set("Authorization", token);
+		httpHeaders.set(TOKEN_KEY, token);
 
 		String url = "http://localhost:8083/api/billing/";
 		RestTemplate restTemplate = new RestTemplate();
@@ -111,6 +113,24 @@ public class RestUtil {
 			throw new RestTemplateException(url, ex.getMessage(), ex.getStatusCode().value());
 		}
 	}
+
+	public void addStoreSalePrice(Integer price, String token) {
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.set("Authorization", token);
+
+		String url = "http://localhost:8081/api/sales";
+		RestTemplate restTemplate = new RestTemplate();
+		MultiValueMap<String, Integer> paramMap = new LinkedMultiValueMap<>();
+		paramMap.add("sum", price);
+		HttpEntity<MultiValueMap<String, Integer>> entity = new HttpEntity<>(paramMap, httpHeaders);
+
+		try {
+			restTemplate.exchange(url, HttpMethod.POST, entity, Map.class);
+		} catch (final HttpClientErrorException ex) {
+			throw new RestTemplateException(url, ex.getMessage(), ex.getStatusCode().value());
+		}
+	}
+
 
 //	public void patchStore(Store store) {
 //		String url = "http://localhost:8081/api/store/";

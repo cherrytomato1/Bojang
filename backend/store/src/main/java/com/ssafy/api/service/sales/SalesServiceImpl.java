@@ -14,65 +14,63 @@ import java.util.Optional;
 
 @Service
 public class SalesServiceImpl implements SalesService {
-    @Autowired
-    SalesRepository salesRepository;
 
-    @Autowired
-    StoreRepositiory storeRepositiory;
+	@Autowired
+	SalesRepository salesRepository;
 
-    @Override
-    public Sales updateSales(String userId, LocalDate now, Integer sum) {
-        Optional<Store> storeOptional = storeRepositiory.findByUser_Id(userId);
-        if (storeOptional.isPresent()) {
-            Store store = storeOptional.get();
-            Optional<Sales> salesOptional = salesRepository.findByStore_IdAndRegisterTime(store.getId(), now);
-            if (salesOptional.isPresent()) {
-                Sales sales = salesOptional.get();
-                if (sum > 0)
-                    sales.setSum(sales.getSum() + sum);
-                return salesRepository.save(sales);
-            } else {
-                Sales sales = new Sales();
-                sales.setStore(store);
-                sales.setSum(sum);
-                return salesRepository.save(sales);
-            }
-        }
-        return null;
-    }
+	@Autowired
+	StoreRepositiory storeRepositiory;
 
-    @Override
-    public List<SalesMapping> getSales(String userId) {
-        Optional<Store> storeOptional = storeRepositiory.findByUser_Id(userId);
-        if (storeOptional.isPresent()) {
-            Store store = storeOptional.get();
-            List<SalesMapping> salesList = salesRepository.findByStore_Id(store.getId());
-            return salesList;
-        }
-        return null;
-    }
+	@Override
+	public Sales updateSales(Store targetStore, LocalDate now, Integer sum) {
+		if (sum <= 0) {
+			throw new IllegalArgumentException("Sum must be at least 0");
+		}
 
-    @Override
-    public List<SalesMapping> getDateSales(String userId, LocalDate start, LocalDate end) {
-        Optional<Store> storeOptional = storeRepositiory.findByUser_Id(userId);
-        if (storeOptional.isPresent()) {
-            Store store = storeOptional.get();
-            List<SalesMapping> salesList = salesRepository.findByStore_IdAndRegisterTimeBetween(store.getId(), start, end);
-            return salesList;
-        }
-        return null;
-    }
+		Sales sales = salesRepository.findByStore_IdAndRegisterTime(targetStore.getId(), now)
+			              .orElseGet(() -> Sales.builder().sum(0).store(targetStore).build());
 
-    @Override
-    public Sales getDateSales(String userId, LocalDate start) {
-        Optional<Store> storeOptional = storeRepositiory.findByUser_Id(userId);
-        if (storeOptional.isPresent()) {
-            Store store = storeOptional.get();
-            Optional<Sales> salesOptional = salesRepository.findByStore_IdAndRegisterTime(store.getId(), start);
-            if (salesOptional.isPresent()) {
-                return salesOptional.get();
-            }
-        }
-        return null;
-    }
+		sales.setSum(sales.getSum() + sum);
+
+		return salesRepository.save(sales);
+	}
+
+	@Override
+	public List<SalesMapping> getSales(String userId) {
+		Optional<Store> storeOptional = storeRepositiory.findByUser_Id(userId);
+		if (storeOptional.isPresent()) {
+			Store store = storeOptional.get();
+			List<SalesMapping> salesList = salesRepository.findByStore_Id(store.getId());
+			return salesList;
+		}
+		return null;
+	}
+
+	@Override
+	public List<SalesMapping> getDateSales(String userId, LocalDate start, LocalDate end) {
+		Optional<Store> storeOptional = storeRepositiory.findByUser_Id(userId);
+		if (storeOptional.isPresent()) {
+			Store store = storeOptional.get();
+			List<SalesMapping> salesList = salesRepository
+				                               .findByStore_IdAndRegisterTimeBetween(store.getId(),
+					                               start, end);
+			return salesList;
+		}
+		return null;
+	}
+
+	@Override
+	public Sales getDateSales(String userId, LocalDate start) {
+		Optional<Store> storeOptional = storeRepositiory.findByUser_Id(userId);
+		if (storeOptional.isPresent()) {
+			Store store = storeOptional.get();
+			Optional<Sales> salesOptional = salesRepository
+				                                .findByStore_IdAndRegisterTime(store.getId(),
+					                                start);
+			if (salesOptional.isPresent()) {
+				return salesOptional.get();
+			}
+		}
+		return null;
+	}
 }
