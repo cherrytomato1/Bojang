@@ -40,12 +40,12 @@
             cols="12"
             md="2"
           >
-            <v-btn
+            <!-- <v-btn
               class="mr-4"
               color="primary"
             >
               우편번호 검색
-            </v-btn>
+            </v-btn> -->
           </v-col>
 
 
@@ -75,12 +75,12 @@
             cols="12"
             md="2"
           >
-            <v-btn
+            <!-- <v-btn
               class="mr-4"
               color="primary"
             >
               계좌확인
-            </v-btn>
+            </v-btn> -->
           </v-col>
           <v-btn
             class="mr-4"

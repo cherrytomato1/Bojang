@@ -6,7 +6,10 @@
           cols="8"
         >
           <h2>
+            <!-- {{ $store.getters.frequentStore.store.market.name }} -->
             <!-- {{ $store.getters.frequentStore }} -->
+            <!-- state는 mutation에서 받기만 하니까 비어있음 -->
+            <!-- {{ $store.state.frequentStore }} -->
             <!-- {{ $store.getters.frequentStore.market.name }} -->
             단골 가게 관리
           </h2>
@@ -42,47 +45,43 @@
               alt="가게 사진"
               style="width:60px"
             >
+            <!-- img 하는건 찾아보기 -->
+            <!-- {{ $store.getters.frequentStore[0].store.image }} -->
             <!-- <img
               :src="favoriteStoreList.store.image"
               alt="가게 사진"
               style="width:60px"
             > -->
           </v-col>
-
           <v-col
             cols="2"
           >
+            <!-- 찾아보기 - 안되는거 물어보기 -->
+            <!-- <p
+              v-for="(store, index) in stores"
+              :key="index"
+              :store="store"
+            > -->
             <p>
-              <!-- {{ $store.getters.frequentStore }} -->
-              싸피시장
-            </p><br>
-            <h3>민기네 수산</h3><br>
-            <p>
-              수산
+              <!-- v-for로 돌리기 -->
+              {{ $store.getters.frequentStore[index].store.market.name }}<br>
+              {{ $store.getters.frequentStore[index].store.name }}<br>
+              {{ $store.getters.frequentStore[index].store.storeType.name }}
             </p>
-            <!-- <v-text>
-              싸피시장<br>
-              <h3>민기네 수산</h3><br>
-              수산
-            </v-text> -->
           </v-col>
           <v-col
             cols="4"
           >
             <p>
-              <br>
-              싱싱한 생선 팔아요
+              {{ $store.getters.frequentStore[0].store.comment }}
             </p>
-            <!-- <v-text>
-              <br>
-              싱싱한 생선 팔아요
-            </v-text> -->
           </v-col>
           <v-col
             cols="2"
           >
-            <!-- x 표시 아이콘 찾으면 적용해주세요 -->
-            <v-icon>x</v-icon>
+            <v-icon @click="deleteFrequent(index)">
+              x
+            </v-icon>
             <!-- test -->
           </v-col>
         </v-row>
@@ -107,10 +106,16 @@ export default {
   name: 'FrequentStore',
   data() {
     return{
-      tab: null,
+      name: '',
     }
   },
+  // 이 부분 다시 하기
+  methods: {
+    deleteFrequent(index){
+      this.$store.dispatch("deleteFrequentStore",`/api/favorite?storeId=${this.$store.getters.frequentStore[index].store.id}`)
 
+    }
+  },
   computed:{
     ...mapGetters(["frequentStore", "getToken"])
   },
@@ -122,7 +127,6 @@ export default {
   // },
   created() {
     this.$store.dispatch("getFrequentStore");
-    // this.$store.dispatch("");
   }
 
 };

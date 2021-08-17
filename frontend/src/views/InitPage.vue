@@ -72,7 +72,7 @@
               />
 
               <v-select
-                v-model="select"
+                v-model="userType"
                 :items="types"
                 :rules="[v => !!v || '고객 유형을 선택해 주세요.']"
                 label="고객 유형"
@@ -133,7 +133,7 @@ export default {
     phoneRules: [
       v => !!v || '연락처를 입력해 주세요.',
     ],
-    select: null,
+    userType: null,
     types: [
       '손님',
       '시장 상인',
@@ -155,22 +155,38 @@ export default {
     validate () {
       this.$refs.form.validate()
       if (this.$refs.form.validate()){
-      //   axios({
-      //   method: 'patch',
-      //   url: `http://localhost:8080/api/user`,
-      // })
-      // // userType
-      //   .then(function (userType) {
-      //     console.log(userType)
-      //   })
-        // console.log(store.state.token)
-        // const Token = store.state.getters("getToken", token);
+
         const Token = store.state.token;
         console.log("token", Token);
         const headers = {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + Token,
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + Token,
         };
+        const userTypeLongValue = this.types.indexOf(this.userType) + 1
+
+        axios({
+        method: 'patch',
+        url: `http://localhost:8080/api/user`,
+        headers: headers,
+        data : {
+          userType : userTypeLongValue, name : this.name, phoneNumber: this.phone}
+      })
+      // userType
+        .then(function (userType) {
+          console.log(userType)
+        })
+          if (this.userType="1") {
+            this.$router.push('/')
+          }
+          else if (this.userType="2") {
+            this.$router.push('/basket')
+          }
+          else if (this.userType="3") {
+            this.$router.push('/usermypage')
+          }
+        // console.log(store.state.token)
+        // const Token = store.state.getters("getToken", token);
+
         // console.log(headers);
 
         // axios
@@ -198,15 +214,7 @@ export default {
       // console.log(this.name)
       // console.log(this.phone)
       // console.log(this.select)
-        if (this.select="손님") {
-          this.$router.push('/')
-        }
-        if (this.select="시장상인") {
-          this.$router.push('/basket')
-        }
-        if (this.select="픽업 매니저") {
-          this.$router.push('/usermypage')
-        }
+
       }
     },
     // 기존 code
@@ -236,7 +244,6 @@ export default {
     reset () {
       this.$refs.form.reset()
     },
-
   },
 }
 </script>

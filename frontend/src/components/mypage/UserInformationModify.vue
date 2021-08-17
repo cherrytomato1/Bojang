@@ -7,20 +7,18 @@
       <br>
       <v-form>
         <v-text-field
-          v-model="email"
-          :error-messages="emailErrors"
+          v-model="name"
+          :counter="10"
+          :rules="nameRules"
           label="Name"
           required
-          @input="$v.email.$touch()"
-          @blur="$v.email.$touch()"
         />
+
         <v-text-field
-          v-model="email"
-          :error-messages="emailErrors"
-          label="연락처"
+          v-model="phoneNumber"
+          :rules="phoneNumberRules"
+          label="phoneNumber"
           required
-          @input="$v.email.$touch()"
-          @blur="$v.email.$touch()"
         />
         <v-row>
           <v-col
@@ -50,8 +48,49 @@
 </template>
 
 <script>
+// import {mapGetters} from "vuex";
+
 export default {
   name: 'UserInformationModify',
+  data: () => ({
+      valid: true,
+      name: '',
+      nameRules: [
+        v => !!v || 'Name is required',
+        v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+      ],
+      phoneNumber: '',
+      phoneNumberRules: [
+        v => !!v || 'phoneNumber is required',
+        v => /.+@.+\..+/.test(v) || 'phoneNumber must be valid',
+      ]
+    }),
+  // computed:{
+  // //   ...mapGetters([""])
+  // // },
+  // // // watch:{
+  // // //   tab: function (val){ // 선택한 탭 변경될 경우
+  // // //     this.$store.commit("setFrequentStore",this.$store.getters.frequentStore[val]);
+  // // //     // console.log(this.$store.getters.market);
+  // // //   }
+  // // // },
+  // // created() {
+  // //   this.$store.dispatch("");
+  // //   // this.$store.dispatch("");
+  // // }
+  // },
+
+    methods: {
+      // validate를 바꿔도 됨
+      submit () {
+        this.$refs.observer.validate()
+      },
+      clear () {
+        this.name = ''
+        this.phoneNumber = ''
+        // this.$refs.observer.reset()
+      },
+    }
 }
 </script>
 
