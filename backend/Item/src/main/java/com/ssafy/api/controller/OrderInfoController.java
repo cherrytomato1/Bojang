@@ -116,7 +116,7 @@ public class OrderInfoController {
     @PatchMapping("/check")
     @ApiOperation(value = "픽업 매니저의 주문내역 상태 변경", response = BaseResponseBody.class)
     public ResponseEntity<BaseResponseBody> checkStatus(@ApiIgnore @RequestHeader("Authorization") String token,@RequestBody OrderInfoPatchRequest infoPatchRequest) {
-        if (infoPatchRequest.getOrderStatusId() < 4L || infoPatchRequest.getOrderStatusId() <= 0L) {
+        if (infoPatchRequest.getOrderStatusId() >= 4L || infoPatchRequest.getOrderStatusId() <= 0L) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(BaseResponseBody.of(400, "주문 상태 ID 확인"));
         }
