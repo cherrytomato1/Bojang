@@ -13,19 +13,32 @@
     <v-row>
       <v-tabs
         fixed-tabs
-        background-color="primary"
-        dark
+        class="color5"
       >
-        <v-tab>
+        <v-tab @click="change(1)">
           가게 관리
         </v-tab>
-        <v-tab>
+        <v-tab @click="change(2)">
           주문 관리
         </v-tab>
-        <v-tab>
+        <v-tab @click="change(3)">
           판매 금액
         </v-tab>
       </v-tabs>
     </v-row>
   </v-container>
 </template>
+
+<script>
+export default {
+  name: 'StoreBar',
+  data: () => ({
+    tab: 1,
+  }),
+  methods:{
+    change(no){
+      this.$emit('change',no);
+    }
+  }
+}
+</script>

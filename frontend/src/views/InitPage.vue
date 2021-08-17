@@ -145,7 +145,7 @@ export default {
     kakaoLoginLink() {
       // return `https://kauth.kakao.com/oauth/authorize?client_id=${this.client_id}&redirect_uri=${this.redirect_uri}&response_type=code`;
       // return `http://localhost:80/oauth2/authorize/kakao?redirect_uri=http://localhost:80/oauth2/redirect`;
-      return `http://localhost:8080/oauth2/authorize/kakao?redirect_uri=http://localhost:80/oauth2/redirect`;
+      return `http://localhost:8085/oauth2/authorize/kakao?redirect_uri=http://localhost:80/oauth2/redirect`;
     },
   },
   methods: {
@@ -166,7 +166,7 @@ export default {
 
         axios({
         method: 'patch',
-        url: `http://localhost:8080/api/user`,
+        url: `http://localhost:8085/api/user`,
         headers: headers,
         data : {
           userType : userTypeLongValue, name : this.name, phoneNumber: this.phone}

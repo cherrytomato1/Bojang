@@ -10,11 +10,17 @@ export default new Vuex.Store({
   state: {
     markets: [], // 전체 마켓들
     market: [], // 선택된 마켓(id,name)
-    token: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODM2OTU3MjgxIiwianRpIjoiUzVjMzY3NTA2MmE0NCIsImlhdCI6MTYyOTA5MjUyOSwiZXhwIjoxNjI5MTUzMDA5fQ.rVoMikSnzm7gLq-0QTZqBcFH_2C1ZdSkmvCEsENkcWWMIIttvKFYuFDvaTpiDlNPhhuCUqB7kuxDhBHp3Tt54A',
-    isLogin: false,
-    frequentStore: [], // 단골 가게
     stores: [], // (마켓, 카테고리 내)전체 가게들
     store: [], // 마켓에서 선택된 가게
+    myStore: [], // 나의 가게정보 (상점 정보수정 시 필요)
+
+    // 정준님 토큰
+    // token: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODM2OTU3MjgxIiwianRpIjoiUzVjMzY3NTA2MmE0NCIsImlhdCI6MTYyOTA5MjUyOSwiZXhwIjoxNjI5MTUzMDA5fQ.rVoMikSnzm7gLq-0QTZqBcFH_2C1ZdSkmvCEsENkcWWMIIttvKFYuFDvaTpiDlNPhhuCUqB7kuxDhBHp3Tt54A`
+
+    // 태욱 토큰
+    token: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODQyNzQzNzQxIiwianRpIjoiUzBmZWIwMTdkMWQxNCIsImlhdCI6MTYyOTEyNzk4MiwiZXhwIjoxNjI5MTg4NDYyfQ.oziEyg3RfIfXSNWNxpz_Q6O82Tfa-X4cfxTxeFz3eiMjvsRFRooeT6y0Yz03qOGeEfy6c-7dj24StTASQk8VDw',
+    isLogin: false,
+    frequentStore: [], // 단골가게
     orderList: [], // 주문내역
     basketList: [],
   },
@@ -25,6 +31,17 @@ export default new Vuex.Store({
     market(state){
       return state.market;
     },
+    stores(state){
+      return state.stores;
+    },
+    store(state){
+      return state.store;
+    },
+    myStore(state){
+      return state.myStore;
+    },
+
+
     frequentStore(state){
       return state.frequentStore;
     },
@@ -33,12 +50,6 @@ export default new Vuex.Store({
     },
     getIsLogin: (state) => {
         return state.isLogin;
-    },
-    stores(state){
-      return state.stores;
-    },
-    store(state){
-      return state.store;
     },
     orderList(state){
       return state.orderList;
@@ -54,7 +65,28 @@ export default new Vuex.Store({
     setMarket(state, payload){ // 선택된 market명으로 변경
       state.market = payload;
     },
-    setFrequentStore(state, payload){
+    setStores(state, payload) {
+      // section 번호순으로 정렬
+      payload.sort((a,b) =>{
+        let compare = 0;
+        if (a['section'] > b['section']) {
+          compare = 1;
+        } else if (b['section'] > a['section']) {
+          compare = -1;
+        }
+        return compare;
+      });
+      state.stores = payload;
+    },
+    setStore(state, payload){
+      state.store = payload;
+    },
+    setMyStore(state, payload){
+      state.myStore = payload;
+    },
+
+
+    setFrequentStore(state, payload){ // 선택된 market명으로 변경
       state.frequentStore = payload;
     },
     setToken(state, payload){
@@ -63,16 +95,11 @@ export default new Vuex.Store({
     setIsLogin(state){
       if (localStorage.getItem("token")) {
         state.isLogin = true;
-    } else {
+      } else {
         state.isLogin = false;
-    }
+      }
     },
-    setStores(state, payload) {
-      state.stores = payload;
-    },
-    setStore(state, payload){
-      state.store = payload;
-    },
+
     setOrderList(state, payload){
       state.orderList = payload;
     },
@@ -111,14 +138,37 @@ export default new Vuex.Store({
           alert("getStore 오류 발생");
         });
     },
+    getMyStore(context){
+      http
+        .get("/api/store", {
+          headers: {
+            // Authorization: `Bearer `+ this.state.token
+            Authorization: `Bearer `+ this.getters.getToken
+          }
+        })
+        .then(( data ) => {
+          context.commit("setMyStore", data.data.store);
+        })
+        .catch(() => {
+          alert("getMyStore 오류 발생");
+        });
+    },
+
+
+
+
+
+
     getFrequentStore(context) {
       http
         .get("/api/favorite", {
           // header token 팁
           headers: {
-            // Authorization: `Bearer `+ this.state.token
-            Authorization: `Bearer `+ this.getters.getToken
-          }})
+            Authorization: `Bearer `+ this.state.token
+            // Authorization: `Bearer `+ this.getters.getToken
+            // eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODQyNzQzNzQxIiwianRpIjoiUzBmZWIwMTdkMWQxNCIsImlhdCI6MTYyOTAzNzIyMSwiZXhwIjoxNjI5MDk3NzAxfQ.VPpKmqk4v1yYDKj_sBZrjMpcDTIS6kvEn_dbsuGL5noGRE4oyLb952ysPVgum9g9C5beP8tM5VzWyWiwcXfzHg
+            // Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODQyNzQzNzQxIiwianRpIjoiUzBmZWIwMTdkMWQxNCIsImlhdCI6MTYyOTAzNzIyMSwiZXhwIjoxNjI5MDk3NzAxfQ.VPpKmqk4v1yYDKj_sBZrjMpcDTIS6kvEn_dbsuGL5noGRE4oyLb952ysPVgum9g9C5beP8tM5VzWyWiwcXfzHg`
+            }})
         .then(( data ) => {
           // console.log(data)
           context.commit("setFrequentStore", data.data.favoriteStoreList);

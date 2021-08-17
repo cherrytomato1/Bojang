@@ -4,6 +4,8 @@ import Mainpage from '@/views/Mainpage'
 import StoreDetail from '@/views/StoreDetail'
 import StoreManager from '@/views/StoreManager'
 import InitPage from '@/views/InitPage'
+import LiveManager from '@/views/LiveManager'
+
 
 import Basket from '@/views/Basket'
 import OrderCheck from '@/views/OrderCheck'
@@ -97,8 +99,12 @@ const routes = [
     path: '/oauth2/redirect',
     name: 'OauthHandler',
     component: OauthHandler,
-},
-
+  },
+  {
+    path: '/livemanager',
+    name: 'LiveManager',
+    component: LiveManager,
+  },
 ]
 
 const router = new VueRouter({

@@ -15,8 +15,8 @@
       two-line
     >
       <v-list-item
-        v-for="product in products"
-        :key="product.name"
+        v-for="(item,idx) in $store.getters.store.itemList"
+        :key="idx"
       >
         <v-list-item-avatar>
           <v-icon
@@ -28,20 +28,23 @@
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item-title v-text="product.name" />
+          <v-list-item-title v-text="item.name" />
 
-          <v-list-item-subtitle v-text="product.price" />
+          <v-list-item-subtitle v-text="item.price" />
         </v-list-item-content>
 
         <v-list-item-action>
-          <v-btn icon>
+          <v-btn
+            icon
+            @click="clickHandler(item.id,amount[idx])"
+          >
             <v-icon>
               mdi-basket
             </v-icon>
           </v-btn>
 
           <v-text-field
-            v-model="product.count"
+            v-model="amount[idx]"
             type="number"
             min="1"
             max="9"
@@ -81,35 +84,39 @@
 </style>
 
 <script>
-  export default {
-    data: () => ({
-      products: [
-        {
-          name: '갈치',
-          price: '1마리 10,000원 / 5마리 40,000원',
-          count: 0,
+import axios from "axios";
+import {mapGetters} from "vuex";
+
+export default {
+  name: 'StoreProducts',
+  data: () => ({
+    amount: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+  }),
+  computed: {
+    ...mapGetters(["store"]),
+
+  },
+  methods: {
+    clickHandler: function(id,num) {
+      axios({
+        method:'put',
+        url:'http://localhost:8082/api/basket',
+        headers:{
+          Authorization: `Bearer `+ this.$store.getters.getToken
         },
-        {
-          name: '꽁치',
-          price: '1마리 10,000원 / 5마리 40,000원',
-          count: 0,
-        },
-        {
-          name: '한치',
-          price: '1마리 10,000원 / 5마리 40,000원',
-          count: 0,
-        },
-        {
-          name: '쥐치',
-          price: '1마리 10,000원 / 5마리 40,000원',
-          count: 0,
-        },
-        {
-          name: '자갈치',
-          price: '1마리 10,000원 / 5마리 40,000원',
-          count: 0,
-        },
-      ],
-    }),
-  }
+        data:{
+          amount: num,
+          itemId: id,
+        }
+      })
+      .then(() => {
+        alert("장바구니에 상품을 넣었습니다.");
+      })
+      .catch(() => {
+        alert("장바구니에 해당 상품이 이미 있습니다.");
+      });
+    }
+  },
+
+}
 </script>

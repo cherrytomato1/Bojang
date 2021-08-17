@@ -70,9 +70,10 @@
                             md="4"
                             lg="3"
                           >
-                            <v-card @click="clickHandler">
+                            <v-card @click="clickHandler(store.id)">
                               <v-card-title class="subheading font-weight-bold">
                                 {{ store.name }}
+                                {{ store.section }}
                               </v-card-title>
                             </v-card>
                           </v-col>
@@ -172,7 +173,7 @@ export default {
       ],
 
       // vuetify
-      keys:[],
+      keys:['section'],
       itemsPerPageArray: [4, 8, 12],
       search: '',
       filter: {},
@@ -192,21 +193,17 @@ export default {
     tab: function (val){ // 선택한 탭 변경될 경우
     val=val+1
       this.$store.dispatch("getStores","/api/store/category?marketId="+this.market+"&storeTypeId="+val);
-      // console.log("# "+this.$store.getters.market.id)
-      // console.log(val)
+
     },
     market: function (val){ // 선택한 시장 변경될 경우
       this.$store.dispatch("getStores","/api/store/category?marketId="+val+"&storeTypeId="+this.tab+1);
-      // console.log("### "+this.$store.getters.market.id)
-      // console.log(this.tab+1)
+
     }
   },
   created() {
     this.$store.dispatch("getStores","/api/store/category?marketId="+this.market+"&storeTypeId="+this.storeTypeId);
-        //  console.log("####"+this.$store.state.stores[0].name)
-    // 메인페이지로 왔을 때 가게 선택 섹션이 보이지 않아야 함.
+    // 메인페이지로 왔을 때 처음에 가게 선택 섹션이 보이지 않아야 함.
     this.$store.commit("setStore",[]);
-
   },
   methods: {
     nextPage () {
@@ -218,8 +215,8 @@ export default {
     updateItemsPerPage (number) {
       this.itemsPerPage = number
     },
-    clickHandler: function() {
-      this.$store.dispatch("getStore",`/api/store/${this.$route.query.storeId}`);
+    clickHandler: function(storeId) {
+      this.$store.dispatch("getStore",`/api/store/${storeId}`);
     }
   },
 
