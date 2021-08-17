@@ -93,7 +93,7 @@ public class SalesController {
 		}
 	}
 
-	@PutMapping()
+	@PutMapping("")
 	@ApiOperation(value = "판매자의 판매 금액 UPDATE", notes = "성공 여부 반환", response =
 		                                                               SalesUpdateResponse.class)
 	@ApiResponses(value = {
@@ -108,7 +108,7 @@ public class SalesController {
 		try {
 			System.out.println(salesUpdatePutRequest.getStoreId());
 			Store targetStore = storeService.getStoreInfo(salesUpdatePutRequest.getStoreId());
-			salesService.updateSales(targetStore, LocalDate.now(), salesUpdatePutRequest.getSum());
+			salesService.updateSales(targetStore, LocalDate.now(), salesUpdatePutRequest.getSum().intValue());
 			return ResponseEntity.ok(SalesUpdateResponse.of(200, "Success"));
 		} catch (ResourceNotFoundException e) {
 			return ResponseEntity.status(404).body(StoreGetResponse.of(404, "조회 실패", null));

@@ -1,5 +1,8 @@
 package com.ssafy.common.exception.handler;
 
+import lombok.Getter;
+
+@Getter
 public class RestTemplateException extends RuntimeException{
 	String serverUrl;
 	Integer statusCode;

@@ -1,6 +1,7 @@
 package com.ssafy.common.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
 import com.ssafy.common.exception.handler.AuthException;
 import com.ssafy.common.exception.handler.ResourceNotFoundException;
 import com.ssafy.common.exception.handler.RestTemplateException;
@@ -99,7 +100,7 @@ public class RestUtil {
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.set(TOKEN_KEY, token);
 
-		String url = "http://localhost:8083/api/billing/";
+		String url = "http://localhost:8083/api/billing";
 		RestTemplate restTemplate = new RestTemplate();
 		MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<>();
 		paramMap.add("orderInfoId", orderInfoId);
@@ -114,18 +115,30 @@ public class RestUtil {
 		}
 	}
 
-	public void addStoreSalePrice(Integer price, String token) {
-		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.set("Authorization", token);
-
+	public void addStoreSalePrice(Long price, String storeId) {
 		String url = "http://localhost:8081/api/sales";
+		HttpHeaders httpHeaders = new HttpHeaders();
+		//json 객체로 지정
+		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+//		httpHeaders.add("Content-Type", "application/json");
+
 		RestTemplate restTemplate = new RestTemplate();
-		MultiValueMap<String, Integer> paramMap = new LinkedMultiValueMap<>();
-		paramMap.add("sum", price);
-		HttpEntity<MultiValueMap<String, Integer>> entity = new HttpEntity<>(paramMap, httpHeaders);
+		MultiValueMap<String, Object> paramMap = new LinkedMultiValueMap<>();
+		//google.gson.JsonObject
+		JsonObject paramJSONObject = new JsonObject();
+		//프로퍼티 추가
+		paramJSONObject.addProperty("sum", price);
+		paramJSONObject.addProperty("storeId", storeId);
+//		paramMap.add("sum", price);
+//		paramMap.add("storeId", storeId);
+//		HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(paramMap, httpHeaders);
+
+		//json to string으로 전송
+		HttpEntity<String> entity = new HttpEntity<>(paramJSONObject.toString(), httpHeaders);
 
 		try {
-			restTemplate.exchange(url, HttpMethod.POST, entity, Map.class);
+			System.out.println(url);
+			restTemplate.exchange(url, HttpMethod.PUT, entity, Map.class);
 		} catch (final HttpClientErrorException ex) {
 			throw new RestTemplateException(url, ex.getMessage(), ex.getStatusCode().value());
 		}

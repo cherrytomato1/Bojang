@@ -59,21 +59,16 @@ public class OrderServiceImp implements OrderService {
 			//주문 내역에서 아이템 id 찾아오기
 			Item item = getItemByOrderItemId(orderItemDto.getItemId());
 
-
-			OrderItem orderItem = new OrderItem();
-			//addOrderItem에서 수행됨
-//			orderItem.setOrderInfo(orderInfo);
-			orderItem.setComment(orderItemDto.getComment());
-			orderItem.setItem(item);
-			orderItem.setPickStatus(false);
-			orderItem.setAmount(orderItemDto.getAmount());
-			orderItemRepository.save(orderItem);
+			OrderItem orderItem = setOrderItemAndSave(orderItemDto, item);
 
 			//아이템에서 스토어 아이디 찾기
 			String storeId = item.getStore().getId();
-
+			System.out.println(storeId);
+			restUtil.getStoreByStoreId(storeId);
+			//해당 상품 최종 구매금액
 			Long orderItemPrice = orderItemDto.getAmount() * item.getPrice();
 
+			//해당 주문에서 스토어 판매금액 합
 			storeSaleAmountMap.put(storeId, storeSaleAmountMap.getOrDefault(storeId, 0L) + orderItemPrice);
 
 			orderInfo.addOrderItem(orderItem);
@@ -81,8 +76,9 @@ public class OrderServiceImp implements OrderService {
 		}
 
 		orderInfo.setPrice(totalPrice);
-
 		orderInfo = orderInfoRepository.save(orderInfo);
+
+		storeSaleAmountMap.forEach((key, value) -> restUtil.addStoreSalePrice(value, key));
 		restUtil.sendBillingRequestByOrderInfoId(orderInfo.getId(), token);
 
 	}
@@ -100,5 +96,16 @@ public class OrderServiceImp implements OrderService {
 	private Item getItemByOrderItemId(String orderItemId) {
 		return itemRepository.findById(orderItemId).orElseThrow(
 			() -> new ResourceNotFoundException("Item", "OrderItemId", orderItemId));
+	}
+
+	private OrderItem setOrderItemAndSave(OrderItemRequestDto orderItemRequestDto, Item item) {
+		OrderItem orderItem = new OrderItem();
+		//addOrderItem에서 수행됨
+//			orderItem.setOrderInfo(orderInfo);
+		orderItem.setComment(orderItemRequestDto.getComment());
+		orderItem.setItem(item);
+		orderItem.setPickStatus(false);
+		orderItem.setAmount(orderItemRequestDto.getAmount());
+		return orderItemRepository.save(orderItem);
 	}
 }

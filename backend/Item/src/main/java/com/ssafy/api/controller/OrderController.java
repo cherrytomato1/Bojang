@@ -65,8 +65,9 @@ public class OrderController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 				       .body(OrderPostResponse.of(404, ex.getMessage()));
 		} catch (RestTemplateException ex) {
+			ex.printStackTrace();
 			return ResponseEntity.status(HttpStatus.CONFLICT)
-				       .body(OrderPostResponse.of(409, ex.getMessage()));
+				       .body(OrderPostResponse.of(409, ex.getServerUrl() + " : " + ex.getMessage()));
 		}
 		return ResponseEntity.status(HttpStatus.OK)
 			       .body(ItemDeleteResponse.of(200, "Success"));

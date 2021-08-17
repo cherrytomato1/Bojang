@@ -5,6 +5,7 @@ import com.ssafy.db.entity.Store;
 import com.ssafy.db.mapping.sales.SalesMapping;
 import com.ssafy.db.repository.SalesRepository;
 import com.ssafy.db.repository.StoreRepositiory;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +15,12 @@ import java.util.Optional;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class SalesServiceImpl implements SalesService {
 
-	@Autowired
-	SalesRepository salesRepository;
+	final SalesRepository salesRepository;
 
-	@Autowired
-	StoreRepositiory storeRepositiory;
+	final StoreRepositiory storeRepositiory;
 
 	@Transactional
 	@Override
