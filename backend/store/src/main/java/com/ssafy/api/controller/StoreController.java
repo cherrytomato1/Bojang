@@ -100,10 +100,9 @@ public class StoreController {
             @ApiResponse(code = 403, message = "Forbidden"),
             @ApiResponse(code = 404, message = "Not Found")
     })
-    public ResponseEntity<StorePostResponse> updateComment(@RequestHeader("Authorization") @ApiIgnore String token, @ApiParam(value = "가게 설명")StoreCommentPostRequest request) {
+    public ResponseEntity<StorePostResponse> updateComment(@RequestHeader("Authorization") @ApiIgnore String token,@RequestBody @ApiParam(value = "가게 설명")StoreCommentPostRequest request) {
         try {
             String userId = restUtil.getUserId(token);
-            System.out.println("--------------->"+request.getComment());
             return ResponseEntity.ok(StorePostResponse.of(201, "Success", storeService.updateComment(userId, request.getComment())));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(404).body(StorePostResponse.of(404, "가게 정보 조회 실패", null));
