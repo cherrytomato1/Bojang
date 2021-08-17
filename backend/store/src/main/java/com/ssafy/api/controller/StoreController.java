@@ -1,6 +1,7 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.store.StoreCategoryGetRequest;
+import com.ssafy.api.request.store.StoreCommentPostRequest;
 import com.ssafy.api.response.store.StoreGetResponse;
 import com.ssafy.api.response.store.StoreListGetResponse;
 import com.ssafy.api.response.store.StorePostResponse;
@@ -93,16 +94,17 @@ public class StoreController {
     @PostMapping("/comment")
     @ApiOperation(value = "판매자의 가게 정보 UPDATE", notes = "store 객체 반환", response = StorePostResponse.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 201, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 401, message = "Unauthorized"),
             @ApiResponse(code = 403, message = "Forbidden"),
             @ApiResponse(code = 404, message = "Not Found")
     })
-    public ResponseEntity<StorePostResponse> updateComment(@RequestHeader("Authorization") @ApiIgnore String token, @ApiParam(value = "가게 설명") String comment) {
+    public ResponseEntity<StorePostResponse> updateComment(@RequestHeader("Authorization") @ApiIgnore String token, @ApiParam(value = "가게 설명")StoreCommentPostRequest request) {
         try {
             String userId = restUtil.getUserId(token);
-            return ResponseEntity.ok(StorePostResponse.of(201, "Success", storeService.updateComment(userId, comment)));
+            System.out.println("--------------->"+request.getComment());
+            return ResponseEntity.ok(StorePostResponse.of(201, "Success", storeService.updateComment(userId, request.getComment())));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(404).body(StorePostResponse.of(404, "가게 정보 조회 실패", null));
         } catch (Exception e) {
@@ -113,7 +115,7 @@ public class StoreController {
     @PostMapping("/image")
     @ApiOperation(value = "판매자의 가게 이미지 upload", notes = "성공 여부 반환", response = BaseResponseBody.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 201, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 401, message = "Unauthorized"),
             @ApiResponse(code = 403, message = "Forbidden"),
