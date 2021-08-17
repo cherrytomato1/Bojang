@@ -120,7 +120,7 @@ public class StoreController {
             @ApiResponse(code = 403, message = "Forbidden"),
             @ApiResponse(code = 404, message = "Not Found")
     })
-    public ResponseEntity<BaseResponseBody> uploadStoreImage(@RequestHeader("Authorization") @ApiIgnore String token, @ApiParam(value = "이미지 파일") MultipartFile file) {
+    public ResponseEntity<BaseResponseBody> uploadStoreImage(@RequestHeader("Authorization") @ApiIgnore String token,@RequestBody @ApiParam(value = "이미지 파일") MultipartFile file) {
         try {
             String userId = restUtil.getUserId(token);
             storeService.storeImgUpload(file, userId);

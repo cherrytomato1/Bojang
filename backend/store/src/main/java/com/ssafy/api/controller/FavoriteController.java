@@ -1,6 +1,7 @@
 package com.ssafy.api.controller;
 
 
+import com.ssafy.api.request.favorite.FavoriteRegisterPostReq;
 import com.ssafy.api.response.favorite.FavoriteListGetResponse;
 import com.ssafy.api.response.favorite.FavoriteRegisterPostResponse;
 import com.ssafy.api.response.favorite.FavoriteSearchGetResponse;
@@ -65,10 +66,10 @@ public class FavoriteController {
             @ApiResponse(code = 403, message = "Forbidden"),
             @ApiResponse(code = 404, message = "Not Found")
     })
-    public ResponseEntity<FavoriteRegisterPostResponse> resgisterFavoriteStore(@RequestHeader("Authorization") @ApiParam(value = "사용자 토큰") @ApiIgnore String token, @ApiParam(value = "가게 ID") String storeId) {
+    public ResponseEntity<FavoriteRegisterPostResponse> resgisterFavoriteStore(@RequestHeader("Authorization") @ApiParam(value = "사용자 토큰") @ApiIgnore String token,@RequestBody @ApiParam(value = "가게 ID") FavoriteRegisterPostReq favoriteRegisterPostReq) {
         try {
             String userId = restUtil.getUserId(token);
-            return ResponseEntity.ok(FavoriteRegisterPostResponse.of(201, "Success", favoriteService.createFavoriteStore(userId, storeId)));
+            return ResponseEntity.ok(FavoriteRegisterPostResponse.of(201, "Success", favoriteService.createFavoriteStore(userId, favoriteRegisterPostReq.getStoreId())));
         } catch (ResourceNotFoundException ex) {
             return ResponseEntity.status(404).body(FavoriteRegisterPostResponse.of(404, "등록 실패",null));
         } catch (BadRequestException ex) {
