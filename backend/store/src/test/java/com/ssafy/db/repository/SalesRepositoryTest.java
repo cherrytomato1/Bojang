@@ -31,8 +31,8 @@ class SalesRepositoryTest {
 
     @Test
     public void update() {
-        Sales sales = salesRepository.findById("S9fadae1751cb").get();
-        sales.setRegisterTime(LocalDate.now().minusWeeks(2));
+        Sales sales = salesRepository.findById("Sb68644e79601").get();
+        sales.setRegisterTime(LocalDate.now().minusDays(1));
         salesRepository.save(sales);
     }
 
