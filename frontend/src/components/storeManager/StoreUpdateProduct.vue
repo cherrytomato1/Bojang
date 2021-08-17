@@ -13,6 +13,9 @@
                 prepend-icon="mdi-camera"
               />
             </td>
+            {{ $props.item-image }}
+            {{ $props.item.name }}
+
             <td>
               <v-btn
                 depressed
@@ -29,7 +32,9 @@
               <v-form
                 ref="form"
               >
-                <v-text-field />
+                <v-text-field
+                  v-model="itemName"
+                />
               </v-form>
             </td>
           </tr>
@@ -80,8 +85,10 @@
 
 <script>
 export default {
+  props: ['storeId','item','item-id','item-image','item-Name','item-content','item-price','item-on-sale'],
   data () {
     return {
+      itemName: $props.item.name,
       product: {
         image: '',
         name: '갈치',
