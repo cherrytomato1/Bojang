@@ -1,8 +1,7 @@
 package com.ssafy.db.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +9,7 @@ import lombok.Setter;
 @Getter @Setter
 public class StoreLive {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@ManyToOne
