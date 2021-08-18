@@ -18,10 +18,10 @@ public class OrderItem {
     private String id;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private OrderInfo orderInfo;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Item item;
 
     @Column(name = "comment")

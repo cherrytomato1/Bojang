@@ -20,7 +20,7 @@ public class Sales {
     @GeneratedValue(generator = "Id")
     private String id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Store store;
 
     //	@Temporal(TemporalType.DATE)

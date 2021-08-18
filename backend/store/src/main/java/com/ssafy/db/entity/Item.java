@@ -2,6 +2,7 @@ package com.ssafy.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -27,35 +28,35 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class Item {
 
-    @Id
-    @GenericGenerator(name = "Id", strategy = "com.ssafy.db.util.IdGenerator")
-    @GeneratedValue(generator = "Id")
-    private String id;
+	@Id
+	@GenericGenerator(name = "Id", strategy = "com.ssafy.db.util.IdGenerator")
+	@GeneratedValue(generator = "Id")
+	private String id;
 
-    @Column(name = "name")
-    private String name;
+	@Column(name = "name")
+	private String name;
 
-    @Column(name = "content")
-    private String content;
+	@Column(name = "content")
+	private String content;
 
-    @Column(name = "image")
-    private String image;
+	@Column(name = "image")
+	private String image;
 
-    @Column(name = "on_sale")
-    private boolean onSale;
+	@Column(name = "on_sale")
+	private boolean onSale;
 
-    private Long price;
+	private Long price;
 
-    @CreatedDate
-    @Column(name = "register_time")
-    private LocalDateTime registerTime;
+	@CreatedDate
+	@Column(name = "register_time")
+	private LocalDateTime registerTime;
 
-    @ManyToOne
-    private ItemType itemType;
+	@ManyToOne
+	private ItemType itemType;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Store store;
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Store store;
 
 
 }

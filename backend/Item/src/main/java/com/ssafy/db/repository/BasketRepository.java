@@ -1,6 +1,8 @@
 package com.ssafy.db.repository;
 
 import com.ssafy.db.entity.Basket;
+import com.ssafy.db.entity.Item;
+import com.ssafy.db.entity.User;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,6 +15,8 @@ public interface BasketRepository extends JpaRepository<Basket,String> {
 	List<Basket> findAllByUserId(String userId);
 
 	Optional<Basket> findByItem_IdAndUser_Id(String itemId, String userId);
+
+	Optional<Basket> findByItemAndUser(Item item, User user);
 
 	//영속성 컨텍스트도 함꼐 삭제
 	@Modifying(clearAutomatically = true)

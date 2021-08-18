@@ -21,8 +21,8 @@ class OrderServiceImpTest {
 
 	@Test
 	public void 아이템아이디와_사용자아이디로_장바구니를_삭제한다() {
-		String itemId = "12312312";
-		String userId = "123123";
+		String itemId = "S0212fd45e229";
+		String userId = "Sb7bf7830e855";
 		Optional<Basket> targetBasket = basketRepository.findByItem_IdAndUser_Id(itemId, userId);
 
 		if (!targetBasket.isPresent()) {
@@ -31,4 +31,5 @@ class OrderServiceImpTest {
 		}
 		basketRepository.delete(targetBasket.get());
 	}
+
 }

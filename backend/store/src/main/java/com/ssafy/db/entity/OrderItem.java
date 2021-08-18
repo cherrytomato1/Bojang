@@ -1,6 +1,7 @@
 package com.ssafy.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,17 +22,17 @@ public class OrderItem {
     private String id;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private OrderInfo orderInfo;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Item item;
 
     @Column(name = "comment")
     private String comment;
 
     @Column(name = "amount")
-    private int amount;
+    private Long amount;
 
     @Column(name = "pickStatus")
     private boolean pickStatus;
