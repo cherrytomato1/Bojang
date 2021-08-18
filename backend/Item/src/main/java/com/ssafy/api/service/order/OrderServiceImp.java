@@ -118,7 +118,7 @@ public class OrderServiceImp implements OrderService {
 	}
 
 	private void deleteBasketByItemAndUser(Item item, User user) {
-		Optional<Basket> targetBasket = basketRepository.findByItemIdAndUserId(item.getId(), user.getId());
+		Optional<Basket> targetBasket = basketRepository.findByItem_IdAndUser_Id(item.getId(), user.getId());
 		if (!targetBasket.isPresent()) {
 			return;
 		}

@@ -12,7 +12,7 @@ public interface BasketRepository extends JpaRepository<Basket,String> {
 
 	List<Basket> findAllByUserId(String userId);
 
-	Optional<Basket> findByItemIdAndUserId(String itemId, String userId);
+	Optional<Basket> findByItem_IdAndUser_Id(String itemId, String userId);
 
 	//영속성 컨텍스트도 함꼐 삭제
 	@Modifying(clearAutomatically = true)
