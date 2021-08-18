@@ -10,7 +10,6 @@ import lombok.Setter;
 @ApiModel("FavoriteRegisterPostReq")
 public class FavoriteRegisterPostReq {
 
-    @ApiModelProperty(name = "가게ID")
     String storeId;
 
 }

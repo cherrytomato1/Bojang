@@ -66,7 +66,7 @@ public class FavoriteController {
             @ApiResponse(code = 403, message = "Forbidden"),
             @ApiResponse(code = 404, message = "Not Found")
     })
-    public ResponseEntity<FavoriteRegisterPostResponse> resgisterFavoriteStore(@RequestHeader("Authorization") @ApiParam(value = "사용자 토큰") @ApiIgnore String token,@RequestBody @ApiParam(value = "가게 ID") FavoriteRegisterPostReq favoriteRegisterPostReq) {
+    public ResponseEntity<FavoriteRegisterPostResponse> registerFavoriteStore(@RequestHeader("Authorization") @ApiParam(value = "사용자 토큰") @ApiIgnore String token, @RequestBody @ApiParam(value = "가게 ID") FavoriteRegisterPostReq favoriteRegisterPostReq) {
         try {
             String userId = restUtil.getUserId(token);
             return ResponseEntity.ok(FavoriteRegisterPostResponse.of(201, "Success", favoriteService.createFavoriteStore(userId, favoriteRegisterPostReq.getStoreId())));
