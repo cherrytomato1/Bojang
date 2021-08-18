@@ -52,7 +52,7 @@ public class FavoriteController {
         } catch (ResourceNotFoundException ex) {
             return ResponseEntity.status(404).body(FavoriteListGetResponse.of(HttpStatus.NOT_FOUND.value(), "관심가게 리스트 조회 실패", null));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(FavoriteListGetResponse.of(HttpStatus.INTERNAL_SERVER_ERROR.value(), "조회 실패",null));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(FavoriteListGetResponse.of(HttpStatus.INTERNAL_SERVER_ERROR.value(), "조회 실패", null));
         }
     }
 
@@ -69,14 +69,18 @@ public class FavoriteController {
     public ResponseEntity<FavoriteRegisterPostResponse> registerFavoriteStore(@RequestHeader("Authorization") @ApiParam(value = "사용자 토큰") @ApiIgnore String token, @RequestBody @ApiParam(value = "가게 ID") FavoriteRegisterPostReq favoriteRegisterPostReq) {
         try {
             String userId = restUtil.getUserId(token);
-            return ResponseEntity.ok(FavoriteRegisterPostResponse.of(201, "Success", favoriteService.createFavoriteStore(userId, favoriteRegisterPostReq.getStoreId())));
+            FavoriteStore favoriteStore = favoriteService.createFavoriteStore(userId, favoriteRegisterPostReq.getStoreId());
+            if (favoriteStore == null) {
+                return ResponseEntity.status(500).body(FavoriteRegisterPostResponse.of(500, "이미 해당 가게가 있습니다!", null));
+            }
+            return ResponseEntity.ok(FavoriteRegisterPostResponse.of(201, "Success", favoriteStore));
         } catch (ResourceNotFoundException ex) {
-            return ResponseEntity.status(404).body(FavoriteRegisterPostResponse.of(404, "등록 실패",null));
+            return ResponseEntity.status(404).body(FavoriteRegisterPostResponse.of(404, "등록 실패", null));
         } catch (BadRequestException ex) {
             return ResponseEntity.status(400)
-                    .body(FavoriteRegisterPostResponse.of(400, ex.getMessage(),null));
+                    .body(FavoriteRegisterPostResponse.of(400, ex.getMessage(), null));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(FavoriteRegisterPostResponse.of(HttpStatus.INTERNAL_SERVER_ERROR.value(), "조회 실패",null));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(FavoriteRegisterPostResponse.of(HttpStatus.INTERNAL_SERVER_ERROR.value(), "조회 실패", null));
         }
     }
 
@@ -96,12 +100,12 @@ public class FavoriteController {
             List<FavoriteStore> favoriteStoreList = favoriteService.searchFavoriteStore(userId, storeName);
             return ResponseEntity.ok(FavoriteSearchGetResponse.of(HttpStatus.OK.value(), "Success", favoriteStoreList));
         } catch (ResourceNotFoundException ex) {
-            return ResponseEntity.status(404).body(FavoriteSearchGetResponse.of(404, "검색 실패",null));
+            return ResponseEntity.status(404).body(FavoriteSearchGetResponse.of(404, "검색 실패", null));
         } catch (BadRequestException ex) {
             return ResponseEntity.status(400)
-                    .body(FavoriteSearchGetResponse.of(400, ex.getMessage(),null));
+                    .body(FavoriteSearchGetResponse.of(400, ex.getMessage(), null));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(FavoriteSearchGetResponse.of(HttpStatus.INTERNAL_SERVER_ERROR.value(), "조회 실패",null));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(FavoriteSearchGetResponse.of(HttpStatus.INTERNAL_SERVER_ERROR.value(), "조회 실패", null));
         }
     }
 

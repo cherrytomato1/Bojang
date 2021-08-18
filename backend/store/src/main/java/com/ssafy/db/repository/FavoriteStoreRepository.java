@@ -1,6 +1,7 @@
 package com.ssafy.db.repository;
 
 import com.ssafy.db.entity.FavoriteStore;
+import com.ssafy.db.entity.Store;
 import com.ssafy.db.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -15,5 +16,7 @@ public interface FavoriteStoreRepository extends JpaRepository<FavoriteStore,Str
     List<FavoriteStore> findByUser(User user);
 
     List<FavoriteStore> findByStore_NameContainingAndUser(String name, User user);
+
+    Optional<FavoriteStore> findByStore(Store store);
 
 }
