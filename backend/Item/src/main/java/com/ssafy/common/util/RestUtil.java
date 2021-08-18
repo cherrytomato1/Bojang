@@ -78,7 +78,7 @@ public class RestUtil {
 
 	public Store getStoreByStoreId(String storeId) {
 //		String url = "http://localhost:8081/api/store/" + storeId;
-		String url = CURRENT_SERVER_DOMAIN + STORE_PORT + "/api/store" + storeId;
+		String url = CURRENT_SERVER_DOMAIN + STORE_PORT + "/api/store/" + storeId;
 		Store store;
 
 		RestTemplate restTemplate = new RestTemplate();

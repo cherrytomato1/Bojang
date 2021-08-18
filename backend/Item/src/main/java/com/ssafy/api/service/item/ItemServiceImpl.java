@@ -57,7 +57,6 @@ public class ItemServiceImpl implements ItemService {
     public Item getItemByItemId(String itemId) {
         return itemRepository.findById(itemId)
                    .orElseThrow(() -> new ResourceNotFoundException("Item", "Id", itemId));
-
     }
 
     @Transactional
@@ -79,7 +78,8 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void patchItemInStore(ItemPatchRequest itemPatchRequest, Store targetStore) {
         Item item = getItemByItemId(itemPatchRequest.getItemId());
-        if (!item.getStore().equals(targetStore)) {
+        if (!item.getStore().getId().equals(targetStore.getId())) {
+            System.out.println("Store Auth ex : item not equals " + item.getStore().getId() + " " + targetStore.getId());
             throw new AuthException("가게에 등록되어 있는 아이템이 아닙니다.");
         }
 
@@ -123,7 +123,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void itemImgUpload(MultipartFile file, String itemId, Store targetStore) {
         Item item = getItemByItemId(itemId);
-        if (!item.getStore().equals(targetStore)) {
+        if (!item.getStore().getId().equals(targetStore.getId())) {
             throw new AuthException("가게에 등록되어 있는 아이템이 아닙니다.");
         }
         itemImageUpload(item, file);
