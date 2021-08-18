@@ -6,6 +6,7 @@
       <v-spacer />
       <v-btn
         large
+        @click="moveHandler($store.getters.myStore.id)"
       >
         <h3>상점 개설</h3>
       </v-btn>
@@ -38,6 +39,9 @@ export default {
   methods:{
     change(no){
       this.$emit('change',no);
+    },
+    moveHandler: function(storeId) {
+      this.$router.push(`/livemanager?storeId=${storeId}`);
     }
   }
 }

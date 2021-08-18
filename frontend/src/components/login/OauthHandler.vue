@@ -27,8 +27,8 @@ export default {
             // this.$store.dispatch("getToken", token);
             this.$store.commit("setToken", token);
             // console.log(this.$store.state.token);
-            // localStorage.getItem("token", token);
-            // this.$store.dispatch("getIsLogin", true);
+            localStorage.getItem("token", token);
+            this.$store.dispatch("getIsLogin", true);
 
             this.$router.push({ name: "InitPage" });
         } else {

@@ -10,8 +10,9 @@
       >
         <colgroup>
           <col style="width:10%">
-          <col style="width:50%">
+          <col style="width:40%">
           <col style="width:30%">
+          <col style="width:20%">
         </colgroup>
 
         <tbody>
@@ -19,7 +20,7 @@
             <th>
               가게이름
             </th>
-            <td colspan="2">
+            <td colspan="3">
               <h1>{{ $store.getters.myStore.name }}</h1>
             </td>
           </tr>
@@ -35,19 +36,27 @@
                 accept="image/*"
                 label="이미지 등록 및 수정"
                 prepend-icon="mdi-camera"
+                @change="selectImage"
               />
-              현재 등록된 이미지 파일명 : <br>
-              {{ $store.getters.myStore.image }}
+            </td>
+            <td>
+              <v-btn @click="submit">
+                이미지 변경
+              </v-btn>
             </td>
           </tr>
           <tr>
             <th>가게설명</th>
             <td>
+              현재 등록된 가게설명 : <br><strong>{{ $store.getters.myStore.comment }}</strong>
+            </td>
+            <td>
               <v-form
                 ref="form"
               >
                 <v-text-field
-                  v-model="$store.getters.myStore.comment"
+                  v-model="comment"
+                  placeholder="수정할 가게설명"
                 />
               </v-form>
             </td>
@@ -59,23 +68,33 @@
           </tr>
           <tr>
             <th>판매품목</th>
-            <td colspan="2">
+            <td colspan="3">
+              <!-- 판매 품목 테이블 -->
               <v-simple-table>
+                <colgroup>
+                  <col style="width:30%">
+                  <col style="width:20%">
+                  <col style="width:25%">
+                  <col style="width:15%">
+                  <col style="width:5%">
+                  <col style="width:5%">
+                </colgroup>
+
                 <thead>
                   <tr>
-                    <th class="text-left">
+                    <th class="text-center">
                       이미지
                     </th>
-                    <th class="text-left">
+                    <th class="text-center">
                       이름
                     </th>
-                    <th class="text-left">
+                    <th class="text-center">
                       설명
                     </th>
-                    <th class="text-left">
+                    <th class="text-center">
                       가격
                     </th>
-                    <th class="text-left">
+                    <th class="text-center">
                       판매중
                     </th>
                     <th />
@@ -83,11 +102,10 @@
                 </thead>
                 <tbody>
                   <tr
-                    v-for="(item,idx) in $store.getters.myStore.itemList"
+                    v-for="(item,index) in $store.getters.myStore.itemList"
                     :key="item.id"
                   >
                     <td>
-                      {{ item.image }}
                       <v-img
                         :src="'http://localhost:8082/api/item/downloadFile/' + item.image"
                       />
@@ -102,12 +120,9 @@
                       />
                     </td>
                     <td>
-                      <btn @click="updateHandler(item)">
-                        test
-                      </btn>
                       <!-- 상품 수정 모달창 -->
                       <v-dialog
-                        v-model="dialog"
+                        v-model="dialogUpdate[index]"
                         width="500"
                       >
                         <template v-slot:activator="{ on, attrs }">
@@ -124,18 +139,12 @@
 
                         <v-card>
                           <StoreUpdateProduct
-                            :store-id="$store.getters.myStore.itemList"
-                            :item="item[idx]"
-                            :item-image="item.image"
-                            :item-name="item.name"
-                            :item-content="item.content"
-                            :item-price="item.price"
-                            :item-on-sale="item.onSale"
+                            :idx="index"
                           />
                           <v-btn
                             color="primary"
                             text
-                            @click="dialog = false"
+                            @click="dialogUpdate[index] = false"
                           >
                             X
                           </v-btn>
@@ -153,10 +162,9 @@
                   </tr>
                   <tr>
                     <td />
-                    <td />
                     <!-- 상품 추가 모달창 -->
                     <v-dialog
-                      v-model="dialog"
+                      v-model="dialogAdd"
                       width="500"
                     >
                       <template v-slot:activator="{ on, attrs }">
@@ -176,7 +184,7 @@
                         <v-btn
                           color="primary"
                           text
-                          @click="dialog = false"
+                          @click="dialogAdd = false"
                         >
                           X
                         </v-btn>
@@ -207,12 +215,22 @@ export default {
   },
   data () {
     return {
-      dialog: false,
-      // comment: this.$store.getters.myStore.comment
+      dialogUpdate:[],
+      // dialogUpdate: false,
+      dialogAdd: false,
+
+      image: '',
+      comment: this.$store.getters.myStore.comment,
     }
   },
+  created(){
+    for(var i = 0 ; i < this.$store.getters.myStore.itemList.length ; i++) {
+      this.dialogUpdate[i]=false;
+    }
+  },
+
   methods:{
-    updateComment(){ // 코멘트 수정버튼 클릭시 수행
+    updateComment(){
       axios({
         method:'post',
         url:'http://localhost:8081/api/store/comment',
@@ -220,17 +238,39 @@ export default {
           Authorization: `Bearer `+ this.$store.getters.getToken
         },
         data:{
-          comment: 'test',
+          comment: this.comment,
         }
       })
       .then(() => {
         // console.log(this.comment)
         alert("가게설명이 성공적으로 수정되었습니다.");
+        this.$router.go()
       })
     },
 
-    updateHhandler(item){
-      console.log(item.name)
+    selectImage(file) {
+      this.image = file;
+    },
+    async submit() {
+      const formData = new FormData();
+      formData.append("file", this.image);
+
+      try {
+        const { data } = await axios.post(
+          "http://localhost:8081/api/store/image",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer `+ this.$store.getters.getToken
+            },
+          }
+        );
+        console.log(data);
+        this.$router.go()
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 }

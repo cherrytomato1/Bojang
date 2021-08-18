@@ -18,7 +18,8 @@ export default new Vuex.Store({
     // token: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODM2OTU3MjgxIiwianRpIjoiUzVjMzY3NTA2MmE0NCIsImlhdCI6MTYyOTA5MjUyOSwiZXhwIjoxNjI5MTUzMDA5fQ.rVoMikSnzm7gLq-0QTZqBcFH_2C1ZdSkmvCEsENkcWWMIIttvKFYuFDvaTpiDlNPhhuCUqB7kuxDhBHp3Tt54A`
 
     // 태욱 토큰
-    token: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODQyNzQzNzQxIiwianRpIjoiUzBmZWIwMTdkMWQxNCIsImlhdCI6MTYyOTEyNzk4MiwiZXhwIjoxNjI5MTg4NDYyfQ.oziEyg3RfIfXSNWNxpz_Q6O82Tfa-X4cfxTxeFz3eiMjvsRFRooeT6y0Yz03qOGeEfy6c-7dj24StTASQk8VDw',
+    token:'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODQyNzQzNzQxIiwianRpIjoiUzBmZWIwMTdkMWQxNCIsImlhdCI6MTYyOTI1MTczMywiZXhwIjoxNjI5MzEyMjEzfQ.awcR2wOh-ftMZd6V6Pkmy2tVAD38Z05CJwTb9PtJ0fGkJLLAtELCo2ADB2GfFHGcNBZW-C5GSwsaPcVS4gUbbA',
+    // token:'',
     isLogin: false,
     frequentStore: [], // 단골가게
     orderList: [], // 주문내역
