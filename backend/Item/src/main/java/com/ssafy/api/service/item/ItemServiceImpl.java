@@ -32,6 +32,8 @@ import java.util.UUID;
 @Service
 public class ItemServiceImpl implements ItemService {
 
+    final String DEFAULT_ITEM_IMAGE = "71dcd7cb-370d-40a3-92f1-930ab0e99cc5_store_default.jpg";
+
     final Path fileLocation;
     @Autowired
     ItemRepository itemRepository;
@@ -70,6 +72,8 @@ public class ItemServiceImpl implements ItemService {
                         .store(targetStore).onSale(onSale == null ? false : onSale).build();
         if (itemPutRequest.getFile() != null) {
             itemImageUpload(item, itemPutRequest.getFile());
+        } else {
+            item.setImage(DEFAULT_ITEM_IMAGE);
         }
         itemRepository.save(item);
     }
