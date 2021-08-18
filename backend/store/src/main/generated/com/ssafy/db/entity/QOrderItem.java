@@ -22,7 +22,7 @@ public class QOrderItem extends EntityPathBase<OrderItem> {
 
     public static final QOrderItem orderItem = new QOrderItem("orderItem");
 
-    public final NumberPath<Integer> amount = createNumber("amount", Integer.class);
+    public final NumberPath<Long> amount = createNumber("amount", Long.class);
 
     public final StringPath comment = createString("comment");
 
