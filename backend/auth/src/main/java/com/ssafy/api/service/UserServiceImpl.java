@@ -13,6 +13,8 @@ import com.ssafy.db.repository.BankTypeRepository;
 import com.ssafy.db.repository.UserRepository;
 import com.ssafy.db.repository.UserTypeRepository;
 import com.ssafy.security.UserPrincipal;
+
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -102,6 +104,11 @@ public class UserServiceImpl implements UserService {
 		} catch (Exception ex) {
 			throw new BadRequestException(ex.getMessage());
 		}
+	}
+
+	@Override
+	public List<BankType> getBankType() {
+		return bankTypeRepository.findAll();
 	}
 
 	/*
