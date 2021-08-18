@@ -48,8 +48,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public AuthUser getAuthUser(UserPrincipal userPrincipal) {
 		return authUserRepository.findById(userPrincipal.getId())
-			                    .orElseThrow(() -> new ResourceNotFoundException("AuthUser", "id",
-				                    userPrincipal.getId()));
+			       .orElseThrow(() -> new ResourceNotFoundException("AuthUser", "id",
+				       userPrincipal.getId()));
 	}
 
 	@Override
@@ -71,7 +71,9 @@ public class UserServiceImpl implements UserService {
 
 		try {
 			existingUser.setName(userUpdatePatchRequest.getName());
-			updateUserType(existingUser, userUpdatePatchRequest.getUserType());
+			if (userUpdatePatchRequest.getUserType() != null) {
+				updateUserType(existingUser, userUpdatePatchRequest.getUserType());
+			}
 			existingUser.setPhoneNumber(userUpdatePatchRequest.getPhoneNumber());
 
 			if (existingUser.getUserType().getName()
@@ -115,7 +117,8 @@ public class UserServiceImpl implements UserService {
 		null인 값을 확인하면 BadRequestException 발생
 	 */
 	private void validateUpdateUserRequest(UserUpdatePatchRequest userUpdatePatchRequest) {
-		if (userUpdatePatchRequest.getName() == null || userUpdatePatchRequest.getUserType() == null
+		if (userUpdatePatchRequest.getName()
+			    == null /* || userUpdatePatchRequest.getUserType() == null */
 			    || userUpdatePatchRequest.getPhoneNumber() == null) {
 			throw new BadRequestException(
 				"User Update Request is invalidate : " + userUpdatePatchRequest.getName() + " "

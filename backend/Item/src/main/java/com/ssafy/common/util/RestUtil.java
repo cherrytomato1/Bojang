@@ -26,20 +26,25 @@ public class RestUtil {
 	final ObjectMapper objectMapper;
 
 	final String TOKEN_KEY = "Authorization";
+	final String LOCAL = "http://localhost";
+	final String AWS = "http://i5a508.p.ssafy.io";
+	final String CURRENT_SERVER_DOMAIN = LOCAL;
+
+	final String AUTH_PORT = ":8085";
+	final String STORE_PORT = ":8081";
+	final String BILLING_PORT = ":8083";
 
 	public String getUserId(String token) {
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.set(TOKEN_KEY, token);
-		String id;
-		String url = "http://localhost:8085/api/user/id";
+		String url = CURRENT_SERVER_DOMAIN + AUTH_PORT + "/api/user/id";
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<HttpHeaders> entity = new HttpEntity<>(null, httpHeaders);
 		try {
 			ResponseEntity<Map> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity,
 				Map.class);
 			Map<String, String> map = responseEntity.getBody();
-			id = map.get("userId");
-			return id;
+			return map.get("userId");
 		} catch (final HttpClientErrorException e) {
 			throw new AuthException(e.getMessage());
 		}
@@ -48,8 +53,9 @@ public class RestUtil {
 	public User getUserByToken(String token) {
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.set(TOKEN_KEY, token);
-		String url = "http://localhost:8085/api/user";
+//		String url = "http://localhost:8085/api/user";
 
+		String url = CURRENT_SERVER_DOMAIN + AUTH_PORT + "/api/user";
 		RestTemplate restTemplate = new RestTemplate();
 		HttpEntity<HttpHeaders> entity = new HttpEntity<>(null, httpHeaders);
 		User user;
@@ -71,7 +77,8 @@ public class RestUtil {
 	}
 
 	public Store getStoreByStoreId(String storeId) {
-		String url = "http://localhost:8081/api/store/" + storeId;
+//		String url = "http://localhost:8081/api/store/" + storeId;
+		String url = CURRENT_SERVER_DOMAIN + STORE_PORT + "/api/store" + storeId;
 		Store store;
 
 		RestTemplate restTemplate = new RestTemplate();
@@ -100,7 +107,8 @@ public class RestUtil {
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.set(TOKEN_KEY, token);
 
-		String url = "http://localhost:8083/api/billing";
+//		String url = "http://localhost:8083/api/billing";
+		String url = CURRENT_SERVER_DOMAIN + BILLING_PORT + "/api/billing";
 		RestTemplate restTemplate = new RestTemplate();
 		MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<>();
 		paramMap.add("orderInfoId", orderInfoId);
@@ -116,14 +124,15 @@ public class RestUtil {
 	}
 
 	public void addStoreSalePrice(Long price, String storeId) {
-		String url = "http://localhost:8081/api/sales";
+//		String url = "http://localhost:8081/api/sales";
+		String url = CURRENT_SERVER_DOMAIN + STORE_PORT + "/api/sales";
 		HttpHeaders httpHeaders = new HttpHeaders();
 		//json 객체로 지정
 		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 //		httpHeaders.add("Content-Type", "application/json");
 
 		RestTemplate restTemplate = new RestTemplate();
-		MultiValueMap<String, Object> paramMap = new LinkedMultiValueMap<>();
+//		MultiValueMap<String, Object> paramMap = new LinkedMultiValueMap<>();
 		//google.gson.JsonObject
 		JsonObject paramJSONObject = new JsonObject();
 		//프로퍼티 추가
