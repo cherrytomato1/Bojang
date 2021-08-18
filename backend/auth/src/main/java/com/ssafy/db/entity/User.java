@@ -20,34 +20,32 @@ public class User {
 	@Id
 	@GenericGenerator(name = "userIdGenerator", strategy = "com.ssafy.db.util.IdGenerator")
 	@GeneratedValue(generator = "userIdGenerator")
-	String id;
+	private String id;
 
 	@Column(name = "name", nullable = false, length = 15)
-	String name;
+	private String name;
 
-	@Column(name = "zip_code", length = 5)
-	Integer zipCode;
 
-	@Column(name = "address", length = 200)
-	String address;
+	@Column(name = "phone_number", length = 15)
+	private String phoneNumber;
 
-	@Column(name = "address_detail", length = 200)
-	String addressDetail;
-
+	//판매자 전용
 	@Column(name = "account_number", length = 200)
-	String accountNumber;
+	private String accountNumber;
 
 	//	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
-	LocalDateTime registerTime;
+	private LocalDateTime registerTime;
 
-	@Column(name = "phone_number", length = 15)
-	String phoneNumber;
+	//판매자 전용
+	@ManyToOne
+	private BankType bankType;
 
 	@ManyToOne
-	BankType bankType;
+	private UserType userType;
 
+	//픽업 매니저 전용
 	@ManyToOne
-	UserType userType;
+	private Market market;
 
 }

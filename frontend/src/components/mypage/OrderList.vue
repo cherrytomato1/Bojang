@@ -58,9 +58,17 @@
           cols="4"
         >
           <!-- 주문 날짜 불러오기 -->
-          <v-text>
+          <p>
+            <!-- {{ $store.getters.orderList.orderItemList[0].registerTime }} -->
+            <!-- {{ $store.getters.frequentStore[index].store.name }} -->
+            <!-- {{ $store.getters.orderList.orderInfo }} -->
+            {{ $store.getters.orderList }}
             2021.07.23 주문
-          </v-text>
+          </p>
+          <!-- <v-text>
+            {{ $store.getters.orderList }}
+            2021.07.23 주문
+          </v-text> -->
         </v-col>
         <v-col
           cols="2"
@@ -75,9 +83,12 @@
         <v-col
           cols="2"
         >
-          <v-text>
+          <p>
             106,000원
-          </v-text>
+          </p>
+          <!-- <v-text>
+            106,000원
+          </v-text> -->
         </v-col>
         <v-col
           cols="2"
@@ -116,26 +127,38 @@
             cols="4"
           >
             <!-- 입력한 필드가 아닌 데이터를 가져와야됨 변경필요 -->
-            <v-text>
+            <p>
               민기네 수산<br>
               고등어<br>
               수량: 13 <br>
-            </v-text>
+            </p>
+            <!-- <v-text>
+              민기네 수산<br>
+              고등어<br>
+              수량: 13 <br>
+            </v-text> -->
           </v-col>
           <v-col
             cols="2"
           >
-            <v-text>
+            <p>
               2000원<br>
               2021.07.23<br>
-            </v-text>
+            </p>
+            <!-- <v-text>
+              2000원<br>
+              2021.07.23<br>
+            </v-text> -->
           </v-col>
           <v-col
             cols="4"
           >
-            <v-text>
+            <p>
               요청사항 : 고등어 손질 부탁드려요!<br>
-            </v-text>
+            </p>
+            <!-- <v-text>
+              요청사항 : 고등어 손질 부탁드려요!<br>
+            </v-text> -->
           </v-col>
         </v-row>
       </v-container>
@@ -156,26 +179,38 @@
             cols="4"
           >
             <!-- 입력한 필드가 아닌 데이터를 가져와야됨 변경필요 -->
-            <v-text>
+            <p>
               수민이네 과일<br>
               사과<br>
               수량: 1 <br>
-            </v-text>
+            </p>
+            <!-- <v-text>
+              수민이네 과일<br>
+              사과<br>
+              수량: 1 <br>
+            </v-text> -->
           </v-col>
           <v-col
             cols="2"
           >
-            <v-text>
+            <p>
               5000원<br>
               2021.07.23<br>
-            </v-text>
+            </p>
+            <!-- <v-text>
+              5000원<br>
+              2021.07.23<br>
+            </v-text> -->
           </v-col>
           <v-col
             cols="4"
           >
-            <v-text>
+            <p>
               요청사항 : 많이 주세요<br>
-            </v-text>
+            </p>
+            <!-- <v-text>
+              요청사항 : 많이 주세요<br>
+            </v-text> -->
           </v-col>
         </v-row>
       </v-container>
@@ -199,9 +234,31 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
 
+// script vuetify에서 가져와야됨
 export default {
   name: 'OrderList',
+    data() {
+    return{
+      // 변경하기
+      tab: null,
+    }
+  },
+
+  computed:{
+    ...mapGetters(["orderList"])
+  },
+  watch:{
+    tab: function (val){ // 선택한 탭 변경될 경우
+      this.$store.commit("setOrderList",this.$store.getters.orderList[val]);
+      console.log(this.$store.getters.OrderList);
+    }
+  },
+  created() {
+    this.$store.dispatch("getOrderList");
+  }
+
 }
 </script>
 

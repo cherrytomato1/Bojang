@@ -20,16 +20,16 @@
     >
       <v-row>
         <v-img
-          :src="store.image"
+          :src="'http://localhost:8081/api/store/downloadFile/' + $store.getters.store.image"
         />
       </v-row>
       <v-row>
         <h3>
-          {{ store.name }}
+          {{ $store.getters.store.name }}
         </h3>
       </v-row>
       <v-row>
-        {{ store.ment }}
+        {{ $store.getters.store.comment }}
       </v-row>
     </v-container>
 
@@ -153,21 +153,20 @@
 </style>
 
 <script>
-  export default {
-    data: () => ({
-      sheet: false,
-      dialog: false,
-      store:
-        {
-          image:require("../../assets/store/store_1.jpg"),
-          name:'아담부각',
-          ment:'아담부각은 싸피시장에서 30년 이상 장사한 가게입니다. 믿음과 신뢰를 바탕으로 판매하고 있습니다.'
-        },
-    }),
-    methods: {
-      next() {
-        alert('단골가게로 등록되었습니다.')
-      },
+import {mapGetters} from "vuex";
+
+export default {
+  name: 'StoreSide',
+  data: () => ({
+    sheet: false,
+    dialog: false,
+  }),
+
+  methods: {
+    next() {
+      alert('단골가게로 등록되었습니다.')
     },
+
   }
+}
 </script>

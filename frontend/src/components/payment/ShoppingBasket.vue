@@ -38,7 +38,6 @@
           <v-col
             cols="1"
           >
-            <!-- 체크가 왜 안되지? -->
             <v-checkbox value />
           </v-col>
           <v-col
@@ -55,6 +54,7 @@
             cols="2"
           >
             <br>
+            <v-text> {{ $store.getters.basketList.item }} </v-text>
             <v-text> 고등어 </v-text>
           </v-col>
           <v-col
@@ -111,7 +111,8 @@
       </v-container>
     </v-form>
 
-    <v-container>
+    <!-- 필요시 하기 -->
+    <!-- <v-container>
       <v-row>
         <v-col
           cols="1"
@@ -128,7 +129,7 @@
           </v-btn>
         </v-col>
       </v-row>
-    </v-container>
+    </v-container> -->
     <v-container>
       <v-row>
         <v-col
@@ -157,9 +158,30 @@
   </v-app>
 </template>
 <script>
+import {mapGetters} from "vuex";
+
 export default {
   name: 'ShoppingBasket',
-}
+  data() {
+    return{
+      name: '',
+    }
+  },
+  // 이 부분 다시 하기
+  // methods: {
+  //   deleteFrequent(index){
+  //     this.$store.dispatch("deleteFrequentStore",`/api/favorite?storeId=${this.$store.getters.frequentStore[index].store.id}`)
+
+  //   }
+  // },
+  computed:{
+    ...mapGetters(["basketList", "getToken"])
+  },
+  created() {
+    this.$store.dispatch("getBasketList");
+  }
+
+};
 </script>
 
 <style>

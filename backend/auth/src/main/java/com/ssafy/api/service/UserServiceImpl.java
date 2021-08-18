@@ -13,6 +13,8 @@ import com.ssafy.db.repository.BankTypeRepository;
 import com.ssafy.db.repository.UserRepository;
 import com.ssafy.db.repository.UserTypeRepository;
 import com.ssafy.security.UserPrincipal;
+
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -48,8 +50,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public AuthUser getAuthUser(UserPrincipal userPrincipal) {
 		return authUserRepository.findById(userPrincipal.getId())
-			                    .orElseThrow(() -> new ResourceNotFoundException("AuthUser", "id",
-				                    userPrincipal.getId()));
+			       .orElseThrow(() -> new ResourceNotFoundException("AuthUser", "id",
+				       userPrincipal.getId()));
 	}
 
 	@Override
@@ -71,7 +73,9 @@ public class UserServiceImpl implements UserService {
 
 		try {
 			existingUser.setName(userUpdatePatchRequest.getName());
-			updateUserType(existingUser, userUpdatePatchRequest.getUserType());
+			if (userUpdatePatchRequest.getUserType() != null) {
+				updateUserType(existingUser, userUpdatePatchRequest.getUserType());
+			}
 			existingUser.setPhoneNumber(userUpdatePatchRequest.getPhoneNumber());
 
 			if (existingUser.getUserType().getName()
@@ -102,6 +106,11 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	@Override
+	public List<BankType> getBankType() {
+		return bankTypeRepository.findAll();
+	}
+
 	/*
 		id에서 유저 객체 반환
     */
@@ -115,7 +124,8 @@ public class UserServiceImpl implements UserService {
 		null인 값을 확인하면 BadRequestException 발생
 	 */
 	private void validateUpdateUserRequest(UserUpdatePatchRequest userUpdatePatchRequest) {
-		if (userUpdatePatchRequest.getName() == null || userUpdatePatchRequest.getUserType() == null
+		if (userUpdatePatchRequest.getName()
+			    == null /* || userUpdatePatchRequest.getUserType() == null */
 			    || userUpdatePatchRequest.getPhoneNumber() == null) {
 			throw new BadRequestException(
 				"User Update Request is invalidate : " + userUpdatePatchRequest.getName() + " "

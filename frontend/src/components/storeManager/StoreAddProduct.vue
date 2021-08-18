@@ -7,7 +7,8 @@
             <td>이미지</td>
             <td>
               <v-file-input
-                label="이미지 경로"
+                accept="image/*"
+                label="이미지 등록 및 수정"
                 filled
                 prepend-icon="mdi-camera"
               />

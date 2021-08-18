@@ -2,11 +2,15 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Mainpage from '@/views/Mainpage'
 import StoreDetail from '@/views/StoreDetail'
+import StoreManager from '@/views/StoreManager'
 import InitPage from '@/views/InitPage'
+import LiveManager from '@/views/LiveManager'
+
 
 import Basket from '@/views/Basket'
 import OrderCheck from '@/views/OrderCheck'
 import UserMypage from '@/views/UserMypage'
+import StoreMypage from '@/views/StoreMypage'
 import FrequentStoreManage from '@/views/FrequentStoreManage'
 import Payment from '@/views/Payment'
 import FinalOrderDetail from '@/views/FinalOrderDetail'
@@ -14,7 +18,7 @@ import FinalOrderDetail from '@/views/FinalOrderDetail'
 import StoreInformationModify from '@/components/mypage/StoreInformationModify'
 import OrderPayment from '@/components/payment/OrderPayment'
 import OauthHandler from '@/components/login/OauthHandler'
-import Login from '@/components/login/Login'
+import Pickup from '@/views/Pickup'
 
 
 ``
@@ -22,12 +26,12 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/Init',
     name: 'InitPage',
     component: InitPage
   },
   {
-    path: '/mainpage',
+    path: '/',
     name: 'Mainpage',
     component: Mainpage
   },
@@ -35,6 +39,11 @@ const routes = [
     path: '/storedetail',
     name: 'StoreDetail',
     component: StoreDetail
+  },
+  {
+    path: '/storemanager',
+    name: 'StoreManager',
+    component: StoreManager
   },
   {
     path: '/ordercheck',
@@ -62,6 +71,11 @@ const routes = [
     component: UserMypage
   },
   {
+    path: '/storemypage',
+    name: 'StoreMypage',
+    component: StoreMypage
+  },
+  {
     path: '/orderpayment',
     name: 'OrderPayment',
     component: OrderPayment
@@ -72,6 +86,11 @@ const routes = [
     component: Payment
   },
   {
+    path: '/pickup',
+    name: 'Pickup',
+    component: Pickup
+  },
+  {
     path: '/finalorderdetail',
     name: 'FinalOrderDetail',
     component: FinalOrderDetail
@@ -80,13 +99,12 @@ const routes = [
     path: '/oauth2/redirect',
     name: 'OauthHandler',
     component: OauthHandler,
-},
-{
-  path: '/login',
-  name: 'Login',
-  component: Login
-},
-
+  },
+  {
+    path: '/livemanager',
+    name: 'LiveManager',
+    component: LiveManager,
+  },
 ]
 
 const router = new VueRouter({
