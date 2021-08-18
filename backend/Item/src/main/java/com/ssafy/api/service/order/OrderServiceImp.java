@@ -5,12 +5,14 @@ import com.ssafy.common.exception.handler.AuthException;
 import com.ssafy.common.exception.handler.ResourceNotFoundException;
 import com.ssafy.common.model.dto.OrderItemRequestDto;
 import com.ssafy.common.util.RestUtil;
+import com.ssafy.db.entity.Basket;
 import com.ssafy.db.entity.Item;
 import com.ssafy.db.entity.OrderInfo;
 import com.ssafy.db.entity.OrderItem;
 import com.ssafy.db.entity.OrderStatus;
 import com.ssafy.db.entity.PayType;
 import com.ssafy.db.entity.User;
+import com.ssafy.db.repository.BasketRepository;
 import com.ssafy.db.repository.ItemRepository;
 import com.ssafy.db.repository.OrderInfoRepository;
 import com.ssafy.db.repository.OrderItemRepository;
@@ -19,6 +21,7 @@ import com.ssafy.db.repository.PayTypeRepository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +39,8 @@ public class OrderServiceImp implements OrderService {
 	final OrderItemRepository orderItemRepository;
 
 	final ItemRepository itemRepository;
+
+	final BasketRepository basketRepository;
 
 	final RestUtil restUtil;
 
@@ -72,6 +77,9 @@ public class OrderServiceImp implements OrderService {
 			storeSaleAmountMap.put(storeId, storeSaleAmountMap.getOrDefault(storeId, 0L) + orderItemPrice);
 
 			orderInfo.addOrderItem(orderItem);
+
+			deleteBasketByItemAndUser(item, user);
+
 			totalPrice += orderItemPrice;
 		}
 
@@ -107,5 +115,13 @@ public class OrderServiceImp implements OrderService {
 		orderItem.setPickStatus(false);
 		orderItem.setAmount(orderItemRequestDto.getAmount());
 		return orderItemRepository.save(orderItem);
+	}
+
+	private void deleteBasketByItemAndUser(Item item, User user) {
+		Optional<Basket> targetBasket = basketRepository.findByItemIdAndUserId(item.getId(), user.getId());
+		if (!targetBasket.isPresent()) {
+			return;
+		}
+		basketRepository.delete(targetBasket.get());
 	}
 }
