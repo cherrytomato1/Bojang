@@ -3,6 +3,7 @@ package com.ssafy.api.controller;
 
 import com.ssafy.api.request.UserUpdatePatchRequest;
 import com.ssafy.api.response.AuthUserProfileGetResponse;
+import com.ssafy.api.response.BankTypeGetResponse;
 import com.ssafy.api.response.UserDeleteResponse;
 import com.ssafy.api.response.UserIdGetResponse;
 import com.ssafy.api.response.UserGetResponse;
@@ -11,7 +12,9 @@ import com.ssafy.api.response.UserUpdatePatchResponse;
 import com.ssafy.api.service.UserService;
 import com.ssafy.common.exception.handler.BadRequestException;
 import com.ssafy.common.exception.handler.ResourceNotFoundException;
+import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.AuthUser;
+import com.ssafy.db.entity.BankType;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.AuthUserRepository;
 import com.ssafy.security.CurrentUser;
@@ -21,6 +24,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -236,5 +240,33 @@ public class UserController {
 		return ResponseEntity.status(200)
 			       .body(UserUpdatePatchResponse.of(200, "Success"));
 	}
+
+	@GetMapping("/bank-type")
+	@PreAuthorize("hasRole('USER')")
+	@ApiOperation(value = "Bank Type Get", notes = "은행 타입을 모두 조회한다 ", response =
+		                                                                          UserDeleteResponse.class)
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK"),
+		@ApiResponse(code = 400, message = "Bad Request"),
+		@ApiResponse(code = 401, message = "Unauthorized"),
+		@ApiResponse(code = 403, message = "Forbidden"),
+		@ApiResponse(code = 404, message = "Not Found")
+	})
+	public ResponseEntity<? extends BaseResponseBody> getBankTypeList() {
+		List<BankType> bankTypeList;
+		try {
+			bankTypeList = userService.getBankType();
+		} catch (ResourceNotFoundException ex) {
+			return ResponseEntity.status(404)
+				       .body(BankTypeGetResponse.of(404, "유저 정보 조회 실패", null));
+		} catch (BadRequestException ex) {
+			return ResponseEntity.status(400)
+				       .body(BankTypeGetResponse.of(400, ex.getMessage(), null));
+		}
+		return ResponseEntity.status(200)
+			       .body(BankTypeGetResponse.of(200, "Success", bankTypeList));
+	}
+
+
 
 }

@@ -17,13 +17,13 @@ import java.util.List;
 @ApiModel("BankTypeGetResponse")
 public class BankTypeGetResponse extends BaseResponseBody {
     @ApiModelProperty(name = "bank list")
-    List<BankType> list;
+    List<BankType> bankTypeList;
 
-    public static BankTypeGetResponse of(Integer statusCode, String message, List<BankType> list) {
+    public static BankTypeGetResponse of(Integer statusCode, String message, List<BankType> bankTypeList) {
         BankTypeGetResponse response = new BankTypeGetResponse();
         response.setStatusCode(statusCode);
         response.setMessage(message);
-        response.setList(list);
+        response.setBankTypeList(bankTypeList);
         return response;
     }
 }
