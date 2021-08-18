@@ -48,11 +48,24 @@ public class FavoriteServiceImpl implements FavoriteService {
             Optional<Store> optionalStore = storeRepositiory.findById(storeId);
             if (optionalStore.isPresent()) {
                 Store store = optionalStore.get();
-                FavoriteStore favoriteStore = new FavoriteStore();
-                favoriteStore.setUser(user);
-                favoriteStore.setStore(store);
-                return favoriteStoreRepository.save(favoriteStore);
+                if (findFavoriteStore(store) == null) {
+                    FavoriteStore favoriteStore = new FavoriteStore();
+                    favoriteStore.setUser(user);
+                    favoriteStore.setStore(store);
+                    return favoriteStoreRepository.save(favoriteStore);
+                } else
+                    return null;
+
             }
+        }
+        return null;
+    }
+
+    @Override
+    public FavoriteStore findFavoriteStore(Store store) {
+        Optional<FavoriteStore> favoriteStoreOptional = favoriteStoreRepository.findByStore(store);
+        if (favoriteStoreOptional.isPresent()) {
+            return favoriteStoreOptional.get();
         }
         return null;
     }
