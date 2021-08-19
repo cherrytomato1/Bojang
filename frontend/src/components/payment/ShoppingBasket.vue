@@ -79,13 +79,13 @@
                     max="100"
                     step="1"
                   /> -->
-                  <v-text-field
+                  <!-- <v-text-field
                     v-model="amount[idx]"
                     type="number"
                     min="1"
                     max="9"
                     step="1"
-                  />
+                  /> -->
                 </v-btn>
               </v-list-item-action>
             </v-col>

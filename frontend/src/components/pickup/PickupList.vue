@@ -25,13 +25,13 @@
               <v-col
                 cols="3"
               >
-                {{ fs.orderItemList[0].item.name }}
+                {{ fs.orderItemList.item.name }}
               </v-col>
 
               <v-col
                 cols="3"
               >
-                {{ fs.orderItemList[0].amount }}
+                {{ fs.orderItemList.amount }}
               </v-col>
               <v-col
                 cols="3"
@@ -42,7 +42,7 @@
                   <v-btn
                     @click="statusChange"
                   >
-                    {{ fs.orderItemList[0].pickStatus }}
+                    {{ fs.orderItemList.pickStatus }}
                   </v-btn>
                 </v-container>
               </v-col>
