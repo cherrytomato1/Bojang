@@ -10,118 +10,60 @@
           </h2>
         </v-col>
         <v-col
-          offset="10"
+          offset="9"
         >
+          <!-- <v-subheader>장바구니 > 주문결제 > 완료</v-subheader> -->
           <p>
             장바구니 > 주문결제 > 완료
           </p>
         </v-col>
       </v-row>
     </v-container>
-    <div
+    <div class="table-box">
+      <table
+        class="table table--min table--horizontal"
+        cellspacing="0"
+        cellpadding="0"
+      >
+        <colgroup>
+          <col style="width:10%">
+          <col style="width:40%">
+          <col style="width:30%">
+          <col style="width:20%">
+        </colgroup>
+        <!-- <div
       v-for="(fs, index) in basketList"
       :key="index"
-    >
-      <v-data-table
+    > -->
+        <!-- <v-data-table
         :headers="headers"
         :items="items"
         item-key="name"
         class="elevation-1"
-      >
-        <v-container>
-          <v-row>
-            <v-col
-              cols="2"
-              offset="1"
-            >
-              <!-- 시장 부분 데이터에서 없는듯 -->
-              {{ fs.storeName }}
-              <!-- <p>SSAFY 시장</p> -->
-            </v-col>
-          </v-row>
-        </v-container>
-        <v-form>
-          <v-container>
-            <v-row>
-              <v-col
-                cols="1"
-              >
-                <v-checkbox value />
-              </v-col>
-              <v-col
-                cols="2"
-              >
-                <!-- img는 다시 물어보기 -->
-                <img
-                  src="@/assets/fish1.png"
-                  alt="가게 사진"
-                  style="width:60px"
-                >
-              </v-col>
-              <v-col
-                cols="2"
-              >
-                <br>
-                {{ fs.basket.item.name }}
-                <!-- 이 부분이 왜 안 나타나는지 및 400 error 해결! => token -->
-              </v-col>
-              <v-col
-                cols="3"
-              >
-                <!-- 수량 조절 부분 -->
-                <v-list-item-action>
-                  <v-btn
-                    icon
-                    @click="clickHandler(item.id,amount[idx])"
-                  >
-                    <!-- 수량을 가져오면 변경 적용이 어렵나?  -->
-                    <h3>{{ fs.basket.amount }}</h3>
+      > -->
 
-                  <!-- test 해봄 -->
-                  <!-- <v-text-field
-                    v-model="fs.basket.amount[idx]"
-                    type="number"
-                    min="1"
-                    max="100"
-                    step="1"
-                  /> -->
-                  <!-- <v-text-field
-                    v-model="amount[idx]"
-                    type="number"
-                    min="1"
-                    max="9"
-                    step="1"
-                  /> -->
-                  </v-btn>
-                </v-list-item-action>
-              </v-col>
-              <v-col
-                cols="2"
-              >
-                <br>
-                {{ fs.basket.item.price }}원
-              </v-col>
-              <v-col
-                cols="2"
-              >
-                <br>
-                <v-icon @click="deleteBasket(fs.basket.id)">
-                  x
-                </v-icon>
-              </v-col>
-            </v-row>
-          </v-container>
-          <v-container>
-            <v-row>
-              <v-col
-                offset="9"
-              >
-                <p>물품 금액 : {{ fs.basket.amount * fs.basket.item.price }}원</p>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-form>
-      </v-data-table>
+
+
+        <tbody>
+          <tr
+            v-for="(fs, index) in basketList"
+            :key="index"
+          >
+            <td>
+              <h4>{{ fs.basket.item.name }}</h4>
+            </td>
+            <td>{{ fs.basket.amount }}</td>
+            <td>
+              <h4>{{ fs.basket.item.price }}원</h4>
+            </td>
+            <td>
+              <v-icon @click="deleteBasket(fs.basket.id)">
+                x
+              </v-icon>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <v-container>
       <v-row>
@@ -132,11 +74,7 @@
         </v-col>
       </v-row>
     </v-container>
-
     <br>
-    <br>
-    <!-- 여기까지만 for 문 돌려야 할 듯 -->
-
     <v-container>
       <v-row>
         <v-col
@@ -164,44 +102,26 @@ export default {
       name: '',
       amount: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
       total: 0,
-       calories: '',
-        items: [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-            iron: '1%',
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            iron: '1%',
-          },
-        ]
+      items: []
     }
   },
   computed:{
     ...mapGetters(["basketList", "getToken"]),
-    headers () {
-        return [
-          {
-            text: '선택',
-            align: 'start',
-            value: 'name',
-          },
-          {
-            text: '상품명',
-          },
-          { text: '수량', value: 'fat' },
-          { text: '개당 가격', value: 'carbs' },
-          { text: '상품제거', value: 'protein' },
-        ]
-      },
+    // headers () {
+    //     return [
+    //       {
+    //         text: '선택',
+    //         align: 'start',
+    //         value: 'name',
+    //       },
+    //       {
+    //         text: '상품명',
+    //       },
+    //       { text: '수량', value: 'fat' },
+    //       { text: '개당 가격', value: 'carbs' },
+    //       { text: '상품제거', value: 'protein' },
+    //     ]
+    //   },
   },
   watch:{
     basketList() {
@@ -214,12 +134,12 @@ export default {
   methods: {
     totalHandler:function() {
       // console.log("###" + this.basketList)
-      console.log(this.basketList)
+      // console.log(this.basketList)
 
       this.basketList.forEach(basketItem => {
         this.total += basketItem.basket.amount * basketItem.basket.item.price;
       });
-      console.log(this.total)
+      // console.log(this.total)
     },
 
 
