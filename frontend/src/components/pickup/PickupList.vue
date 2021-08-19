@@ -1,127 +1,105 @@
 <template>
   <v-app class="color5">
     <v-main>
-      <v-container>
-        <v-row>
-          <v-col
-            cols="8"
-          >
-            <p>
-              주문번호 : 123456
-            </p>
-          </v-col>
-        </v-row>
-      </v-container>
-      <v-form>
+      <div
+        v-for="(fs, index) in pickup"
+        :key="index"
+      >
         <v-container>
           <v-row>
             <v-col
-              cols="3"
+              cols="8"
             >
-              <h3> 민기네 수산시장 </h3>
+              주문번호 : {{ fs.id }}
             </v-col>
-            <v-col
-              cols="3"
-            >
-              <v-text>고등어</v-text><br>
-              <v-text>갈치</v-text>
-            </v-col>
-
-            <v-col
-              cols="3"
-            >
-              <v-text>1</v-text><br>
-              <v-text>2</v-text>
-            </v-col>
-            <v-col
-              cols="3"
-            >
-              <v-container>
-                <v-text>21.07.21.12:00</v-text><br>
-                <v-text>주문완료</v-text><br>
-                <v-btn>픽업완료</v-btn>
-              </v-container>
-            </v-col>
-            <v-container />
-            <v-container>
-              <v-row>
-                <v-col
-                  cols="8"
-                >
-                  <p>
-                    주문번호 : 654321
-                  </p>
-                </v-col>
-              </v-row>
-            </v-container>
-
-            <v-container>
-              <v-row>
-                <v-col
-                  cols="3"
-                >
-                  <h3> 민기네 정육 </h3>
-                </v-col>
-                <v-col
-                  cols="3"
-                >
-                  <v-text>삼겹살</v-text><br>
-                  <v-text>목살</v-text>
-                </v-col>
-
-                <v-col
-                  cols="3"
-                >
-                  <v-text>1</v-text><br>
-                  <v-text>2</v-text>
-                </v-col>
-                <v-col
-                  cols="3"
-                >
-                  <!-- 그리드 통합으로 조절하는 법 알면 수정해서 다듬기 -->
-                  <v-container>
-                    <v-text>21.07.21.12:00</v-text><br>
-                    <v-text>주문완료</v-text><br>
-                    <v-btn>픽업완료</v-btn>
-                  </v-container>
-                  <v-container />
-                </v-col>
-                <v-container />
-                <v-container>
-                  <v-row>
-                    <v-col
-                      cols="3"
-                    >
-                      <h3> 민기네 청과 </h3>
-                    </v-col>
-                    <v-col
-                      cols="3"
-                    >
-                      <v-text>사과</v-text><br>
-                      <v-text>포도</v-text>
-                    </v-col>
-
-                    <v-col
-                      cols="3"
-                    >
-                      <v-text>1</v-text><br>
-                      <v-text>2</v-text>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-row>
-            </v-container>
           </v-row>
         </v-container>
-      </v-form>
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col
+                cols="3"
+              >
+                <h3> {{ fs.market.name }} </h3>
+              </v-col>
+              <v-col
+                cols="3"
+              >
+                {{ fs.orderItemList[0].item.name }}
+              </v-col>
+
+              <v-col
+                cols="3"
+              >
+                {{ fs.orderItemList[0].amount }}
+              </v-col>
+              <v-col
+                cols="3"
+              >
+                <v-container>
+                  {{ fs.registerTime.substring(0, 10) }}<br>
+                  {{ fs.orderStatus.name }}<br>
+                  <v-btn
+                    @click="statusChange"
+                  >
+                    {{ fs.orderItemList[0].pickStatus }}
+                  </v-btn>
+                </v-container>
+              </v-col>
+              <v-container />
+            </v-row>
+          </v-container>
+        </v-form>
+      </div>
     </v-main>
   </v-app>
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+import axios from 'axios'
+
 export default {
   name: 'PickupList',
+  data() {
+    return{
+      name: '',
+      comment: '',
+    }
+  },
+    computed:{
+      ...mapGetters(["pickup", "getToken"])
+    },
+    created() {
+      this.$store.dispatch("getPickup");
+    },
+    methods: {
+      statusChange: function() {
+      // storeSearch: function() {
+        axios({
+          method:'patch',
+          url:'http://localhost:8082/api/orderinfo/check',
+          headers:{
+            Authorization: `Bearer `+ this.$store.getters.getToken
+          },
+          // 이 부분을 해결해야 될 듯?
+          data:{
+            orderStatusId: this.orderStatusId,
+            orderInfoId: this.orderInfoId,
+          }
+        })
+        .then((res) => {
+          console.log(res)
+          alert("회원정보가 변경되었습니다.");
+        }
+        // .catch((err) => {
+        //   // console.log(err)
+        //   alert("검색한 가게는 단골가게가 아닙니다. 확인해주세요");
+        // });
+        )},
+    }
 }
+
 </script>
 
 <style>

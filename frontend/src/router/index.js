@@ -26,12 +26,16 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/Init',
+    // 초기 화면으로 하기 위해서
+    path: '/',
+    // path: '/Init',
     name: 'InitPage',
     component: InitPage
   },
   {
-    path: '/',
+    // 아래와 같이하면 화면이 안나옴
+    // path: '/',
+    path: '/mainpage',
     name: 'Mainpage',
     component: Mainpage
   },
