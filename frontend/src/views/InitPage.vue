@@ -118,6 +118,14 @@ import store from '@/store/store';
 
 export default {
   name: "App",
+  // 이게 맞는건지를 모르겠네 userType 데이터를 navbar에 넘겨줘야 되는데
+  // props: {
+  //   userType: {
+  //     type: Number,
+  //     require: true,
+  //     default: 1
+  //   },
+  // },
   data: () => ({
     client_id: "d8d2a25fb9a3d72d3564ed9c5d33c6b3",
     redirect_uri: "http://localhost:80/oauth2/redirect",
@@ -176,13 +184,14 @@ export default {
           console.log(userType)
         })
           if (this.userType="1") {
+            console.log(this.userType)
             this.$router.push('/')
           }
           else if (this.userType="2") {
-            this.$router.push('/basket')
+            this.$router.push('/')
           }
           else if (this.userType="3") {
-            this.$router.push('/usermypage')
+            this.$router.push('/')
           }
         // console.log(store.state.token)
         // const Token = store.state.getters("getToken", token);

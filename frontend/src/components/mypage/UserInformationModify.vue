@@ -36,7 +36,7 @@
           >
             <v-btn
               color="error"
-              @click="clear"
+              @click="deleteId"
             >
               회원 탈퇴
             </v-btn>
@@ -49,6 +49,8 @@
 
 <script>
 // import {mapGetters} from "vuex";
+import axios from 'axios'
+
 
 export default {
   name: 'UserInformationModify',
@@ -57,39 +59,81 @@ export default {
       name: '',
       nameRules: [
         v => !!v || 'Name is required',
-        v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+        v => (v && v.length <= 10) || '이름은 10자 이내로 작성해주세요',
       ],
       phoneNumber: '',
       phoneNumberRules: [
         v => !!v || 'phoneNumber is required',
-        v => /.+@.+\..+/.test(v) || 'phoneNumber must be valid',
+        v => /.+@.+\..+/.test(v) || '예시, 010-1234-5678 처럼 입력해주세요',
       ]
     }),
-  // computed:{
-  // //   ...mapGetters([""])
-  // // },
-  // // // watch:{
-  // // //   tab: function (val){ // 선택한 탭 변경될 경우
-  // // //     this.$store.commit("setFrequentStore",this.$store.getters.frequentStore[val]);
-  // // //     // console.log(this.$store.getters.market);
-  // // //   }
-  // // // },
-  // // created() {
-  // //   this.$store.dispatch("");
-  // //   // this.$store.dispatch("");
-  // // }
-  // },
-
     methods: {
       // validate를 바꿔도 됨
-      submit () {
-        this.$refs.observer.validate()
+      // submit: function(name,phoneNumber) {
+        // 400 error 발생 해결방법
+      submit: function() {
+        // this.$refs.observer.validate()
+        axios({
+          method:'patch',
+          url:'http://localhost:8085/api/user',
+          headers:{
+            Authorization: `Bearer `+ this.$store.getters.getToken
+          },
+          data:{
+            name: this.name,
+            phoneNumber: this.phoneNumber,
+          }
+        })
+        .then((res) => {
+          // console.log(res)
+          alert("회원정보가 변경되었습니다.");
+        })
+        .catch((err) => {
+          // console.log(err)
+          alert("형식을 확인해주세요");
+        });
       },
-      clear () {
-        this.name = ''
-        this.phoneNumber = ''
+
+    //   clickHandler: function(id,num) {
+    //   axios({
+    //     method:'put',
+    //     url:'http://localhost:8082/api/basket',
+    //     headers:{
+    //       Authorization: `Bearer `+ this.$store.getters.getToken
+    //     },
+    //     data:{
+    //       amount: num,
+    //       itemId: id,
+    //     }
+    //   })
+    //   .then(() => {
+    //     alert("장바구니에 상품을 넣었습니다.");
+    //   })
+    //   .catch(() => {
+    //     alert("장바구니에 해당 상품이 이미 있습니다.");
+    //   });
+    // },
+    // 이 부분은 이제 적용되는듯 - token이 사라지게 안되네..
+      deleteId () {
+        this.token = ''
+        this.$router.push({ name: 'InitPage'})
         // this.$refs.observer.reset()
       },
+    //   deleteId: function () {
+    //   axios({
+    //     method: 'delete',
+    //     url: `http://localhost:8085/api/user`,
+    //     // url: `http://localhost:8085/api/user/${this.user.id}/`,
+    //     // headers: this.setToken()
+    //   })
+    //     .then((res) => {
+    //       // console.log(res)
+    //       this.$router.push({ name: 'InitPage'})
+    //     })
+    //     // .catch((err) => {
+    //     //   console.log(err)
+    //     // })
+    // },
     }
 }
 </script>

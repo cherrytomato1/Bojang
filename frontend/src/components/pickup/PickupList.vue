@@ -23,22 +23,22 @@
             <v-col
               cols="3"
             >
-              <v-text>고등어</v-text><br>
-              <v-text>갈치</v-text>
+              <span>고등어</span><br>
+              <span>갈치</span>
             </v-col>
 
             <v-col
               cols="3"
             >
-              <v-text>1</v-text><br>
-              <v-text>2</v-text>
+              <span>1</span><br>
+              <span>2</span>
             </v-col>
             <v-col
               cols="3"
             >
               <v-container>
-                <v-text>21.07.21.12:00</v-text><br>
-                <v-text>주문완료</v-text><br>
+                <span>21.07.21.12:00</span><br>
+                <span>주문완료</span><br>
                 <v-btn>픽업완료</v-btn>
               </v-container>
             </v-col>
@@ -65,23 +65,23 @@
                 <v-col
                   cols="3"
                 >
-                  <v-text>삼겹살</v-text><br>
-                  <v-text>목살</v-text>
+                  <span>삼겹살</span><br>
+                  <span>목살</span>
                 </v-col>
 
                 <v-col
                   cols="3"
                 >
-                  <v-text>1</v-text><br>
-                  <v-text>2</v-text>
+                  <span>1</span><br>
+                  <span>2</span>
                 </v-col>
                 <v-col
                   cols="3"
                 >
                   <!-- 그리드 통합으로 조절하는 법 알면 수정해서 다듬기 -->
                   <v-container>
-                    <v-text>21.07.21.12:00</v-text><br>
-                    <v-text>주문완료</v-text><br>
+                    <span>21.07.21.12:00</span><br>
+                    <span>주문완료</span><br>
                     <v-btn>픽업완료</v-btn>
                   </v-container>
                   <v-container />
@@ -97,15 +97,15 @@
                     <v-col
                       cols="3"
                     >
-                      <v-text>사과</v-text><br>
-                      <v-text>포도</v-text>
+                      <span>사과</span><br>
+                      <span>포도</span>
                     </v-col>
 
                     <v-col
                       cols="3"
                     >
-                      <v-text>1</v-text><br>
-                      <v-text>2</v-text>
+                      <span>1</span><br>
+                      <span>2</span>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -119,9 +119,53 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+import axios from 'axios'
+
 export default {
   name: 'PickupList',
+  data() {
+    return{
+      name: '',
+      comment: '',
+    }
+  },
+    computed:{
+      ...mapGetters(["pickup", "getToken"])
+    },
+    created() {
+      this.$store.dispatch("getPickup");
+    },
+    methods: {
+      // submit: function(name,phoneNumber) {
+        // 400 error 발생 해결방법
+      // storeSearch: function() {
+      //   axios({
+      //     method:'get',
+      //     url:'http://localhost:8081/api/favorite/search',
+      //     headers:{
+      //       Authorization: `Bearer `+ this.$store.getters.getToken
+      //     },
+      //     data:{
+      //       name: this.name,
+      //       comment: this.comment,
+      //     }
+      //   })
+      //   .then((res) => {
+      //     // console.log(res)
+      //     // alert("회원정보가 변경되었습니다.");[]
+      //   })
+      //   .catch((err) => {
+      //     // console.log(err)
+      //     alert("검색한 가게는 단골가게가 아닙니다. 확인해주세요");
+      //   });
+      // },
+      deleteFrequent(index){
+        this.$store.dispatch("deleteFrequentStore",`/api/favorite?storeId=${this.$store.getters.frequentStore[index].store.id}`)
+      }
+    },
 }
+
 </script>
 
 <style>

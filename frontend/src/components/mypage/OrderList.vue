@@ -53,7 +53,6 @@
     <!-- outlined 적용이 잘 안되는데 다시 적용해보기 -->
     <v-container>
       <v-row>
-        <!-- <v-list-item> -->
         <v-col
           cols="4"
         >
@@ -62,13 +61,9 @@
             <!-- {{ $store.getters.orderList.orderItemList[0].registerTime }} -->
             <!-- {{ $store.getters.frequentStore[index].store.name }} -->
             <!-- {{ $store.getters.orderList.orderInfo }} -->
-            {{ $store.getters.orderList }}
+            <!-- {{ $store.getters.orderList }} -->
             2021.07.23 주문
           </p>
-          <!-- <v-text>
-            {{ $store.getters.orderList }}
-            2021.07.23 주문
-          </v-text> -->
         </v-col>
         <v-col
           cols="2"
@@ -86,9 +81,6 @@
           <p>
             106,000원
           </p>
-          <!-- <v-text>
-            106,000원
-          </v-text> -->
         </v-col>
         <v-col
           cols="2"
@@ -106,115 +98,55 @@
             결제 취소
           </v-btn>
         </v-col>
-        <!-- </v-list-item> -->
       </v-row>
     </v-container>
-    <v-form>
-      <v-container>
-        <v-row>
-          <v-col
-            cols="2"
-          >
-            <!-- size mx-auto가 안되네 추후 설정 -->
-            <img
-              src="@/assets/fish_store.png"
-              alt="가게 사진"
-              style="width:60px"
+    <div
+      v-for="(fs, index) in orderList"
+      :key="index"
+    >
+      <v-form>
+        <v-container>
+          <v-row>
+            <v-col
+              cols="2"
             >
-          </v-col>
+              <img
+                src="@/assets/fish_store.png"
+                alt="가게 사진"
+                style="width:60px"
+              >
+            </v-col>
 
-          <v-col
-            cols="4"
-          >
-            <!-- 입력한 필드가 아닌 데이터를 가져와야됨 변경필요 -->
-            <p>
-              민기네 수산<br>
-              고등어<br>
-              수량: 13 <br>
-            </p>
-            <!-- <v-text>
-              민기네 수산<br>
-              고등어<br>
-              수량: 13 <br>
-            </v-text> -->
-          </v-col>
-          <v-col
-            cols="2"
-          >
-            <p>
-              2000원<br>
-              2021.07.23<br>
-            </p>
-            <!-- <v-text>
-              2000원<br>
-              2021.07.23<br>
-            </v-text> -->
-          </v-col>
-          <v-col
-            cols="4"
-          >
-            <p>
-              요청사항 : 고등어 손질 부탁드려요!<br>
-            </p>
-            <!-- <v-text>
-              요청사항 : 고등어 손질 부탁드려요!<br>
-            </v-text> -->
-          </v-col>
-        </v-row>
-      </v-container>
-      <v-container>
-        <v-row>
-          <v-col
-            cols="2"
-          >
-            <!-- size mx-auto가 안되네 추후 설정 -->
-            <img
-              src="@/assets/fruit.png"
-              alt="가게 사진"
-              style="width:60px"
+            <v-col
+              cols="4"
             >
-          </v-col>
+              <!-- <p>
+                민기네 수산<br>
+                고등어<br>
+                수량: 13 <br>
+              </p> -->
+              {{ fs.itme.name }}<br>
+            </v-col>
+            <v-col
+              cols="2"
+            >
+              <p>
+                2000원<br>
+                2021.07.23<br>
+              </p>
+            </v-col>
+            <v-col
+              cols="4"
+            >
+              <p>
+                요청사항 : 고등어 손질 부탁드려요!<br>
+              </p>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-form>
+    </div>
 
-          <v-col
-            cols="4"
-          >
-            <!-- 입력한 필드가 아닌 데이터를 가져와야됨 변경필요 -->
-            <p>
-              수민이네 과일<br>
-              사과<br>
-              수량: 1 <br>
-            </p>
-            <!-- <v-text>
-              수민이네 과일<br>
-              사과<br>
-              수량: 1 <br>
-            </v-text> -->
-          </v-col>
-          <v-col
-            cols="2"
-          >
-            <p>
-              5000원<br>
-              2021.07.23<br>
-            </p>
-            <!-- <v-text>
-              5000원<br>
-              2021.07.23<br>
-            </v-text> -->
-          </v-col>
-          <v-col
-            cols="4"
-          >
-            <p>
-              요청사항 : 많이 주세요<br>
-            </p>
-            <!-- <v-text>
-              요청사항 : 많이 주세요<br>
-            </v-text> -->
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-form>
     <v-row>
       <v-col
         cols="12"
@@ -247,7 +179,7 @@ export default {
   },
 
   computed:{
-    ...mapGetters(["orderList"])
+    ...mapGetters(["orderList", "getToken"])
   },
   watch:{
     tab: function (val){ // 선택한 탭 변경될 경우

@@ -1,7 +1,6 @@
 <template>
   <v-app class="color5">
     <v-container>
-      <!-- grid로 조절했는데 아직 한줄로 안됨 조절해보기-->
       <v-row>
         <v-col
           cols="8"
@@ -13,104 +12,115 @@
         <v-col
           offset="10"
         >
-          <!-- font color 적용이 잘 안됨 수정하기 -->
-          <v-text>
-            장바구니
-          </v-text>
-          <v-text> > 주문결제</v-text>
-          <v-text> > 완료</v-text>
+          <p>
+            장바구니 > 주문결제 > 완료
+          </p>
         </v-col>
       </v-row>
     </v-container>
-    <v-container>
-      <v-row>
-        <v-col
-          cols="2"
-          offset="1"
-        >
-          <p>SSAFY 시장</p>
-        </v-col>
-      </v-row>
-    </v-container>
-    <v-form>
+    <div
+      v-for="(fs, index) in basketList"
+      :key="index"
+    >
       <v-container>
         <v-row>
           <v-col
-            cols="1"
-          >
-            <v-checkbox value />
-          </v-col>
-          <v-col
             cols="2"
+            offset="1"
           >
-            <!-- size mx-auto가 안되네 추후 설정 -->
-            <img
-              src="@/assets/fish1.png"
-              alt="가게 사진"
-              style="width:60px"
-            >
-          </v-col>
-          <v-col
-            cols="2"
-          >
-            <br>
-            <v-text> {{ $store.getters.basketList.item }} </v-text>
-            <v-text> 고등어 </v-text>
-          </v-col>
-          <v-col
-            cols="3"
-          >
-            <br>
-            <v-btn
-              class="mx-2"
-              fab
-              dark
-              x-small
-              color="indigo"
-            >
-              <v-icon dark>
-                mdi-minus
-              </v-icon>
-            </v-btn>
-            <v-text> 1 </v-text>
-            <v-btn
-              class="mx-2"
-              fab
-              dark
-              x-small
-              color="indigo"
-            >
-              <v-icon dark>
-                mdi-plus
-              </v-icon>
-            </v-btn>
-          </v-col>
-          <v-col
-            cols="2"
-          >
-            <br>
-            <v-text> 2,000 원 </v-text>
-          </v-col>
-          <v-col
-            cols="2"
-          >
-            <br>
-            <!-- x 표시 아이콘 찾으면 적용해주세요 -->
-            <v-icon>x</v-icon>
+            <!-- 시장 부분 데이터에서 없는듯 -->
+            {{ fs.storeName }}
+          <!-- <p>SSAFY 시장</p> -->
           </v-col>
         </v-row>
       </v-container>
-      <v-container>
-        <v-row>
-          <v-col
-            offset="9"
-          >
-            <v-text>전체금액 : 2,000원</v-text>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-form>
+      <v-form>
+        <v-container>
+          <v-row>
+            <v-col
+              cols="1"
+            >
+              <v-checkbox value />
+            </v-col>
+            <v-col
+              cols="2"
+            >
+              <!-- img는 다시 물어보기 -->
+              <img
+                src="@/assets/fish1.png"
+                alt="가게 사진"
+                style="width:60px"
+              >
+            </v-col>
+            <v-col
+              cols="2"
+            >
+              <br>
+              {{ fs.basket.item.name }}
+            <!-- 이 부분이 왜 안 나타나는지 및 400 error 해결! => token -->
+            </v-col>
+            <v-col
+              cols="3"
+            >
+              <!-- 수량 조절 부분 -->
+              <v-list-item-action>
+                <v-btn
+                  icon
+                  @click="clickHandler(item.id,amount[idx])"
+                >
+                  <!-- 수량을 가져오면 변경 적용이 어렵나?  -->
+                  <h3>{{ fs.basket.amount }}</h3>
 
+                  <!-- test 해봄 -->
+                  <!-- <v-text-field
+                    v-model="fs.basket.amount[idx]"
+                    type="number"
+                    min="1"
+                    max="100"
+                    step="1"
+                  /> -->
+                  <!-- <v-text-field
+                    v-model="amount[idx]"
+                    type="number"
+                    min="1"
+                    max="9"
+                    step="1"
+                  /> -->
+                </v-btn>
+              </v-list-item-action>
+            </v-col>
+            <v-col
+              cols="2"
+            >
+              <br>
+              {{ fs.basket.item.price }}원
+            </v-col>
+            <v-col
+              cols="2"
+            >
+              <br>
+              <!-- x 표시 아이콘 찾으면 적용해주세요 -->
+              <v-icon @click="deleteBasket()">
+                x
+              </v-icon>
+            </v-col>
+          </v-row>
+        </v-container>
+        <v-container>
+          <v-row>
+            <v-col
+              offset="9"
+            >
+              <!-- <v-text>전체금액 : 2,000원</v-text> -->
+              <!-- sum으로 해야 될 것 같음 -->
+              <!-- <p>전체금액 : {{ $store.getters.basketList[0].basket.amount }} * {{ $store.getters.basketList[0].basket.item.price }}</p> -->
+              <!-- <p>전체금액 : {{ $store.getters.basketList[0].basket.amount * $store.getters.basketList[0].basket.item.price }}</p> -->
+              <p>물품 금액 : {{ fs.basket.amount * fs.basket.item.price }}원</p>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-form>
+    </div>
     <!-- 필요시 하기 -->
     <!-- <v-container>
       <v-row>
@@ -135,12 +145,21 @@
         <v-col
           offset="9"
         >
-          <v-text>전체 주문 금액 : 2,000원</v-text>
+          <!-- 합 계산하는거 for 문 돌리면 되나?  함수 따로 없나? sum이 안됨 -->
+          <!-- <p> 전체 주문 금액 :{{ sum(fs.basket.amount * fs.basket.item.price) }} 원</p> -->
+          <!-- <p> 전체 주문 금액 :{{ fs.basket.amount * fs.basket.item.price }} 원</p> -->
+
+          <h3>전체 주문 금액 : 2,000원</h3>
+          <!-- sum으로 해야 될 것 같음 -->
+          <!-- <p>전체 주문 금액 : {{ $store.getters.basketList[0].basket.item.price }} </p> -->
         </v-col>
       </v-row>
     </v-container>
+
     <br>
     <br>
+    <!-- 여기까지만 for 문 돌려야 할 듯 -->
+
     <v-container>
       <v-row>
         <v-col
@@ -159,28 +178,69 @@
 </template>
 <script>
 import {mapGetters} from "vuex";
+import axios from 'axios'
 
 export default {
   name: 'ShoppingBasket',
   data() {
     return{
       name: '',
+      amount: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
     }
   },
-  // 이 부분 다시 하기
-  // methods: {
-  //   deleteFrequent(index){
-  //     this.$store.dispatch("deleteFrequentStore",`/api/favorite?storeId=${this.$store.getters.frequentStore[index].store.id}`)
-
-  //   }
-  // },
   computed:{
     ...mapGetters(["basketList", "getToken"])
   },
   created() {
     this.$store.dispatch("getBasketList");
-  }
-
+  },
+  methods: {
+    clickHandler: function(id,num) {
+      axios({
+        method:'put',
+        url:'http://localhost:8082/api/basket',
+        headers:{
+          Authorization: `Bearer `+ this.$store.getters.getToken
+        },
+        data:{
+          amount: num,
+          itemId: id,
+        }
+      })
+      .then(() => {
+        alert("장바구니에 상품을 넣었습니다.");
+      })
+      .catch(() => {
+        alert("장바구니에 해당 상품이 이미 있습니다.");
+      });
+    },
+    // 이 부분 다시 하기
+    // deleteFrequent(index){
+    //   this.$store.dispatch("deleteFrequentStore",`/api/favorite?storeId=${this.$store.getters.frequentStore[index].store.id}`)
+    // }
+    deleteBasket: function(id,num) {
+      axios({
+        method:'delete',
+        url:'http://localhost:8082/api/basket',
+        headers:{
+          Authorization: `Bearer `+ this.$store.getters.getToken
+        },
+        data:{
+          amount: num,
+          itemId: id,
+        }
+      })
+      .then(() => {
+        alert("장바구니에 상품이 삭제 되었습니다.");
+        // 로그는 제대로 오는 듯 but 장바구니에서 상품을 제거해야됨
+        // reload만 되고 상품제거는 안됨
+        location.reload()
+      })
+      .catch(() => {
+        alert("확인해주세요");
+      });
+    },
+  },
 };
 </script>
 

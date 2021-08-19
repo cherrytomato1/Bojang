@@ -1,10 +1,11 @@
 <template>
-  <!-- v-if="customer" -->
   <div
-
     class="fixed-bar"
     pa-0
   >
+    <!-- v-if="customer" -->
+    <!-- v-if="userType==='1'" / == 안나옴, = 1개는 나옴 -->
+    <!-- <div v-if="$store.getters.userData.userType=='1'"> -->
     <div>
       <v-app-bar
         color="color2 accent-4"
@@ -30,6 +31,7 @@
           :to="{ name: 'OrderCheck'}"
           class="pa-5"
         >
+          {{ $store.getters.userData }}
           마이페이지
         </router-link>
         <router-link
@@ -68,6 +70,7 @@
     </div>
     <!-- v-if="seller" -->
     <div>
+      <!-- <div v-if="userType==='2'"> -->
       <v-app-bar
         color="color2 accent-4"
         height="65px"
@@ -136,13 +139,6 @@
           </router-link>
         </v-toolbar-title>
         <v-spacer />
-        <!-- <router-link
-          :to="{ name: 'OrderCheck'}"
-          class="pa-5"
-        >
-          마이페이지
-        </router-link> -->
-
         <router-link
           :to="{ name: 'InitPage'}"
           class="pa-5"
@@ -161,12 +157,21 @@ export default {
   name: 'Navbar',
   data() {
     return{
+      userType: '',
       tab: null,
     }
   },
-
+  //   methods: {
+  //     axios({
+  //       method: 'get',
+  //       url: `http://localhost:8085/api/user`,
+  //       headers: headers,
+  //       data : {userType : userTypeLongValue, name : this.name, phoneNumber: this.phone}
+  //       })
+  //   },
+  // };
   computed:{
-    ...mapGetters(["markets"])
+    ...mapGetters(["markets", "userData"])
   },
   watch:{
     tab: function (val){ // 선택한 탭 변경될 경우
@@ -176,9 +181,9 @@ export default {
   },
   created() {
     this.$store.dispatch("getMarkets");
+    // console.log(this.userData)
   }
-
-};
+}
 </script>
 
 <style>
