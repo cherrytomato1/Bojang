@@ -3,92 +3,70 @@
     <v-container>
       <!-- grid로 조절했는데 아직 한줄로 안됨 조절해보기-->
       <v-row>
-        <v-col
-          offset="1"
-          cols="8"
-        >
+        <v-col offset="1" cols="8">
           <h2>
             주문 상세정보
           </h2>
         </v-col>
-        <v-col
-          offset="10"
-        >
+        <v-col offset="10">
           <!-- font color 적용이 잘 안됨 수정하기 -->
-          <span>
+          <!-- <span>
             장바구니
           </span>
           <span> > 주문결제</span>
-          <span> > 완료</span>
+          <span> > 완료</span> -->
         </v-col>
       </v-row>
     </v-container>
     <v-container>
       <v-row>
-        <v-col
-          cols="6"
-          offset="1"
-        >
-          <!-- <span>주문 일자 : 2021.07.21</span> -->
-          <!-- {{ $store.getters.orderList }} -->
+        <v-col cols="6" offset="1">
+          <span>주문 일자 {{ order.registerTime.split(" ")[0] }}</span>
         </v-col>
-        <v-col
-          cols="5"
-        >
-          <span>주문번호 : 202107211234566879</span>
-        </v-col>
-      </v-row>
-    </v-container>
-    <v-container>
-      <v-row>
-        <v-col
-          cols="12"
-          offset="1"
-        >
-          <h3>주문 내역</h3><br>
-          <!-- <span>싸피시장</span><br> -->
-          <div
-            v-for="(fs, index) in orderList"
-            :key="index"
+        <v-col cols="5">
+          <span
+            >주문번호 : {{ order.id.substring(1, order.id.length - 1) }}</span
           >
+        </v-col>
+      </v-row>
+    </v-container>
+    <v-container>
+      <v-row>
+        <v-col cols="12" offset="1">
+          <h4>주문 상세정보</h4>
+          <br />
+          <span>{{ order.market.name }}</span
+          ><br />
+          <div v-for="(orderItem, index) in order.orderItemList" :key="index">
             <v-container>
               <v-row>
-                <v-col
-                  cols="2"
-                >
-                  <!-- size mx-auto가 안되네 추후 설정 -->
+                <v-col cols="2">
                   <img
-                    src="@/assets/fish1.png"
-                    alt="가게 사진"
+                    v-bind:src="orderItem.item.image"
+                    alt="상품 사진"
                     style="width:60px"
-                  >
+                  />
                 </v-col>
-                <v-col
-                  cols="2"
-                >
-                  {{ fs.name }}<br>
-                  <span> 민기네 수산 </span><br>
-                  <span> 고등어 </span>
+                <v-col cols="2">
+                  <!-- <span> 민기네 수산 </span><br /> -->
+                  <span> {{ orderItem.item.name }} </span>
                 </v-col>
-                <v-col
-                  cols="2"
-                  offset="4"
-                >
-                  <br>
-                  <span> 13 </span>
+                <v-col cols="2" offset="4">
+                  <br />
+                  <span> {{ orderItem.amount }} </span>
                 </v-col>
-                <v-col
-                  cols="2"
-                >
-                  <br>
-                  <span> 2,000 원 </span>
+                <v-col cols="2">
+                  <br />
+                  <span>
+                    {{ orderItem.item.price * orderItem.amount }} 원
+                  </span>
                 </v-col>
               </v-row>
             </v-container>
             <v-container>
               <v-row>
                 <v-col>
-                  <span>요청사항 : 고등어 손질 부탁드려요!</span>
+                  <span>{{ orderItem.comment }}</span>
                 </v-col>
               </v-row>
             </v-container>
@@ -99,31 +77,21 @@
 
     <v-container>
       <v-row>
-        <v-col
-          cols="5"
-          offset="1"
-        >
-          <span>결제 정보</span><br>
-          <span>결제 수단</span><br>
-          <span>국민 카드</span>
+        <v-col cols="5" offset="1">
+          <span>결제 정보</span><br />
+          <span>결제 수단</span>
         </v-col>
-        <v-col
-          cols="4"
-        >
+        <v-col cols="4">
           <span>총 상품 가격</span>
           <h5>
-            국민 카드
+            {{ order.payType.name }}
           </h5>
           <span>총 결제금액</span>
         </v-col>
-        <v-col
-          cols="2"
-        >
-          <p>26000원</p>
-          <h5>
-            26000원
-          </h5>
-          <p>26000원</p>
+        <v-col cols="2">
+          <p>{{ order.price }} 원</p>
+          <h5>{{ order.price }} 원</h5>
+          <p>{{ order.price }} 원</p>
         </v-col>
       </v-row>
     </v-container>
@@ -166,18 +134,13 @@
         </v-col>
       </v-row>
     </v-container> -->
-    <br>
-    <br>
+    <br />
+    <br />
     <v-container>
       <v-row>
-        <v-col
-          offset="1"
-        >
-          <br>
-          <v-btn
-            color="light-blue"
-            to="/ordercheck"
-          >
+        <v-col offset="1">
+          <br />
+          <v-btn color="light-blue" to="/ordercheck">
             <span> 주문 목록 돌아가기</span>
           </v-btn>
         </v-col>
@@ -187,53 +150,28 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
-import axios from 'axios'
-
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'OrderDetail',
+  name: "OrderDetail",
   data() {
-    return{
-      name: '',
-      comment: '',
-    }
+    return {
+      name: "",
+      comment: "",
+      order: null,
+      isLoaded: false
+    };
   },
-    computed:{
-      ...mapGetters(["orderList", "getToken"])
-    },
-    created() {
-      this.$store.dispatch("getOrderList");
-    }
-    // methods: {
-    //   // submit: function(name,phoneNumber) {
-    //     // 400 error 발생 해결방법
-    //   storeSearch: function() {
-    //     axios({
-    //       method:'get',
-    //       url:'http://localhost:8081/api/favorite/search',
-    //       headers:{
-    //         Authorization: `Bearer `+ this.$store.getters.getToken
-    //       },
-    //       data:{
-    //         name: this.name,
-    //         comment: this.comment,
-    //       }
-    //     })
-    //     .then((res) => {
-    //       // console.log(res)
-    //       // alert("회원정보가 변경되었습니다.");[]
-    //     })
-    //     .catch((err) => {
-    //       // console.log(err)
-    //       alert("검색한 가게는 단골가게가 아닙니다. 확인해주세요");
-    //     });
-      // },
-    // },
+  created() {
+    console.log(this.$route.params.id);
+    this.order = this.orderList[this.$route.params.id];
+    this.isLoaded = true;
+    console.log(this.order);
+  },
+  computed: {
+    ...mapGetters(["orderList", "getToken"])
+  }
 };
 </script>
 
-<style>
-
-</style>
-
+<style></style>

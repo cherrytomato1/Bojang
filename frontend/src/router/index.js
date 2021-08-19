@@ -93,7 +93,7 @@ const routes = [
     component: Pickup
   },
   {
-    path: "/finalorderdetail/:order-id",
+    path: "/final-order-detail/:id",
     name: "FinalOrderDetail",
     component: FinalOrderDetail
   },
