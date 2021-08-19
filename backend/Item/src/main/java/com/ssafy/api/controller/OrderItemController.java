@@ -31,12 +31,8 @@ public class OrderItemController {
     public ResponseEntity<StoreOrderItemListGetResponse> getStoreOrderItem(@PathVariable String storeId) {
         try {
             List<StoreOrderItemDto> list = orderItemService.getStoreOrderItem(storeId);
-            if (list.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body(StoreOrderItemListGetResponse.of(400, "조회 실패", null));
-            } else {
-                return ResponseEntity.ok(StoreOrderItemListGetResponse.of(200, "Success", list));
-            }
+
+            return ResponseEntity.ok(StoreOrderItemListGetResponse.of(200, "Success", list));
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(StoreOrderItemListGetResponse.of(500, "조회 실패", null));
