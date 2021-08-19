@@ -119,7 +119,7 @@ export default {
           method:'patch',
           url:'http://localhost:8085/api/user',
           headers:{
-            Authorization: `Bearer `+ this.$store.getters.getToken
+            Authorization: `Bearer `+ localStorage.getItem("token")
           },
           data:{
             name: this.name,

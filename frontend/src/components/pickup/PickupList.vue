@@ -1,119 +1,56 @@
 <template>
   <v-app class="color5">
     <v-main>
-      <v-container>
-        <v-row>
-          <v-col
-            cols="8"
-          >
-            <p>
-              주문번호 : 123456
-            </p>
-          </v-col>
-        </v-row>
-      </v-container>
-      <v-form>
+      <div
+        v-for="(fs, index) in pickup"
+        :key="index"
+      >
         <v-container>
           <v-row>
             <v-col
-              cols="3"
+              cols="8"
             >
-              <h3> 민기네 수산시장 </h3>
+              주문번호 : {{ fs.id }}
             </v-col>
-            <v-col
-              cols="3"
-            >
-              <span>고등어</span><br>
-              <span>갈치</span>
-            </v-col>
-
-            <v-col
-              cols="3"
-            >
-              <span>1</span><br>
-              <span>2</span>
-            </v-col>
-            <v-col
-              cols="3"
-            >
-              <v-container>
-                <span>21.07.21.12:00</span><br>
-                <span>주문완료</span><br>
-                <v-btn>픽업완료</v-btn>
-              </v-container>
-            </v-col>
-            <v-container />
-            <v-container>
-              <v-row>
-                <v-col
-                  cols="8"
-                >
-                  <p>
-                    주문번호 : 654321
-                  </p>
-                </v-col>
-              </v-row>
-            </v-container>
-
-            <v-container>
-              <v-row>
-                <v-col
-                  cols="3"
-                >
-                  <h3> 민기네 정육 </h3>
-                </v-col>
-                <v-col
-                  cols="3"
-                >
-                  <span>삼겹살</span><br>
-                  <span>목살</span>
-                </v-col>
-
-                <v-col
-                  cols="3"
-                >
-                  <span>1</span><br>
-                  <span>2</span>
-                </v-col>
-                <v-col
-                  cols="3"
-                >
-                  <!-- 그리드 통합으로 조절하는 법 알면 수정해서 다듬기 -->
-                  <v-container>
-                    <span>21.07.21.12:00</span><br>
-                    <span>주문완료</span><br>
-                    <v-btn>픽업완료</v-btn>
-                  </v-container>
-                  <v-container />
-                </v-col>
-                <v-container />
-                <v-container>
-                  <v-row>
-                    <v-col
-                      cols="3"
-                    >
-                      <h3> 민기네 청과 </h3>
-                    </v-col>
-                    <v-col
-                      cols="3"
-                    >
-                      <span>사과</span><br>
-                      <span>포도</span>
-                    </v-col>
-
-                    <v-col
-                      cols="3"
-                    >
-                      <span>1</span><br>
-                      <span>2</span>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-row>
-            </v-container>
           </v-row>
         </v-container>
-      </v-form>
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col
+                cols="3"
+              >
+                <h3> {{ fs.market.name }} </h3>
+              </v-col>
+              <v-col
+                cols="3"
+              >
+                {{ fs.orderItemList[0].item.name }}
+              </v-col>
+
+              <v-col
+                cols="3"
+              >
+                {{ fs.orderItemList[0].amount }}
+              </v-col>
+              <v-col
+                cols="3"
+              >
+                <v-container>
+                  {{ fs.registerTime.substring(0, 10) }}<br>
+                  {{ fs.orderStatus.name }}<br>
+                  <v-btn
+                    @click="statusChange"
+                  >
+                    {{ fs.orderItemList[0].pickStatus }}
+                  </v-btn>
+                </v-container>
+              </v-col>
+              <v-container />
+            </v-row>
+          </v-container>
+        </v-form>
+      </div>
     </v-main>
   </v-app>
 </template>
@@ -137,33 +74,30 @@ export default {
       this.$store.dispatch("getPickup");
     },
     methods: {
-      // submit: function(name,phoneNumber) {
-        // 400 error 발생 해결방법
+      statusChange: function() {
       // storeSearch: function() {
-      //   axios({
-      //     method:'get',
-      //     url:'http://localhost:8081/api/favorite/search',
-      //     headers:{
-      //       Authorization: `Bearer `+ this.$store.getters.getToken
-      //     },
-      //     data:{
-      //       name: this.name,
-      //       comment: this.comment,
-      //     }
-      //   })
-      //   .then((res) => {
-      //     // console.log(res)
-      //     // alert("회원정보가 변경되었습니다.");[]
-      //   })
-      //   .catch((err) => {
-      //     // console.log(err)
-      //     alert("검색한 가게는 단골가게가 아닙니다. 확인해주세요");
-      //   });
-      // },
-      deleteFrequent(index){
-        this.$store.dispatch("deleteFrequentStore",`/api/favorite?storeId=${this.$store.getters.frequentStore[index].store.id}`)
-      }
-    },
+        axios({
+          method:'patch',
+          url:'http://localhost:8082/api/orderinfo/check',
+          headers:{
+            Authorization: `Bearer `+ this.$store.getters.getToken
+          },
+          // 이 부분을 해결해야 될 듯?
+          data:{
+            orderStatusId: this.orderStatusId,
+            orderInfoId: this.orderInfoId,
+          }
+        })
+        .then((res) => {
+          console.log(res)
+          alert("회원정보가 변경되었습니다.");
+        }
+        // .catch((err) => {
+        //   // console.log(err)
+        //   alert("검색한 가게는 단골가게가 아닙니다. 확인해주세요");
+        // });
+        )},
+    }
 }
 
 </script>

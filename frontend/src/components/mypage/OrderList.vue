@@ -125,7 +125,7 @@
                 고등어<br>
                 수량: 13 <br>
               </p> -->
-              {{ fs.itme.name }}<br>
+              {{ fs.item.name }}<br>
             </v-col>
             <v-col
               cols="2"

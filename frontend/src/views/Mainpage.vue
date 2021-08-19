@@ -1,6 +1,6 @@
 <template>
   <v-app class="color5">
-    <Navbar />
+    <Navbar :type="userData.userType" />
     <StoreMap />
     <!-- <RecommendStore /> -->
 
@@ -18,6 +18,7 @@ import Navbar from '@/views/Navbar';
 import StoreMap from '@/components/mainpage/StoreMap';
 import RecommendStore from '@/components/mainpage/RecommendStore';
 import SelectStore from '@/components/mainpage/SelectStore';
+import {mapGetters} from "vuex";
 
 export default {
   components: {
@@ -26,6 +27,14 @@ export default {
     // RecommendStore,
     SelectStore,
   },
+//  created() {
+//     this.$store.dispatch("getUserData");
+//     // console.log(this.userData)
+//   },
+  computed:{
+  ...mapGetters(["userData"])
+  },
 }
+
 </script>
 

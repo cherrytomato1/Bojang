@@ -31,7 +31,8 @@
           :to="{ name: 'OrderCheck'}"
           class="pa-5"
         >
-          {{ $store.getters.userData }}
+          <!-- {{ $store.getters.userData }} -->
+          {{ type }}
           마이페이지
         </router-link>
         <router-link
@@ -155,6 +156,7 @@ import {mapGetters} from "vuex";
 
 export default {
   name: 'Navbar',
+  props: ['type'],
   data() {
     return{
       userType: '',
@@ -181,6 +183,7 @@ export default {
   },
   created() {
     this.$store.dispatch("getMarkets");
+    this.$store.dispatch("getUserData");
     // console.log(this.userData)
   }
 }

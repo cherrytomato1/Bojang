@@ -19,7 +19,7 @@ export default new Vuex.Store({
     // token: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODM2OTU3MjgxIiwianRpIjoiUzVjMzY3NTA2MmE0NCIsImlhdCI6MTYyOTIyNDcxNiwiZXhwIjoxNjI5Mjg1MTk2fQ.22w1He83HWiDdS_WMPbJKH8pm74jigZokuGcLIzXW0lDzCLWFv0Prv2zLeNKAq7LpsibCrdytYb4qX17_XZIXw',
     // application에 token 저장도 되는데 왜 안되지?
     token: '',
-    // token: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODQyNzQzNzQxIiwianRpIjoiUzBmZWIwMTdkMWQxNCIsImlhdCI6MTYyOTI1MTczMywiZXhwIjoxNjI5MzEyMjEzfQ.awcR2wOh-ftMZd6V6Pkmy2tVAD38Z05CJwTb9PtJ0fGkJLLAtELCo2ADB2GfFHGcNBZW-C5GSwsaPcVS4gUbbA',
+    // token: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODM2OTU3MjgxIiwianRpIjoiUzVjMzY3NTA2MmE0NCIsImlhdCI6MTYyOTMzNTQ0MSwiZXhwIjoxNjI5Mzk1OTIxfQ.IeQQlpspRkPLSJkft6HCFcIwgircrQbscV6G_fGiN0ZobfvyzpE9InX_n92rfFauYuDOzI_TxvxWkVES1Bi6cQ',
 
 
     // 태욱 토큰
@@ -185,7 +185,7 @@ export default new Vuex.Store({
           // header token 팁
           headers: {
             // Authorization: `Bearer `+ this.state.token
-            Authorization: `Bearer `+ this.getters.getToken
+            Authorization: `Bearer `+ localStorage.getItem("token")
             }})
         .then(( data ) => {
           // console.log(data)
@@ -209,11 +209,11 @@ export default new Vuex.Store({
         // .get(`/api/orderinfo/${this.orderInfoId}/`, {
         // .get(`/api/orderinfo/${this.id}/`, {
           // 아래처럼 테스트
-        .get(`/api/orderinfo/`, {
+        .get(`/api/orderinfo`, {
           // header token 팁
           headers: {
             // Authorization: `Bearer `+ this.state.token
-            Authorization: `Bearer `+ this.getters.getToken
+            Authorization: `Bearer `+ localStorage.getItem("token")
           }})
         .then(( data ) => {
           // context.commit("setOrderList", data.data.list);
@@ -236,7 +236,7 @@ export default new Vuex.Store({
       // // // header token 팁
           headers: {
       // //       // Authorization: `Bearer `+ this.state.token
-            Authorization: `Bearer `+ this.getters.getToken
+            Authorization: `Bearer `+ localStorage.getItem("token")
           }})
       .then(( data ) => {
         context.commit("setBasketList", data.data.basketList);
@@ -254,12 +254,13 @@ export default new Vuex.Store({
       // // // header token 팁
           headers: {
       // //       // Authorization: `Bearer `+ this.state.token
-            Authorization: `Bearer `+ this.getters.getToken
+            Authorization: `Bearer `+ localStorage.getItem("token")
           }})
       .then(( data ) => {
-        console.log(data)
+        // console.log(data)
+        // console.log(data.data.userData)
         context.commit("setUserData", data.data.userData);
-        // console.log(context.commit("setBasketList", data.data.basketList
+        // console.log(context.commit("setUserData", data.data.userData
         // ))
       })
       .catch(() => {
@@ -271,12 +272,12 @@ export default new Vuex.Store({
         .get("/api/orderinfo/market", {
           headers: {
             // Authorization: `Bearer `+ this.state.token
-            Authorization: `Bearer `+ this.getters.getToken
+            Authorization: `Bearer `+ localStorage.getItem("token")
           }
         })
         .then(( data ) => {
           // data.list가 맞나?
-          console.log(data)
+          // console.log(data)
           context.commit("setPickup", data.data.list);
         })
         .catch(() => {

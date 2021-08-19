@@ -114,7 +114,9 @@
 <script>
 import axios from 'axios';
 import store from '@/store/store';
+import {mapGetters} from "vuex";
 // import Vuex from 'vuex';
+// Vue.use(Vuex)
 
 export default {
   name: "App",
@@ -155,20 +157,23 @@ export default {
       // return `http://localhost:80/oauth2/authorize/kakao?redirect_uri=http://localhost:80/oauth2/redirect`;
       return `http://localhost:8085/oauth2/authorize/kakao?redirect_uri=http://localhost:80/oauth2/redirect`;
     },
+    ...mapGetters(["userData"])
   },
+
   methods: {
     login () {
       this.log = false
     },
     validate () {
+      // console.log(this.$store)
       this.$refs.form.validate()
       if (this.$refs.form.validate()){
 
-        const Token = store.state.token;
-        console.log("token", Token);
+        // const Token = store.state.token;
+        // console.log("token", Token);
         const headers = {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + Token,
+          Authorization: "Bearer " + this.$store.getters.getToken,
         };
         const userTypeLongValue = this.types.indexOf(this.userType) + 1
 
@@ -180,19 +185,25 @@ export default {
           userType : userTypeLongValue, name : this.name, phoneNumber: this.phone}
       })
       // userType
-        .then(function (userType) {
-          console.log(userType)
+        .then(function (data) {
+          // console.log(this.$store)
+          // this.$store.state.dispatch(`getUserData`, userType)
+          // this.$store.state.commit(`getUserData`, userType)
+          console.log(data)
         })
-          if (this.userType="1") {
-            console.log(this.userType)
-            this.$router.push('/')
-          }
-          else if (this.userType="2") {
-            this.$router.push('/')
-          }
-          else if (this.userType="3") {
-            this.$router.push('/')
-          }
+          // console.log(this.$store)
+          this.$router.push('/')
+          // this.$store.dispatch("getUserData");
+          // if (this.userType="1") {
+          //   console.log(this.userType)
+          //   this.$router.push('/')
+          // }
+          // else if (this.userType="2") {
+          //   this.$router.push('/')
+          // }
+          // else if (this.userType="3") {
+          //   this.$router.push('/')
+          // }
         // console.log(store.state.token)
         // const Token = store.state.getters("getToken", token);
 

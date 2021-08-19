@@ -99,8 +99,9 @@
               cols="2"
             >
               <br>
+              <!-- {{ fs.basket.id }} -->
               <!-- x 표시 아이콘 찾으면 적용해주세요 -->
-              <v-icon @click="deleteBasket()">
+              <v-icon @click="deleteBasket(this.fs.basket.id)">
                 x
               </v-icon>
             </v-col>
@@ -200,7 +201,7 @@ export default {
         method:'put',
         url:'http://localhost:8082/api/basket',
         headers:{
-          Authorization: `Bearer `+ this.$store.getters.getToken
+          Authorization: `Bearer `+ localStorage.getItem("token")
         },
         data:{
           amount: num,
@@ -218,23 +219,23 @@ export default {
     // deleteFrequent(index){
     //   this.$store.dispatch("deleteFrequentStore",`/api/favorite?storeId=${this.$store.getters.frequentStore[index].store.id}`)
     // }
-    deleteBasket: function(id,num) {
+    deleteBasket: function(basketId) {
       axios({
         method:'delete',
         url:'http://localhost:8082/api/basket',
         headers:{
-          Authorization: `Bearer `+ this.$store.getters.getToken
+          Authorization: `Bearer `+ localStorage.getItem("token")
         },
         data:{
-          amount: num,
-          itemId: id,
+          basketIdList: [this.basketId],
         }
       })
       .then(() => {
-        alert("장바구니에 상품이 삭제 되었습니다.");
+        this.$store.dispatch("getBasketList")
+        // alert("장바구니에 상품이 삭제 되었습니다.");
         // 로그는 제대로 오는 듯 but 장바구니에서 상품을 제거해야됨
         // reload만 되고 상품제거는 안됨
-        location.reload()
+        // location.reload()
       })
       .catch(() => {
         alert("확인해주세요");
