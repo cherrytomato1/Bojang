@@ -124,8 +124,9 @@ export default {
       isLoaded: false
     };
   },
-  created() {
+  mounted() {
     console.log(this.$route.params.id);
+    console.log(this.orderList);
     this.order = this.orderList[this.$route.params.id];
     this.isLoaded = true;
     console.log(this.order);
