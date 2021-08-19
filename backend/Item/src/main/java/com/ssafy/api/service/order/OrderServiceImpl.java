@@ -28,7 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class OrderServiceImp implements OrderService {
+public class OrderServiceImpl implements OrderService {
 
 	final PayTypeRepository payTypeRepository;
 
@@ -79,7 +79,8 @@ public class OrderServiceImp implements OrderService {
 			Long orderItemPrice = orderItemDto.getAmount() * item.getPrice();
 
 			//해당 주문에서 스토어 판매금액 합
-			storeSaleAmountMap.put(storeId, storeSaleAmountMap.getOrDefault(storeId, 0L) + orderItemPrice);
+			storeSaleAmountMap
+				.put(storeId, storeSaleAmountMap.getOrDefault(storeId, 0L) + orderItemPrice);
 
 			orderInfo.addOrderItem(orderItem);
 
@@ -123,7 +124,9 @@ public class OrderServiceImp implements OrderService {
 	}
 
 	private void deleteBasketByItemAndUser(Item item, User user) {
-		Optional<Basket> targetBasket = basketRepository.findByItemIdAndUserId(item.getId(), user.getId());
+		Optional<Basket> targetBasket = basketRepository
+			                                .findByItem_IdAndUser_Id(item.getId(), user.getId());
+//		Optional<Basket> targetBasket = basketRepository.findByItemAndUser(item, user);
 		if (!targetBasket.isPresent()) {
 			return;
 		}

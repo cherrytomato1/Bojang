@@ -19,7 +19,7 @@ public class Store {
 	private String id;
 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private User user;
 
 	@Column(name = "name", nullable = false, length = 20)

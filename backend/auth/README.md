@@ -2,6 +2,13 @@
 URL
 - http://i5a508.p.ssafy.io:8080/
 
+Swagger-ui
+- http://i5a508.p.ssafy.io:8080/swagger-ui/
+
+> [Authorize] 에 발급받은 인증토큰으로 인증 후 API 테스트
+>
+> 값 : Bearer [인증토큰]
+
 ## Dependencies
 - JDK 1.8
 - Spring Boot 2.4.5
@@ -23,13 +30,7 @@ URL
 ## 시퀀스 다이어그램
 <img width="843" alt="auth-sequence" src="https://user-images.githubusercontent.com/49678555/128441553-9b6555dc-edc6-4eea-a1c2-56ce50e9e531.png">
 
-## Swagger
-접속 URL
-- http://i5a508.p.ssafy.io:8080/swagger-ui/
 
-> [Authorize] 에 발급받은 인증토큰으로 인증 후 API 테스트
->
-> 값 : Bearer [인증토큰]
 
 ## 프로젝트 디렉토리 구조 
 - auth/src/main 하위 구조

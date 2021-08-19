@@ -2,7 +2,6 @@ package com.ssafy.api.service.basket;
 
 import com.ssafy.api.request.basket.BasketIdListDeleteRequest;
 import com.ssafy.api.request.basket.BasketPatchRequest;
-import com.ssafy.common.exception.handler.AuthException;
 import com.ssafy.common.exception.handler.DuplicateBasketItemException;
 import com.ssafy.common.exception.handler.ResourceNotFoundException;
 import com.ssafy.common.model.dto.BasketResponseDto;
@@ -29,7 +28,7 @@ public class BasketServiceImpl implements BasketService {
 	@Transactional
 	@Override
 	public void putItemInBasket(User user, Item item, Long amount) {
-		if (basketRepository.findByItemIdAndUserId(item.getId(), user.getId()).isPresent()) {
+		if (basketRepository.findByItem_IdAndUser_Id(item.getId(), user.getId()).isPresent()) {
 			throw new DuplicateBasketItemException(item.getId(), item.getName(), user.getId());
 		}
 

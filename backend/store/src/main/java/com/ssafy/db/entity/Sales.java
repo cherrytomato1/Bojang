@@ -1,6 +1,7 @@
 package com.ssafy.db.entity;
 
 import java.time.LocalDate;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -31,7 +32,7 @@ public class Sales {
     @GeneratedValue(generator = "Id")
     private String id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Store store;
 
     //	@Temporal(TemporalType.DATE)

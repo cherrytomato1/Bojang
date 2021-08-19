@@ -1,18 +1,17 @@
 package com.ssafy.db.entity;
 
+import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
 @Getter @Setter
 public class StoreLive {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Store store;
 }
