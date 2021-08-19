@@ -14,5 +14,6 @@ public interface OrderInfoRepository extends JpaRepository<OrderInfo,String> {
     List<OrderInfo> findByRegisterTimeBetweenAndUser(LocalDateTime start, LocalDateTime end, User user);
     Optional<OrderInfo> findById(String id);
     List<OrderInfo> findByMarket_IdAndOrderStatus_Id(Long marketId,Long orderStatusId);
+    List<OrderInfo> findByMarket_Id(Long marketId);
 
 }
