@@ -95,45 +95,7 @@
         </v-col>
       </v-row>
     </v-container>
-    <!-- <v-container>
-      <v-row>
-        <v-col
-          cols="2"
-          offset="1"
-        >
-          <br>
-          <span>
-            결제 방법
-          </span>
-        </v-col>
-        <v-col
-          cols="1"
-        >
-          <v-checkbox value />
-        </v-col>
-        <v-col
-          cols="2"
-        >
-          <br>
-          <span>
-            카드 결제
-          </span>
-        </v-col>
-        <v-col
-          cols="1"
-        >
-          <v-checkbox value />
-        </v-col>
-        <v-col
-          cols="2"
-        >
-          <br>
-          <span>
-            카카오 페이
-          </span>
-        </v-col>
-      </v-row>
-    </v-container> -->
+
     <br />
     <br />
     <v-container>
