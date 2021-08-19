@@ -1,6 +1,7 @@
 <template>
   <v-app class="color5">
-    <Navbar :type="userData.userType" />
+    <Navbar />
+    <!-- <Navbar :type="userData.userType" /> -->
     <StoreMap />
     <!-- <RecommendStore /> -->
 
@@ -31,9 +32,9 @@ export default {
 //     this.$store.dispatch("getUserData");
 //     // console.log(this.userData)
 //   },
-  computed:{
-  ...mapGetters(["userData"])
-  },
+  // computed:{
+  // ...mapGetters(["userData"])
+  // },
 }
 
 </script>

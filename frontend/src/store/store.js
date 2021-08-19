@@ -119,6 +119,7 @@ export default new Vuex.Store({
     },
     setBasketList(state, payload){
       state.basketList = payload;
+      // console.log(payload)
     },
     setUserData(state, payload){
       state.userData = payload;
@@ -239,7 +240,13 @@ export default new Vuex.Store({
             Authorization: `Bearer `+ localStorage.getItem("token")
           }})
       .then(( data ) => {
+        // console.log(data)
+        // payload 자체가 undefined
+        // console.log(payload)
+        // console.log(data.data.basketList)
+
         context.commit("setBasketList", data.data.basketList);
+        // 여기서부터 undefined 뜸
         // console.log(context.commit("setBasketList", data.data.basketList
         // ))
       })
@@ -256,10 +263,11 @@ export default new Vuex.Store({
       // //       // Authorization: `Bearer `+ this.state.token
             Authorization: `Bearer `+ localStorage.getItem("token")
           }})
-      .then(( data ) => {
+      .then(( response ) => {
         // console.log(data)
         // console.log(data.data.userData)
-        context.commit("setUserData", data.data.userData);
+        context.commit("setUserData", response.data.user);
+        console.log(response.data.user)
         // console.log(context.commit("setUserData", data.data.userData
         // ))
       })
@@ -291,7 +299,7 @@ export default new Vuex.Store({
     },
     getIsLogin({ commit }, isLogin) {
       commit("setIsLogin", isLogin);
-      // console.log(isLogin)
+      console.log(isLogin)
     }
   },
 });

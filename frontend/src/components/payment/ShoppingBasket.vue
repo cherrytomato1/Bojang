@@ -100,8 +100,13 @@
             >
               <br>
               <!-- {{ fs.basket.id }} -->
-              <!-- x 표시 아이콘 찾으면 적용해주세요 -->
-              <v-icon @click="deleteBasket(this.fs.basket.id)">
+              <!-- <v-icon @click="deleteBasket(basketList)"> -->
+              <!-- <v-icon @click="deleteBasket(basketId)"> -->
+              <!-- <v-icon @click="deleteBasket(basketList.basket.id)"> -->
+              <v-icon @click="deleteBasket(fs.basket.id)">
+                <!-- <v-icon @click="deleteBasket(basket.id)"> -->
+                <!-- <v-icon @click="deleteBasket(basketIdList)"> -->
+                <!-- <v-icon @click="deleteBasket(this.fs.basket.id)"> -->
                 x
               </v-icon>
             </v-col>

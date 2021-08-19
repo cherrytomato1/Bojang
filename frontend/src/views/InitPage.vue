@@ -192,7 +192,7 @@ export default {
           console.log(data)
         })
           // console.log(this.$store)
-          this.$router.push('/')
+          this.$router.push('/mainpage')
           // this.$store.dispatch("getUserData");
           // if (this.userType="1") {
           //   console.log(this.userType)
