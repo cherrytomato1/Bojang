@@ -22,54 +22,60 @@
       v-for="(fs, index) in basketList"
       :key="index"
     >
-      <v-container>
-        <v-row>
-          <v-col
-            cols="2"
-            offset="1"
-          >
-            <!-- 시장 부분 데이터에서 없는듯 -->
-            {{ fs.storeName }}
-          <!-- <p>SSAFY 시장</p> -->
-          </v-col>
-        </v-row>
-      </v-container>
-      <v-form>
+      <v-data-table
+        :headers="headers"
+        :items="items"
+        item-key="name"
+        class="elevation-1"
+      >
         <v-container>
           <v-row>
             <v-col
-              cols="1"
-            >
-              <v-checkbox value />
-            </v-col>
-            <v-col
               cols="2"
+              offset="1"
             >
-              <!-- img는 다시 물어보기 -->
-              <img
-                src="@/assets/fish1.png"
-                alt="가게 사진"
-                style="width:60px"
+              <!-- 시장 부분 데이터에서 없는듯 -->
+              {{ fs.storeName }}
+              <!-- <p>SSAFY 시장</p> -->
+            </v-col>
+          </v-row>
+        </v-container>
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col
+                cols="1"
               >
-            </v-col>
-            <v-col
-              cols="2"
-            >
-              <br>
-              {{ fs.basket.item.name }}
-            <!-- 이 부분이 왜 안 나타나는지 및 400 error 해결! => token -->
-            </v-col>
-            <v-col
-              cols="3"
-            >
-              <!-- 수량 조절 부분 -->
-              <v-list-item-action>
-                <v-btn
-                  icon
-                  @click="clickHandler(item.id,amount[idx])"
+                <v-checkbox value />
+              </v-col>
+              <v-col
+                cols="2"
+              >
+                <!-- img는 다시 물어보기 -->
+                <img
+                  src="@/assets/fish1.png"
+                  alt="가게 사진"
+                  style="width:60px"
                 >
-                  <!-- 수량을 가져오면 변경 적용이 어렵나?  -->
-                  <h3>{{ fs.basket.amount }}</h3>
+              </v-col>
+              <v-col
+                cols="2"
+              >
+                <br>
+                {{ fs.basket.item.name }}
+                <!-- 이 부분이 왜 안 나타나는지 및 400 error 해결! => token -->
+              </v-col>
+              <v-col
+                cols="3"
+              >
+                <!-- 수량 조절 부분 -->
+                <v-list-item-action>
+                  <v-btn
+                    icon
+                    @click="clickHandler(item.id,amount[idx])"
+                  >
+                    <!-- 수량을 가져오면 변경 적용이 어렵나?  -->
+                    <h3>{{ fs.basket.amount }}</h3>
 
                   <!-- test 해봄 -->
                   <!-- <v-text-field
@@ -86,55 +92,37 @@
                     max="9"
                     step="1"
                   /> -->
-                </v-btn>
-              </v-list-item-action>
-            </v-col>
-            <v-col
-              cols="2"
-            >
-              <br>
-              {{ fs.basket.item.price }}원
-            </v-col>
-            <v-col
-              cols="2"
-            >
-              <br>
-              <v-icon @click="deleteBasket(fs.basket.id)">
-                x
-              </v-icon>
-            </v-col>
-          </v-row>
-        </v-container>
-        <v-container>
-          <v-row>
-            <v-col
-              offset="9"
-            >
-              <p>물품 금액 : {{ fs.basket.amount * fs.basket.item.price }}원</p>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-form>
+                  </v-btn>
+                </v-list-item-action>
+              </v-col>
+              <v-col
+                cols="2"
+              >
+                <br>
+                {{ fs.basket.item.price }}원
+              </v-col>
+              <v-col
+                cols="2"
+              >
+                <br>
+                <v-icon @click="deleteBasket(fs.basket.id)">
+                  x
+                </v-icon>
+              </v-col>
+            </v-row>
+          </v-container>
+          <v-container>
+            <v-row>
+              <v-col
+                offset="9"
+              >
+                <p>물품 금액 : {{ fs.basket.amount * fs.basket.item.price }}원</p>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+      </v-data-table>
     </div>
-    <!-- 필요시 하기 -->
-    <!-- <v-container>
-      <v-row>
-        <v-col
-          cols="1"
-        >
-          <v-checkbox value />
-        </v-col>
-        <br>
-        <v-col
-          cols="2"
-        >
-          <br>
-          <v-btn>
-            <p>선택 삭제</p>
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-container> -->
     <v-container>
       <v-row>
         <v-col
@@ -176,10 +164,44 @@ export default {
       name: '',
       amount: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
       total: 0,
+       calories: '',
+        items: [
+          {
+            name: 'Frozen Yogurt',
+            calories: 159,
+            fat: 6.0,
+            carbs: 24,
+            protein: 4.0,
+            iron: '1%',
+          },
+          {
+            name: 'Ice cream sandwich',
+            calories: 237,
+            fat: 9.0,
+            carbs: 37,
+            protein: 4.3,
+            iron: '1%',
+          },
+        ]
     }
   },
   computed:{
-    ...mapGetters(["basketList", "getToken"])
+    ...mapGetters(["basketList", "getToken"]),
+    headers () {
+        return [
+          {
+            text: '선택',
+            align: 'start',
+            value: 'name',
+          },
+          {
+            text: '상품명',
+          },
+          { text: '수량', value: 'fat' },
+          { text: '개당 가격', value: 'carbs' },
+          { text: '상품제거', value: 'protein' },
+        ]
+      },
   },
   watch:{
     basketList() {

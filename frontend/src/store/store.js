@@ -60,7 +60,7 @@ export default new Vuex.Store({
       return state.userData;
     },
     pickup(state) {
-      return state.userData;
+      return state.pickup;
     }
   },
   mutations: {
@@ -119,7 +119,8 @@ export default new Vuex.Store({
       state.userData = payload;
     },
     setPickup(state, payload) {
-      state.userData = payload;
+      state.pickup = payload;
+      // console.log(state.pickup)
     }
   },
   actions: {
@@ -266,7 +267,7 @@ export default new Vuex.Store({
         })
         .then(data => {
           // data.list가 맞나?
-          // console.log(data)
+          console.log(data.data.list)
           context.commit("setPickup", data.data.list);
         })
         .catch(() => {
