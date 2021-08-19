@@ -203,27 +203,17 @@ export default new Vuex.Store({
       // })
     },
     getOrderList(context) {
-      // ​​/api​/store​/{storeId} 해당 ID의 가게 정보
       http1
-        // id 부분이 undefined 떠서
-        // .get(`/api/orderinfo/${this.orderInfoId}/`, {
-        // .get(`/api/orderinfo/${this.id}/`, {
-        // 아래처럼 테스트
         .get(`/api/orderinfo`, {
           // header token 팁
           headers: {
-            // Authorization: `Bearer `+ this.state.token
-            Authorization: `Bearer ` + localStorage.getItem("token")
+            Authorization: `Bearer ` + this.state.token
           }
         })
-        .then(data => {
+        .then(response => {
           // context.commit("setOrderList", data.data.list);
-          context.commit("setOrderList", data.data.orderItemList);
-
-          // context.commit("setOrderList", data.data.orderInfo);
-          // console.log(context.commit("setOrderList", data.data.orderInfo))
-          // console.log(context.commit("setOrderList", data.data.list
-          console.log(context.commit("setOrderList", data.data.orderItemList));
+          context.commit("setOrderList", response.data.list);
+          console.log(context.commit("setOrderList", response.data.list));
         })
         .catch(() => {
           alert("getOrderList 오류 발생");
@@ -235,7 +225,7 @@ export default new Vuex.Store({
           // // // header token 팁
           headers: {
             // //       // Authorization: `Bearer `+ this.state.token
-            Authorization: `Bearer ` + localStorage.getItem("token")
+            Authorization: `Bearer ` + this.state.token
           }
         })
         .then(data => {

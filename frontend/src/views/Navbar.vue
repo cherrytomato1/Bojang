@@ -16,7 +16,7 @@
         <v-spacer />
         <router-link :to="{ name: 'OrderCheck' }" class="pa-5">
           <!-- {{ $store.getters.userData }} -->
-          {{ type }}
+          <!-- {{ $store.getters.userData.userType.id }} -->
           마이페이지
         </router-link>
         <router-link :to="{ name: 'FrequentStoreManage' }" class="pa-5">
