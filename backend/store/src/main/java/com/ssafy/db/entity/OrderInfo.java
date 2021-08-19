@@ -57,12 +57,8 @@ public class OrderInfo {
     @ManyToOne
     private Market market;
 
-
     public void addOrderItem(OrderItem orderItem){
         orderItemList.add(orderItem);
         orderItem.setOrderInfo(this);
     }
-
-
-
 }
