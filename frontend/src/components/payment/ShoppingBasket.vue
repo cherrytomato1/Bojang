@@ -79,13 +79,13 @@
                     max="100"
                     step="1"
                   /> -->
-                  <!-- <v-text-field
+                  <v-text-field
                     v-model="amount[idx]"
                     type="number"
                     min="1"
                     max="9"
                     step="1"
-                  /> -->
+                  />
                 </v-btn>
               </v-list-item-action>
             </v-col>
@@ -99,14 +99,7 @@
               cols="2"
             >
               <br>
-              <!-- {{ fs.basket.id }} -->
-              <!-- <v-icon @click="deleteBasket(basketList)"> -->
-              <!-- <v-icon @click="deleteBasket(basketId)"> -->
-              <!-- <v-icon @click="deleteBasket(basketList.basket.id)"> -->
               <v-icon @click="deleteBasket(fs.basket.id)">
-                <!-- <v-icon @click="deleteBasket(basket.id)"> -->
-                <!-- <v-icon @click="deleteBasket(basketIdList)"> -->
-                <!-- <v-icon @click="deleteBasket(this.fs.basket.id)"> -->
                 x
               </v-icon>
             </v-col>
@@ -117,10 +110,6 @@
             <v-col
               offset="9"
             >
-              <!-- <v-text>전체금액 : 2,000원</v-text> -->
-              <!-- sum으로 해야 될 것 같음 -->
-              <!-- <p>전체금액 : {{ $store.getters.basketList[0].basket.amount }} * {{ $store.getters.basketList[0].basket.item.price }}</p> -->
-              <!-- <p>전체금액 : {{ $store.getters.basketList[0].basket.amount * $store.getters.basketList[0].basket.item.price }}</p> -->
               <p>물품 금액 : {{ fs.basket.amount * fs.basket.item.price }}원</p>
             </v-col>
           </v-row>
@@ -151,13 +140,7 @@
         <v-col
           offset="9"
         >
-          <!-- 합 계산하는거 for 문 돌리면 되나?  함수 따로 없나? sum이 안됨 -->
-          <!-- <p> 전체 주문 금액 :{{ sum(fs.basket.amount * fs.basket.item.price) }} 원</p> -->
-          <!-- <p> 전체 주문 금액 :{{ fs.basket.amount * fs.basket.item.price }} 원</p> -->
-
-          <h3>전체 주문 금액 : 2,000원</h3>
-          <!-- sum으로 해야 될 것 같음 -->
-          <!-- <p>전체 주문 금액 : {{ $store.getters.basketList[0].basket.item.price }} </p> -->
+          <h3>전체 주문 금액 : {{ total }} 원</h3>
         </v-col>
       </v-row>
     </v-container>
@@ -175,7 +158,7 @@
           <v-btn
             to="/payment"
           >
-            <p>주문하기</p>
+            <span>주문하기</span>
           </v-btn>
         </v-col>
       </v-row>
@@ -192,15 +175,33 @@ export default {
     return{
       name: '',
       amount: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+      total: 0,
     }
   },
   computed:{
     ...mapGetters(["basketList", "getToken"])
   },
+  watch:{
+    basketList() {
+      this.totalHandler()
+    }
+  },
   created() {
     this.$store.dispatch("getBasketList");
   },
   methods: {
+    totalHandler:function() {
+      // console.log("###" + this.basketList)
+      console.log(this.basketList)
+
+      this.basketList.forEach(basketItem => {
+        this.total += basketItem.basket.amount * basketItem.basket.item.price;
+      });
+      console.log(this.total)
+    },
+
+
+
     clickHandler: function(id,num) {
       axios({
         method:'put',

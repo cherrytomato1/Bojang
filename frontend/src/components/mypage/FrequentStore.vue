@@ -40,14 +40,16 @@
             <v-col
               cols="2"
             >
-              <img
+              <!-- <img
                 src="@/assets/fish_store.png"
                 alt="가게 사진"
                 style="width:60px"
-              >
-              <!-- 405 error 발생 - 물어보기 -->
-              <!-- <v-img
-                :src="'http://localhost:8081/api/favorite/' + $store.getters.frequentStore.image"
+              > -->
+              {{ fs.store.image }}
+              <!-- 사진 안나옴 405 에러 발생 -->
+              <!--
+              <v-img
+                :src="'http://localhost:8081/api/favorite/' + fs.store.image"
               /> -->
             </v-col>
             <v-col
@@ -112,43 +114,44 @@ export default {
     methods: {
       // submit: function(name,phoneNumber) {
         // 400 error 발생 해결방법
-      storeSearch: function() {
-        axios({
-          method:'get',
-          url:'http://localhost:8081/api/favorite/search',
-          headers:{
-            Authorization: `Bearer `+ this.$store.getters.getToken
-          },
-          data:{
-            name: this.name,
-            comment: this.comment,
-          }
-        })
-        .then((res) => {
-          // console.log(res)
-          // alert("회원정보가 변경되었습니다.");[]
-        })
-        .catch((err) => {
-          // console.log(err)
-          alert("검색한 가게는 단골가게가 아닙니다. 확인해주세요");
-        });
-      },
+      // storeSearch: function() {
+      //   axios({
+      //     method:'get',
+      //     url:'http://localhost:8081/api/favorite/search',
+      //     headers:{
+      //       Authorization: `Bearer `+ this.$store.getters.getToken
+      //     },
+      //     data:{
+      //       name: this.name,
+      //       comment: this.comment,
+      //     }
+      //   })
+      //   .then((res) => {
+      //     // console.log(res)
+      //     // alert("회원정보가 변경되었습니다.");[]
+      //   })
+      //   .catch((err) => {
+      //     // console.log(err)
+      //     alert("검색한 가게는 단골가게가 아닙니다. 확인해주세요");
+      //   });
+      // },
       // 수정해야됨
-      deleteFrequent: function(storeId) {
+      deleteFrequent: function(id) {
         axios({
           method:'delete',
-          url:`http://localhost:8081/api/favorite/${this.storeId}`,
+          url:`http://localhost:8081/api/favorite/${this.id}`,
           headers:{
             Authorization: `Bearer `+ localStorage.getItem("token")
           },
           data:{
-            storeIdList: [storeId],
+            // favoriteStore: [storeId],
+            storeId: [id],
             // basketIdList: [storeId],
           }
         })
         .then(() => {
           this.$store.dispatch("getBasketList")
-          alert("장바구니에 상품이 삭제 되었습니다.");
+          alert("단골가게가 삭제 되었습니다.");
           // 로그는 제대로 오는 듯 but 장바구니에서 상품을 제거해야됨
           // reload만 되고 상품제거는 안됨
           // location.reload()

@@ -1,12 +1,16 @@
 <template>
   <v-app class="color5">
     <v-container>
-      <v-layout justify-center align-center ma-10>
+      <v-layout
+        justify-center
+        align-center
+        ma-10
+      >
         <img
           class="justify-center"
           src="@/assets/logo.png"
           style="width: 400px"
-        />
+        >
       </v-layout>
       <v-layout justify-center>
         <p class="text-h1">
@@ -19,20 +23,30 @@
           v-if="$store.state.token == ''"
           class="justify-center align-center"
         >
-          <button class="justify-center align-center" @click="login">
-            <a :href="kakaoLoginLink" alt="kakao login">
+          <button
+            class="justify-center align-center"
+            @click="login"
+          >
+            <a
+              :href="kakaoLoginLink"
+              alt="kakao login"
+            >
               <img
                 class="justify-center"
                 alt="kakao logo"
                 src="@/assets/kakao_login_large.png"
-              />
+              >
             </a>
           </button>
         </div>
 
         <div v-if="isLoaded !== false">
           <v-container>
-            <v-form ref="form" v-model="valid" lazy-validation>
+            <v-form
+              ref="form"
+              v-model="valid"
+              lazy-validation
+            >
               <v-text-field
                 v-model="name"
                 :counter="10"
@@ -66,7 +80,11 @@
                 시장 입장하기
               </v-btn>
 
-              <v-btn color="error" class="mr-4" @click="reset">
+              <v-btn
+                color="error"
+                class="mr-4"
+                @click="reset"
+              >
                 입력 초기화
               </v-btn>
             </v-form>
@@ -94,19 +112,6 @@ import { mapGetters } from "vuex";
 export default {
   name: "App",
 
-  mounted() {
-    // while ((!this.$store.state.token == "") & (this.$userData != undefined)) {}
-    console.log("userData >> " + this.$userData);
-    console.log("userData >> " + this.$store.state.userData);
-
-    if (
-      (this.userData.length != 0) & (this.userData.phoneNumber != null) &&
-      this.userData.phoneNumber != ""
-    ) {
-      this.$router.push("/mainpage");
-    }
-  },
-
   data: () => ({
     client_id: "d8d2a25fb9a3d72d3564ed9c5d33c6b3",
     redirect_uri: "https://localhost:80/oauth2/redirect",
@@ -125,10 +130,24 @@ export default {
     checkbox: false,
     isLoaded: false
   }),
+
+  mounted() {
+    // while ((!this.$store.state.token == "") & (this.$userData != undefined)) {}
+    console.log("userData >> " + this.$userData);
+    console.log("userData >> " + this.$store.state.userData);
+
+    if (
+      (this.userData.length != 0) & (this.userData.phoneNumber != null) &&
+      this.userData.phoneNumber != ""
+    ) {
+      this.$router.push("/mainpage");
+    }
+  },
   computed: {
     ...mapGetters(["userData"]),
     kakaoLoginLink() {
-      return `http://localhost:8085/oauth2/authorize/kakao?redirect_uri=https://localhost:1024/oauth2/redirect`;
+      // return `http://localhost:8085/oauth2/authorize/kakao?redirect_uri=https://localhost:1024/oauth2/redirect`;
+      return `http://localhost:8085/oauth2/authorize/kakao?redirect_uri=https://localhost:80/oauth2/redirect`;
     }
   },
 

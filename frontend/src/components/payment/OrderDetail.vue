@@ -127,7 +127,7 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-container>
+    <!-- <v-container>
       <v-row>
         <v-col
           cols="2"
@@ -165,7 +165,7 @@
           </span>
         </v-col>
       </v-row>
-    </v-container>
+    </v-container> -->
     <br>
     <br>
     <v-container>

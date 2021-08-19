@@ -76,20 +76,20 @@
         </v-col>
 
         <v-col
-          cols="2"
+          cols="3"
         >
           <p>
             106,000원
           </p>
         </v-col>
         <v-col
-          cols="2"
+          cols="3"
         >
           <p>
             결제 확인
           </p>
         </v-col>
-        <v-col
+        <!-- <v-col
           cols="2"
         >
           <v-btn
@@ -97,7 +97,7 @@
           >
             결제 취소
           </v-btn>
-        </v-col>
+        </v-col> -->
       </v-row>
     </v-container>
     <div
