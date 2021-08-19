@@ -112,27 +112,27 @@ export default {
     methods: {
       // submit: function(name,phoneNumber) {
         // 400 error 발생 해결방법
-      storeSearch: function() {
-        axios({
-          method:'get',
-          url:'http://localhost:8081/api/favorite/search',
-          headers:{
-            Authorization: `Bearer `+ this.$store.getters.getToken
-          },
-          data:{
-            name: this.name,
-            comment: this.comment,
-          }
-        })
-        .then((res) => {
-          // console.log(res)
-          // alert("회원정보가 변경되었습니다.");[]
-        })
-        .catch((err) => {
-          // console.log(err)
-          alert("검색한 가게는 단골가게가 아닙니다. 확인해주세요");
-        });
-      },
+      // storeSearch: function() {
+      //   axios({
+      //     method:'get',
+      //     url:'http://localhost:8081/api/favorite/search',
+      //     headers:{
+      //       Authorization: `Bearer `+ this.$store.getters.getToken
+      //     },
+      //     data:{
+      //       name: this.name,
+      //       comment: this.comment,
+      //     }
+      //   })
+      //   .then((res) => {
+      //     // console.log(res)
+      //     // alert("회원정보가 변경되었습니다.");[]
+      //   })
+      //   .catch((err) => {
+      //     // console.log(err)
+      //     alert("검색한 가게는 단골가게가 아닙니다. 확인해주세요");
+      //   });
+      // },
       // 수정해야됨
       deleteFrequent: function(storeId) {
         axios({
@@ -159,15 +159,6 @@ export default {
         // console.log(basketId)
       },
     },
-      // deleteFrequent(index){
-      //   this.$store.dispatch("deleteFrequentStore",`/api/favorite?storeId=${this.$store.getters.frequentStore[index].store.id}`)
-      // }
-    // watch:{
-    //   tab: function (val){ // 선택한 탭 변경될 경우
-    //     this.$store.commit("setFrequentStore",this.$store.getters.frequentStore[val]);
-    //     // console.log(this.$store.getters.market);
-    //   }
-    // },
 };
 
 

@@ -1,57 +1,57 @@
 <template>
   <v-app class="color5">
-    <v-main>
-      <div
-        v-for="(fs, index) in pickup"
-        :key="index"
-      >
+    <!-- <v-main> -->
+    <div
+      v-for="(fs, index) in pickup"
+      :key="index"
+    >
+      <v-container>
+        <v-row>
+          <v-col
+            cols="8"
+          >
+            주문번호 : {{ fs.id }}
+          </v-col>
+        </v-row>
+      </v-container>
+      <v-form>
         <v-container>
           <v-row>
             <v-col
-              cols="8"
+              cols="3"
             >
-              주문번호 : {{ fs.id }}
+              <h3> {{ fs.market.name }} </h3>
             </v-col>
+            <v-col
+              cols="3"
+            >
+              {{ fs.orderItemList[0].item.name }}
+            </v-col>
+
+            <v-col
+              cols="3"
+            >
+              {{ fs.orderItemList[0].amount }}
+            </v-col>
+            <v-col
+              cols="3"
+            >
+              <v-container>
+                {{ fs.registerTime.substring(0, 10) }}<br>
+                {{ fs.orderStatus.name }}<br>
+                <v-btn
+                  @click="statusChange"
+                >
+                  {{ fs.orderItemList[0].pickStatus }}
+                </v-btn>
+              </v-container>
+            </v-col>
+            <v-container />
           </v-row>
         </v-container>
-        <v-form>
-          <v-container>
-            <v-row>
-              <v-col
-                cols="3"
-              >
-                <h3> {{ fs.market.name }} </h3>
-              </v-col>
-              <v-col
-                cols="3"
-              >
-                {{ fs.orderItemList[0].item.name }}
-              </v-col>
-
-              <v-col
-                cols="3"
-              >
-                {{ fs.orderItemList[0].amount }}
-              </v-col>
-              <v-col
-                cols="3"
-              >
-                <v-container>
-                  {{ fs.registerTime.substring(0, 10) }}<br>
-                  {{ fs.orderStatus.name }}<br>
-                  <v-btn
-                    @click="statusChange"
-                  >
-                    {{ fs.orderItemList[0].pickStatus }}
-                  </v-btn>
-                </v-container>
-              </v-col>
-              <v-container />
-            </v-row>
-          </v-container>
-        </v-form>
-      </div>
-    </v-main>
+      </v-form>
+    </div>
+    <!-- </v-main> -->
   </v-app>
 </template>
 
