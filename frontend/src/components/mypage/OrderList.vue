@@ -30,7 +30,10 @@
       </v-col>
     </v-container>
     <!-- outlined 적용이 잘 안되는데 다시 적용해보기 -->
-    <v-container v-for="order in $store.getters.orderList" :key="order.id">
+    <v-container
+      v-for="(order, index) in $store.getters.orderList"
+      :key="index"
+    >
       <v-row>
         <v-col cols="4">
           <!-- 주문 날짜 불러오기 -->
@@ -100,7 +103,7 @@
         <v-col cols="12" offset="9">
           <br />
           <br />
-          <v-btn color="success" v-bind:to="orderDetailUrl + order.id">
+          <v-btn color="success" v-bind:to="orderDetailUrl + index">
             주문 상세보기
           </v-btn>
         </v-col>
@@ -120,7 +123,7 @@ export default {
       // 변경하기
       tab: null,
       tabs: ["최근 6개월", "2021", "2020", "2019", "2018"],
-      orderDetailUrl: "/find-order-detail/"
+      orderDetailUrl: "/final-order-detail/"
     };
   },
 

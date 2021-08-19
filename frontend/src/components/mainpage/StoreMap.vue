@@ -70,10 +70,11 @@
                             md="4"
                             lg="3"
                           >
-                            <v-card @click="clickHandler(store.id)">
+                            <!-- <v-card @click="clickHandler(store.id)">
+                               -->
+                            <v-card @click="moveHandler(store.id)">
                               <v-card-title class="subheading font-weight-bold">
                                 {{ store.name }}
-                                {{ store.section }}
                               </v-card-title>
                             </v-card>
                           </v-col>
@@ -215,8 +216,11 @@ export default {
     updateItemsPerPage (number) {
       this.itemsPerPage = number
     },
-    clickHandler: function(storeId) {
-      this.$store.dispatch("getStore",`/api/store/${storeId}`);
+    // clickHandler: function(storeId) {
+    //   this.$store.dispatch("getStore",`/api/store/${storeId}`);
+    // }
+    moveHandler: function(storeId) {
+      this.$router.push(`/storedetail?storeId=${storeId}`);
     }
   },
 

@@ -9,10 +9,10 @@
         cellpadding="0"
       >
         <colgroup>
-          <col style="width:10%" />
-          <col style="width:40%" />
-          <col style="width:30%" />
-          <col style="width:20%" />
+          <col style="width:10%">
+          <col style="width:40%">
+          <col style="width:30%">
+          <col style="width:20%">
         </colgroup>
 
         <tbody>
@@ -30,10 +30,9 @@
             </th>
             <td>
               <v-img
-                :src="
-                  'http://localhost:8081/api/store/downloadFile/' +
-                    $store.getters.myStore.image
-                "
+                :src="'http://localhost:8081/api/store/downloadFile/' + $store.getters.myStore.image"
+                max-height="256"
+                max-width="194"
               />
             </td>
             <td>
@@ -53,13 +52,16 @@
           <tr>
             <th>가게설명</th>
             <td>
-              현재 등록된 가게설명 : <br /><strong>{{
-                $store.getters.myStore.comment
-              }}</strong>
+              현재 등록된 가게설명 : <br><strong>{{ $store.getters.myStore.comment }}</strong>
             </td>
             <td>
-              <v-form ref="form">
-                <v-text-field v-model="comment" placeholder="수정할 가게설명" />
+              <v-form
+                ref="form"
+              >
+                <v-text-field
+                  v-model="comment"
+                  placeholder="수정할 가게설명"
+                />
               </v-form>
             </td>
             <td>
@@ -74,12 +76,12 @@
               <!-- 판매 품목 테이블 -->
               <v-simple-table>
                 <colgroup>
-                  <col style="width:30%" />
-                  <col style="width:20%" />
-                  <col style="width:25%" />
-                  <col style="width:15%" />
-                  <col style="width:5%" />
-                  <col style="width:5%" />
+                  <col style="width:30%">
+                  <col style="width:20%">
+                  <col style="width:25%">
+                  <col style="width:15%">
+                  <col style="width:5%">
+                  <col style="width:5%">
                 </colgroup>
 
                 <thead>
@@ -104,30 +106,31 @@
                 </thead>
                 <tbody>
                   <tr
-                    v-for="(item, index) in $store.getters.myStore.itemList"
+                    v-for="(item,index) in $store.getters.myStore.itemList"
                     :key="item.id"
                   >
                     <td>
                       <v-img
-                        :src="
-                          'http://localhost:8082/api/item/downloadFile/' +
-                            item.image
-                        "
+                        :src="'http://localhost:8082/api/item/downloadFile/' + item.image"
+                        max-height="256"
+                        max-width="194"
+                      />
+                    </td>
+                    <td><h4>{{ item.name }}</h4></td>
+                    <td>{{ item.content }}</td>
+                    <td><h4>{{ item.price }}</h4></td>
+                    <td>
+                      <v-checkbox
+                        v-model="item.onSale"
+                        required
                       />
                     </td>
                     <td>
-                      <h4>{{ item.name }}</h4>
-                    </td>
-                    <td>{{ item.content }}</td>
-                    <td>
-                      <h4>{{ item.price }}</h4>
-                    </td>
-                    <td>
-                      <v-checkbox v-model="item.onSale" required />
-                    </td>
-                    <td>
                       <!-- 상품 수정 모달창 -->
-                      <v-dialog v-model="dialogUpdate[index]" width="500">
+                      <v-dialog
+                        v-model="dialogUpdate[index]"
+                        width="500"
+                      >
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
                             color="orange"
@@ -141,7 +144,9 @@
                         </template>
 
                         <v-card>
-                          <StoreUpdateProduct :idx="index" />
+                          <StoreUpdateProduct
+                            :idx="index"
+                          />
                           <v-btn
                             color="primary"
                             text
@@ -152,7 +157,11 @@
                         </v-card>
                       </v-dialog>
                       <v-spacer />
-                      <v-btn depressed color="error" x-small>
+                      <v-btn
+                        depressed
+                        color="error"
+                        x-small
+                      >
                         삭제
                       </v-btn>
                     </td>
@@ -160,9 +169,17 @@
                   <tr>
                     <td />
                     <!-- 상품 추가 모달창 -->
-                    <v-dialog v-model="dialogAdd" width="500">
+                    <v-dialog
+                      v-model="dialogAdd"
+                      width="500"
+                    >
                       <template v-slot:activator="{ on, attrs }">
-                        <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                        <v-btn
+                          color="primary"
+                          dark
+                          v-bind="attrs"
+                          v-on="on"
+                        >
                           상품 추가
                         </v-btn>
                       </template>
@@ -170,7 +187,11 @@
                       <v-card>
                         <StoreAddProduct />
 
-                        <v-btn color="primary" text @click="dialogAdd = false">
+                        <v-btn
+                          color="primary"
+                          text
+                          @click="dialogAdd = false"
+                        >
                           X
                         </v-btn>
                       </v-card>
@@ -188,48 +209,49 @@
 
 <script>
 import axios from "axios";
-import { mapGetters } from "vuex";
-import StoreAddProduct from "./StoreAddProduct";
-import StoreUpdateProduct from "./StoreUpdateProduct";
+import {mapGetters} from "vuex";
+import StoreAddProduct from './StoreAddProduct';
+import StoreUpdateProduct from './StoreUpdateProduct';
 
 export default {
-  name: "StoreManagerView",
+  name: 'StoreManagerView',
   components: {
     StoreAddProduct,
-    StoreUpdateProduct
+    StoreUpdateProduct,
   },
-  data() {
+  data () {
     return {
-      dialogUpdate: [],
+      dialogUpdate:[],
       // dialogUpdate: false,
       dialogAdd: false,
 
-      image: "",
-      comment: this.$store.getters.myStore.comment
-    };
+      image: '',
+      comment: this.$store.getters.myStore.comment,
+    }
   },
-  created() {
-    for (var i = 0; i < this.$store.getters.myStore.itemList.length; i++) {
-      this.dialogUpdate[i] = false;
+  created(){
+    for(var i = 0 ; i < this.$store.getters.myStore.itemList.length ; i++) {
+      this.dialogUpdate[i]=false;
     }
   },
 
-  methods: {
-    updateComment() {
+  methods:{
+    updateComment(){
       axios({
-        method: "post",
-        url: "http://localhost:8081/api/store/comment",
-        headers: {
-          Authorization: `Bearer ` + this.$store.getters.getToken
+        method:'post',
+        url:'http://localhost:8081/api/store/comment',
+        headers:{
+          Authorization: `Bearer `+ this.$store.getters.getToken
         },
-        data: {
-          comment: this.comment
+        data:{
+          comment: this.comment,
         }
-      }).then(() => {
+      })
+      .then(() => {
         // console.log(this.comment)
         alert("가게설명이 성공적으로 수정되었습니다.");
-        this.$router.go();
-      });
+        this.$router.go()
+      })
     },
 
     selectImage(file) {
@@ -246,50 +268,53 @@ export default {
           {
             headers: {
               "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ` + this.$store.getters.getToken
-            }
+              Authorization: `Bearer `+ this.$store.getters.getToken
+            },
           }
         );
         console.log(data);
-        this.$router.go();
+        this.$router.go()
       } catch (err) {
         console.log(err);
       }
     }
   }
-};
+}
 </script>
+
+
+
+
 
 <style>
 .table {
-  table-layout: fixed;
-  width: 100%;
-  text-align: center;
+  table-layout:fixed;
+  width:100%;
+  text-align:center;
 }
 .table th {
-  background: #ccc;
+  background:#ccc;
 }
-.table td,
-.table th {
-  padding: 10px 20px;
-  border-top: 1px solid #ccc;
-  word-break: break-all;
+.table td, .table th {
+  padding:10px 20px;
+  border-top:1px solid #ccc;
+  word-break:break-all
 }
 .table--min {
-  min-width: 700px;
+  min-width:700px;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width:768px) {
   /*normal*/
   .table-box {
-    overflow-x: auto;
+    overflow-x:auto;
   }
   /*horizontal*/
   .table--horizontal tr {
-    position: relative;
+    position:relative;
   }
   .table--horizontal th {
-    position: fixed;
-    width: 32px;
+    position:fixed;
+    width:32px;
   }
 }
 </style>
