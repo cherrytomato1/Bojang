@@ -207,7 +207,7 @@ export default {
         .then(() => {
           this.$store.dispatch("getOrderList", NaN);
           alert("결제 완료 되었습니다.");
-          this.$router.push("/final-order-detail/0");
+          this.$router.push("/");
         })
         .catch(() => {
           alert("결제 실패");
