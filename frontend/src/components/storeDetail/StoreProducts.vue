@@ -19,12 +19,11 @@
         :key="idx"
       >
         <v-list-item-avatar>
-          <v-icon
-            class="grey lighten-1"
-            dark
-          >
-            mdi-fish
-          </v-icon>
+          <v-img
+            :src="'http://localhost:8082/api/item/downloadFile/' + item.image"
+            max-height="256"
+            max-width="194"
+          />
         </v-list-item-avatar>
 
         <v-list-item-content>

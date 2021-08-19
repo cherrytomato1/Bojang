@@ -15,7 +15,8 @@ export default new Vuex.Store({
     store: [], // 마켓에서 선택된 가게
     myStore: [], // 나의 가게정보 (상점 정보수정 시 필요)
 
-    token: "",
+    token: '',
+    // token: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODQyNzQzNzQxIiwianRpIjoiUzBmZWIwMTdkMWQxNCIsImlhdCI6MTYyOTM5MTc4MywiZXhwIjoxNjI5NDUyMjYzfQ.vQz9bAom1sWDab78O0MaOzQgHtE9XHAkIrcTQBIAQTWFRyk5vkgPTV6Yv3OPG0hmvY0xQ_XOmDnq17aHemgEeA',
 
     isLogin: false,
     frequentStore: [], // 단골가게

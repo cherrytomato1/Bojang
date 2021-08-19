@@ -6,7 +6,7 @@
     <!-- <RecommendStore /> -->
 
     <!-- 가게가 선택되었을 때 표시하기 위함 -->
-    <SelectStore v-if="$store.getters.store.id!=undefined" />
+    <!-- <SelectStore v-if="$store.getters.store.id!=undefined" /> -->
   </v-app>
 </template>
 
@@ -26,7 +26,7 @@ export default {
     Navbar,
     StoreMap,
     // RecommendStore,
-    SelectStore,
+    // SelectStore,
   },
 //  created() {
 //     this.$store.dispatch("getUserData");

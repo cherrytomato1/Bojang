@@ -1,62 +1,63 @@
 <template>
   <v-app class="color5">
-    <div id="session-header">
-      <h1 id="session-title">
-        {{ mySessionId }}
-        !!f
-      </h1>
-      <input
-        id="buttonLeaveSession"
-        class="btn btn-large btn-danger"
-        type="button"
-        value="Leave session"
-        @click="leaveSession"
-      >
-    </div>
-    <div
-      id="main-video"
-      class="col-md-6"
-    >
-      <user-video :stream-manager="mainStreamManager" />
-    </div>
-    <div class="chat-box">
+    <v-container>
+      <div id="session-header">
+        <h1 id="session-title">
+        <!-- {{ $route.query.storeId }} -->
+        </h1>
+        <btn
+          id="buttonLeaveSession"
+          type="button"
+          @click="leaveSession"
+        >
+          라이브 종료
+        </btn>
+      </div>
       <div
-        ref="chatDisplay"
-        class="chat-display"
+        id="main-video"
+        class="col-md-6"
       >
+        <user-video :stream-manager="mainStreamManager" />
+      </div>
+      <div class="chat-box">
         <div
-          v-for="(chat, index) in chats"
-          :key="index"
-          class="chat-line"
+          ref="chatDisplay"
+          class="chat-display"
         >
           <div
-            v-if="chat.userId === myUserName"
-            class="my-comment"
+            v-for="(chat, index) in chats"
+            :key="index"
+            class="chat-line"
           >
-            <div>
-              <span class="participant-name">{{ chat.nickname }} </span><span class="chat-msg">{{ chat.msg }}</span>
+            <div
+              v-if="chat.userId === myUserName"
+              class="my-comment"
+            >
+              <div>
+                <span class="participant-name">{{ chat.nickname }} </span><span class="chat-msg">{{ chat.msg }}</span>
+              </div>
             </div>
-          </div>
-          <div
-            v-else
-            class="other-comment"
-          >
-            <div>
-              <span class="participant-name other">{{ chat.nickname }} </span><span class="chat-msg">{{ chat.msg }}</span>
+            <div
+              v-else
+              class="other-comment"
+            >
+              <div>
+                <span class="participant-name other">{{ chat.nickname }} </span><span class="chat-msg">{{ chat.msg }}</span>
+              </div>
             </div>
           </div>
         </div>
+        <div class="msg-wrapper">
+          <input
+            v-model="sendMsg"
+            type="text"
+            class="msg-input"
+            placeholder="메세지를 입력해주세요"
+            @keydown.enter="submitMsg"
+          >
+        </div>
       </div>
-      <div class="msg-wrapper">
-        <input
-          v-model="sendMsg"
-          type="text"
-          class="msg-input"
-          placeholder="메세지를 입력해주세요"
-          @keydown.enter="submitMsg"
-        >
-      </div>
-    </div>
+    </v-container>
   </v-app>
 </template>
 
@@ -64,6 +65,7 @@
 import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
 import UserVideo from '@/components/openvidu/UserVideo';
+import {mapGetters} from "vuex";
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
@@ -88,18 +90,21 @@ export default {
       isFrontCamera: false,
       sendMsg: '',
 
-      mySessionId: this.$store.getters.myStore.id,
-      myUserName: this.$store.getters.myStore.name,
+      // mySessionId: this.$route.query.storeId,
+      // myUserName: this.$store.getters.store.name,
     };
   },
+  computed: {
+    ...mapGetters(["store"]),
+  },
 
-  // created(){
-  //   this.$store.dispatch("getMyStore");
+  created() {
+    this.$store.dispatch("getStore",`/api/store/${this.$route.query.storeId}`);
+  },
 
-  // },
   mounted(){
-    console.log("mySessionId :"+mySessionId);
-    console.log("myUserName : "+myUserName);
+    // console.log("mySessionId :"+mySessionId);
+    // console.log("myUserName : "+myUserName);
 
     this.joinSession()
   },
@@ -113,8 +118,8 @@ export default {
     submitMsg() {
       if (this.sendMsg.trim() === '') return;
       const sendData = {
-        userId: this.myUserName,
-        nickname: this.myUserName,
+        userId: this.$route.query.storeId,
+        nickname: this.$store.getters.store.name,
         msg: this.sendMsg,
       };
       this.sendMsg = '';
@@ -154,9 +159,9 @@ export default {
 
       // 'getToken' method is simulating what your server-side should do.
       // 'token' parameter should be retrieved and returned by your own backend
-      this.getToken(this.mySessionId).then((token) => {
+      this.getToken(this.$route.query.storeId).then((token) => {
         this.session
-          .connect(token, { clientData: this.myUserName })
+          .connect(token, { clientData: this.$store.getters.store.name })
           .then(() => {
             // --- Get your own camera stream with the desired properties ---
             let publisher = this.OV.initPublisher(undefined, {
@@ -193,6 +198,8 @@ export default {
       this.publisher = undefined;
       this.subscribers = [];
       this.OV = undefined;
+
+      this.$router.push(`/storemanager`);
 
       window.removeEventListener('beforeunload', this.leaveSession);
     },

@@ -1,11 +1,11 @@
 <template>
   <v-app class="color5">
-    <!-- 현재 라이브 중이라면, 라이브 화면출력 -->
-    <!-- <div v-if="isOnAir == true"> -->
-    <!-- {{ isOnAir }} -->
-    <div v-show="isOnAir==true">
+    <!-- 잘됨 -->
+    <div v-if="isOnAir==false">
+      <v-img src="@/assets/live_ready.png" />
+    </div>
+    <div v-if="isOnAir==true">
       <div
-
         id="main-video"
         class="col-md-6"
       >
@@ -141,7 +141,7 @@ export default {
       chats: [],
       sendMsg: '',
       isOnAir:false,
-      mySessionId: this.$store.getters.store.id,
+      // mySessionId: this.$store.getters.store.id,
       myUserName: '시장 손님 ' + Math.floor(Math.random() * 100),
     };
   },
@@ -159,10 +159,9 @@ export default {
       })
 
     // this.joinSession();
-    if(this.$store.getters.store.id != undefined){
     axios
       .get(
-        `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${this.$store.getters.store.id}`,
+        `${OPENVIDU_SERVER_URL}/openvidu/api/sessions/${this.$route.query.storeId}`,
 
         {
           headers:{
@@ -179,7 +178,6 @@ export default {
       .catch(()=>{
         this.isOnAir = false
       })
-    }
 
   },
 
@@ -234,6 +232,7 @@ export default {
       this.session.on('streamDestroyed', ({ stream }) => {
         console.log('방송 종료!');
         const index = this.subscribers.indexOf(stream.streamManager, 0);
+        this.isOnAir=false;
         if (index >= 0) {
           this.subscribers.splice(index, 1);
         }
@@ -248,7 +247,7 @@ export default {
 
       // 'getToken' method is simulating what your server-side should do.
       // 'token' parameter should be retrieved and returned by your own backend
-      this.getToken(this.mySessionId).then((token) => {
+      this.getToken(this.$route.query.storeId).then((token) => {
         this.session
           .connect(token, { clientData: this.myUserName })
           .then(() => {})

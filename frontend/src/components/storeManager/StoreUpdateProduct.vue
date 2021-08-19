@@ -12,6 +12,8 @@
           <tr>
             <td>
               <v-img
+                max-height="256"
+                max-width="194"
                 :src="'http://localhost:8082/api/item/downloadFile/' + item.image"
               />
             </td>
