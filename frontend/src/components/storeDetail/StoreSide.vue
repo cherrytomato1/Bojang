@@ -45,6 +45,7 @@
             dark
             v-bind="attrs"
             v-on="on"
+            @click="addFavoriteStore"
           >
             <v-icon
               dark
@@ -154,6 +155,7 @@
 
 <script>
 import {mapGetters} from "vuex";
+import axios from "axios";
 
 export default {
   name: 'StoreSide',
@@ -166,6 +168,21 @@ export default {
     next() {
       alert('단골가게로 등록되었습니다.')
     },
+    addFavoriteStore(){
+      axios({
+        method:'post',
+        url:'http://localhost:8081/api/favorite',
+        headers:{
+          Authorization: `Bearer `+ this.$store.getters.getToken
+        },
+        data:{
+          storeId: this.$store.getters.store.id,
+        }
+      })
+      .then(() =>{
+        console.log('ttt')
+      })
+    }
 
   }
 }
