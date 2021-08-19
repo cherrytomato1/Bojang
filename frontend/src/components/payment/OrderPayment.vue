@@ -59,7 +59,7 @@
                 </v-col>
                 <v-col cols="2">
                   <br />
-                  {{ fs.basket.item.price }}원
+                  {{ fs.basket.item.price * fs.basket.amount }}원
                 </v-col>
                 <!-- input field 넣어서 요청사항 출력시키기 -->
                 <v-col cols="4">
@@ -90,7 +90,7 @@
         <v-col cols="12" offset="1">
           <h4>결제 정보</h4>
           <br />
-          <span>총 결제금액 26,000원</span>
+          <span>총 결제금액: {{ total }} 원</span>
         </v-col>
       </v-row>
     </v-container>
@@ -111,9 +111,7 @@
             카드 결제
           </p>
         </v-col>
-        <v-col cols="1">
-          <v-checkbox value />
-        </v-col>
+
         <!-- <v-col
           cols="2"
         >
@@ -150,7 +148,8 @@ export default {
   data() {
     return {
       name: Object,
-      comment: []
+      comment: [],
+      total: 0
     };
   },
 
@@ -158,16 +157,27 @@ export default {
     ...mapGetters(["basketList", "getToken", "userData"])
     // ...mapGetters(["basketList", "getToken"])
   },
-  // 이 부분 다시 찾아보기 여러개로 써야 되는건지 따로 써야 되는지 등
+  watch: {
+    basketList() {
+      this.totalHandler();
+    }
+  },
   created() {
     // this.$store.dispatch(["getBasketList", "getUserData"]);
     // this.$store.dispatch("getOrderList");
     this.$store.dispatch("getBasketList");
-    // this.$store.dispatch(["getUserData"]);
-    // this.$store.dispatch(["getOrderList"]);
-    // this.$store.dispatch("getUserData");
   },
   methods: {
+    totalHandler: function() {
+      // console.log("###" + this.basketList)
+      console.log(this.basketList);
+
+      this.basketList.forEach(basketItem => {
+        this.total += basketItem.basket.amount * basketItem.basket.item.price;
+      });
+      console.log(this.total);
+    },
+
     billing: function() {
       const orderItemList = [];
 
@@ -181,7 +191,7 @@ export default {
         data.comment = this.comment[index++];
         orderItemList.push(data);
       });
-      console.log(orderItemList);
+      // console.log(orderItemList);
       axios({
         method: "post",
         url: "http://localhost:8082/api/billing",
@@ -195,7 +205,9 @@ export default {
         }
       })
         .then(() => {
+          this.$store.dispatch("getOrderList", NaN);
           alert("결제 완료 되었습니다.");
+          this.$router.push("/final-order-detail/0");
         })
         .catch(() => {
           alert("결제 실패");

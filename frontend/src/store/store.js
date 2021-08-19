@@ -196,18 +196,19 @@ export default new Vuex.Store({
       //   context.commit("setMarkets", data.data.marketList);
       // })
     },
-    getOrderList(context) {
+    getOrderList(context, period) {
+      let url = "/api/orderinfo";
+      url += !isNaN(period) ? "?year=" + period : "";
+      console.log(url);
       http1
-        .get(`/api/orderinfo`, {
+        .get(url, {
           // header token 팁
           headers: {
             Authorization: `Bearer ` + this.state.token
           }
         })
         .then(response => {
-          // context.commit("setOrderList", data.data.list);
           context.commit("setOrderList", response.data.list);
-          console.log(context.commit("setOrderList", response.data.list));
         })
         .catch(() => {
           alert("getOrderList 오류 발생");

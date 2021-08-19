@@ -21,7 +21,7 @@ public class OrderItem {
     @ManyToOne(cascade = CascadeType.ALL)
     private OrderInfo orderInfo;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Item item;
 
     @Column(name = "comment")

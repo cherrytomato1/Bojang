@@ -19,7 +19,7 @@ public class Store {
 	private String id;
 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	private User user;
 
 	@Column(name = "name", nullable = false, length = 20)
@@ -43,7 +43,7 @@ public class Store {
 	@ManyToOne
 	private StoreType storeType;
 
-	@OneToMany(mappedBy = "store",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "store")
 	private List<Item> itemList = new ArrayList<>();
 
 	public void addItem(Item item){

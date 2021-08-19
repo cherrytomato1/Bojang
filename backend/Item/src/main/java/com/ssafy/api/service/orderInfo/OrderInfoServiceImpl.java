@@ -48,7 +48,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
 
     @Override
     public List<OrderInfo> getMarketInfoList(Long marketId) {
-        return orderInfoRepository.findByMarket_Id(marketId);
+        return orderInfoRepository.findByMarket_IdAndOrderStatus_IdNot(marketId, 3L);
     }
 
     @Override
