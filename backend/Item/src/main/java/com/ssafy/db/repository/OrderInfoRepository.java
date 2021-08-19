@@ -9,11 +9,17 @@ import java.util.List;
 import java.util.Optional;
 
 
-public interface OrderInfoRepository extends JpaRepository<OrderInfo,String> {
-    List<OrderInfo> findByUser(User user);
-    List<OrderInfo> findByRegisterTimeBetweenAndUser(LocalDateTime start, LocalDateTime end, User user);
-    Optional<OrderInfo> findById(String id);
-    List<OrderInfo> findByMarket_IdAndOrderStatus_Id(Long marketId,Long orderStatusId);
-    List<OrderInfo> findByMarket_Id(Long marketId);
+public interface OrderInfoRepository extends JpaRepository<OrderInfo, String> {
+
+	List<OrderInfo> findByUser(User user);
+
+	List<OrderInfo> findByRegisterTimeBetweenAndUser(LocalDateTime start, LocalDateTime end,
+		User user);
+
+	Optional<OrderInfo> findById(String id);
+
+//	List<OrderInfo> findByMarket_IdAndOrderStatus_Id(Long marketId, Long orderStatusId);
+
+	List<OrderInfo> findByMarket_IdAndOrderStatus_IdNot(Long marketId, Long orderStatusId);
 
 }
