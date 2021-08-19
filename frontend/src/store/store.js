@@ -160,7 +160,6 @@ export default new Vuex.Store({
       http
         .get("/api/store", {
           headers: {
-            // Authorization: `Bearer `+ this.state.token
             Authorization: `Bearer ` + this.getters.getToken
           }
         })

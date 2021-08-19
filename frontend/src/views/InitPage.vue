@@ -128,7 +128,7 @@ export default {
   computed: {
     ...mapGetters(["userData"]),
     kakaoLoginLink() {
-      return `http://localhost:8085/oauth2/authorize/kakao?redirect_uri=http://localhost:1024/oauth2/redirect`;
+      return `http://localhost:8085/oauth2/authorize/kakao?redirect_uri=https://localhost:1024/oauth2/redirect`;
     }
   },
 
