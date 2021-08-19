@@ -9,11 +9,11 @@
             단골 가게 관리
           </h2>
         </v-col>
-        <v-col
+        <!-- <v-col
           cols="4"
-        >
-          <!-- 검색하면 데이터 찾아야됨 -->
-          <v-text-field
+        > -->
+        <!-- 검색하면 데이터 찾아야됨 -->
+        <!-- <v-text-field
             flat
             hide-details
             label="Search"
@@ -21,9 +21,10 @@
             solo-inverted
             @keyup.enter="storeSearch"
           />
-        </v-col>
+        </v-col> -->
       </v-row>
     </v-container>
+    <br>
     <div
       v-for="(fs, index) in frequentStore"
       :key="index"
@@ -68,7 +69,8 @@
             <v-col
               cols="2"
             >
-              <v-icon @click="deleteFrequent(index)">
+              <v-icon @click="deleteFrequent(fs.store.id)">
+                <!-- <v-icon @click="deleteFrequent(index)"> -->
                 x
               </v-icon>
             <!-- test -->
@@ -131,10 +133,35 @@ export default {
           alert("검색한 가게는 단골가게가 아닙니다. 확인해주세요");
         });
       },
-      deleteFrequent(index){
-        this.$store.dispatch("deleteFrequentStore",`/api/favorite?storeId=${this.$store.getters.frequentStore[index].store.id}`)
-      }
+      // 수정해야됨
+      deleteFrequent: function(storeId) {
+        axios({
+          method:'delete',
+          url:`http://localhost:8081/api/favorite/${this.storeId}`,
+          headers:{
+            Authorization: `Bearer `+ localStorage.getItem("token")
+          },
+          data:{
+            storeIdList: [storeId],
+            // basketIdList: [storeId],
+          }
+        })
+        .then(() => {
+          this.$store.dispatch("getBasketList")
+          alert("장바구니에 상품이 삭제 되었습니다.");
+          // 로그는 제대로 오는 듯 but 장바구니에서 상품을 제거해야됨
+          // reload만 되고 상품제거는 안됨
+          // location.reload()
+        })
+        .catch(() => {
+          alert("확인해주세요");
+        });
+        // console.log(basketId)
+      },
     },
+      // deleteFrequent(index){
+      //   this.$store.dispatch("deleteFrequentStore",`/api/favorite?storeId=${this.$store.getters.frequentStore[index].store.id}`)
+      // }
     // watch:{
     //   tab: function (val){ // 선택한 탭 변경될 경우
     //     this.$store.commit("setFrequentStore",this.$store.getters.frequentStore[val]);

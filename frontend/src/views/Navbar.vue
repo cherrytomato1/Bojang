@@ -32,7 +32,7 @@
           class="pa-5"
         >
           <!-- {{ $store.getters.userData }} -->
-          {{ type }}
+          <!-- {{ $store.getters.userData.userType.id }} -->
           마이페이지
         </router-link>
         <router-link

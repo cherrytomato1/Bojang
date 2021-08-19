@@ -48,6 +48,7 @@
             />
           </v-col>
           <v-col
+            offset="5"
             cols="4"
           >
             <v-btn
@@ -57,7 +58,7 @@
               저장
             </v-btn>
           </v-col>
-          <v-col
+          <!-- <v-col
             offset="6"
           >
             <v-btn
@@ -66,7 +67,7 @@
             >
               회원 탈퇴
             </v-btn>
-          </v-col>
+          </v-col> -->
         </v-row>
       </v-form>
     </v-container>
@@ -136,11 +137,11 @@ export default {
         });
       },
       // 로그아웃이 제대로 안되는 것 같음 - 확인해보기
-      deleteId () {
-        this.token = ''
-        this.$router.push({ name: 'InitPage'})
-        // this.$refs.observer.reset()
-      },
+      // deleteId () {
+      //   this.token = ''
+      //   this.$router.push({ name: 'InitPage'})
+      //   // this.$refs.observer.reset()
+      // },
     }
 }
 </script>

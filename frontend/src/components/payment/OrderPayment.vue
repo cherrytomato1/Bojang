@@ -27,8 +27,8 @@
           <h3>구매자 정보</h3><br>
 
           <!-- 이 부분에서 mapgetters 가져오는 건 맞는것 같은데 created hook error -->
-          <!-- <p>{{ $store.getters.userData.name }}</p>
-          <p>{{ $store.getters.userData.phoneNumber }}</p> -->
+          <p>이름 : {{ $store.getters.userData.name }}</p>
+          <p>휴대폰번호 : {{ $store.getters.userData.phoneNumber }}</p>
 
 
           <!-- <v-text>이름 : 김싸피</v-text><br>
@@ -81,6 +81,16 @@
                 >
                   <br>
                   {{ fs.basket.item.price }}원
+                </v-col>
+                <!-- input field 넣어서 요청사항 출력시키기 -->
+                <v-col
+                  cols="4"
+                >
+                  <v-text-field
+                    v-model="comment[index]"
+                    dense
+                    placeholder="요청사항을 입력하세요"
+                  />
                 </v-col>
               </v-row>
             </v-container>
@@ -138,14 +148,11 @@
         >
           <v-checkbox value />
         </v-col>
-        <v-col
+        <!-- <v-col
           cols="2"
         >
-          <br>
-          <p>
-            카카오 페이
-          </p>
-        </v-col>
+
+        </v-col> -->
       </v-row>
     </v-container>
     <br>
@@ -158,7 +165,7 @@
           <!-- <br> -->
           <v-btn
             color="blue"
-            to="/finalorderdetail"
+            @click="billing"
           >
             <span>
               결제하기
@@ -172,47 +179,69 @@
 
 <script>
 import {mapGetters} from "vuex";
+import axios from 'axios';
+// import store from '@/store/store';
+
+// const message = $store.getters.basketList.basket.item.comment
 
 export default {
   name: 'OrderPayment',
   data() {
     return{
       name: Object,
+      comment: [],
     }
   },
-  // methods: {
-  //   axios({
-  //       method:'get',
-  //       url:'http://localhost:8082/api/basket',
-  //       headers:{
-  //         Authorization: `Bearer `+ this.$store.getters.getToken
-  //       },
-  //       data:{
-  //         amount: num,
-  //         itemId: id,
-  //       }
-  //     })
-  //     .then(() => {
-  //       alert("장바구니에 상품을 넣었습니다.");
-  //     })
-  //     .catch(() => {
-  //       alert("장바구니에 해당 상품이 이미 있습니다.");
-  //     }),
+
   computed:{
     ...mapGetters(["basketList", "getToken", "userData"])
     // ...mapGetters(["basketList", "getToken"])
   },
   // 이 부분 다시 찾아보기 여러개로 써야 되는건지 따로 써야 되는지 등
   created() {
-    // this.$store.dispatch(["getBasketList", "getUserData", "getOrderList"]);
+    // this.$store.dispatch(["getBasketList", "getUserData"]);
     // this.$store.dispatch("getOrderList");
-    this.$store.dispatch(["getBasketList"]);
+    this.$store.dispatch("getBasketList");
     // this.$store.dispatch(["getUserData"]);
     // this.$store.dispatch(["getOrderList"]);
     // this.$store.dispatch("getUserData");
-  }
+  },
+    methods: {
+     billing: function() {
+      const orderItemList = [];
 
-};
+      // console.log(this.this.comment)
+      let index = 0
+      this.basketList.forEach(basketItem => {
+      let data = new Object()
+      data.amount = basketItem.basket.amount
+      data.itemId = basketItem.basket.item.id
+      // console.log(this.this.comment)
+      data.comment = this.comment[index++]
+      orderItemList.push(data)
+    });
+      console.log(orderItemList)
+      axios({
+          method:'post',
+          url:'http://localhost:8082/api​/billing',
+          headers:{
+            Authorization: `Bearer `+ this.$store.getters.getToken
+          },
+          data:{
+            orderItemList: orderItemList,
+            payTypeId: 1,
+            userId: this.userData.id
+          }
+        })
+        .then(() => {
+          alert("결제 완료 되었습니다.");
+        })
+        .catch(() => {
+          alert("결제 실패");
+        })
+    }
+  }
+}
 </script>
 
 <style>

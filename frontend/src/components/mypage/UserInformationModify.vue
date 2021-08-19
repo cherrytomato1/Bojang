@@ -22,6 +22,7 @@
         />
         <v-row>
           <v-col
+            offset="5"
             cols="4"
           >
             <v-btn
@@ -31,7 +32,7 @@
               저장
             </v-btn>
           </v-col>
-          <v-col
+          <!-- <v-col
             offset="5"
           >
             <v-btn
@@ -40,7 +41,7 @@
             >
               회원 탈퇴
             </v-btn>
-          </v-col>
+          </v-col> -->
         </v-row>
       </v-form>
     </v-container>
@@ -114,11 +115,13 @@ export default {
     //   });
     // },
     // 이 부분은 이제 적용되는듯 - token이 사라지게 안되네..
-      deleteId () {
-        this.token = ''
-        this.$router.push({ name: 'InitPage'})
-        // this.$refs.observer.reset()
-      },
+
+
+      // deleteId () {
+      //   this.token = ''
+      //   this.$router.push({ name: 'InitPage'})
+      //   // this.$refs.observer.reset()
+      // },
     //   deleteId: function () {
     //   axios({
     //     method: 'delete',

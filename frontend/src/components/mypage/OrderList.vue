@@ -11,7 +11,7 @@
             주문 내역
           </h2>
         </v-col>
-        <v-col
+        <!-- <v-col
           cols="4"
         >
           <v-text-field
@@ -23,7 +23,7 @@
             prepend-inner-icon="mdi-magnify"
             solo-inverted
           />
-        </v-col>
+        </v-col> -->
       </v-row>
       <v-col
         cols="12"

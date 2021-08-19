@@ -232,12 +232,12 @@ export default {
           Authorization: `Bearer `+ localStorage.getItem("token")
         },
         data:{
-          basketIdList: [this.basketId],
+          basketIdList: [basketId],
         }
       })
       .then(() => {
         this.$store.dispatch("getBasketList")
-        // alert("장바구니에 상품이 삭제 되었습니다.");
+        alert("장바구니에 상품이 삭제 되었습니다.");
         // 로그는 제대로 오는 듯 but 장바구니에서 상품을 제거해야됨
         // reload만 되고 상품제거는 안됨
         // location.reload()
@@ -245,6 +245,7 @@ export default {
       .catch(() => {
         alert("확인해주세요");
       });
+      // console.log(basketId)
     },
   },
 };

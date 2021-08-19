@@ -216,14 +216,14 @@ export default new Vuex.Store({
             // Authorization: `Bearer `+ this.state.token
             Authorization: `Bearer `+ localStorage.getItem("token")
           }})
-        .then(( data ) => {
+        .then(( response ) => {
           // context.commit("setOrderList", data.data.list);
-          context.commit("setOrderList", data.data.orderItemList);
+          context.commit("setOrderList", response.data.list);
 
           // context.commit("setOrderList", data.data.orderInfo);
           // console.log(context.commit("setOrderList", data.data.orderInfo))
           // console.log(context.commit("setOrderList", data.data.list
-          console.log(context.commit("setOrderList", data.data.orderItemList
+          console.log(context.commit("setOrderList", response.data.list
           ))
         })
         .catch(() => {
