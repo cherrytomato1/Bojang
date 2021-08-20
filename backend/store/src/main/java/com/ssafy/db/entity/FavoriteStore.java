@@ -1,7 +1,6 @@
 package com.ssafy.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,10 +19,10 @@ public class FavoriteStore {
     private String id;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Store store;
 
 

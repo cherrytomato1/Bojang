@@ -48,7 +48,7 @@ public class OrderInfo {
     private PayType payType;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User user;
 
     @OneToMany(mappedBy = "orderInfo",cascade = CascadeType.ALL)
@@ -57,12 +57,8 @@ public class OrderInfo {
     @ManyToOne
     private Market market;
 
-
     public void addOrderItem(OrderItem orderItem){
         orderItemList.add(orderItem);
         orderItem.setOrderInfo(this);
     }
-
-
-
 }

@@ -12,6 +12,6 @@ public class StoreLive {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Store store;
 }

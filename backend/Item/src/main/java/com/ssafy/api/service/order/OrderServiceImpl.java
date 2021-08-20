@@ -66,8 +66,13 @@ public class OrderServiceImpl implements OrderService {
 
 			OrderItem orderItem = setOrderItemAndSave(orderItemDto, item);
 
+
 			//아이템에서 스토어 아이디 찾기
 			String storeId = item.getStore().getId();
+			if (orderInfo.getMarket() == null) {
+				orderInfo.setMarket(item.getStore().getMarket());
+			}
+
 			System.out.println(storeId);
 			restUtil.getStoreByStoreId(storeId);
 			//해당 상품 최종 구매금액

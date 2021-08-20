@@ -43,7 +43,7 @@ public class OrderInfo {
     private PayType payType;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User user;
 
     @OneToMany(mappedBy = "orderInfo",cascade = CascadeType.ALL)
