@@ -63,11 +63,11 @@
 
 - **🖼와이어프레임**
 
-  - [와이어프레임 확인하기]https://docs.google.com/spreadsheets/d/1jPFiw1D0Ss9qQkTguntnnCTb78wFOnO6DXX1WOmDt6o/edit?userstoinvite=cherrytomato2532%40gmail.com&ts=60f61873#gid=0)
+  - [와이어프레임 확인하기]: https://docs.google.com/spreadsheets/d/1jPFiw1D0Ss9qQkTguntnnCTb78wFOnO6DXX1WOmDt6o/edit?userstoinvite=cherrytomato2532%40gmail.com&ts=60f61873#gid=0)
 
 - **아키텍쳐 설계 (논리 설계) & 주요기능 시퀀스 다이어그램**
 
-  - [구글독스]: https://docs.google.com/presentation/d/1SUA60uzcmfVP3qtHtJ9eRrG_8HJ7iv8Q_XnEakbKB3g/edit#slide=id.ge54cef4a6d_3_0
+  - [구글독스]: https://docs.google.com/presentation/d/1SUA60uzcmfVP3qtHtJ9eRrG_8HJ7iv8Q_XnEakbKB3g/edit#slide=id.ge54cef4a6d_3_0)
 
     
 
