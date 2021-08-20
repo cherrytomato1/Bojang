@@ -245,3 +245,7 @@
 - MariaDB 10.3.30
 - Hibernate
 - QueryDSL 4.4
+
+### Test Id
+- 상인 : [bojangstore@kakao.com](mailto:bojangstore@kakao.com) / bojang9630!
+- 픽업 매니저 : bojang_pickup@kakao.com / qhwkdvlrdjq!   (보장픽업!)
