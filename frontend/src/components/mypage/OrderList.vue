@@ -84,10 +84,11 @@
                 수량: 13 <br>
               </p> -->
                 <!-- {{ fs.item.name }}<br /> -->
+                {{ orderItem.item.name }}
               </v-col>
               <v-col cols="2">
                 <p>
-                  {{ orderItem.item.price * orderItem.amount }}<br />
+                  {{ orderItem.item.price * orderItem.amount }} 원<br />
                   {{ order.registerTime.split(" ")[0] }}<br />
                 </p>
               </v-col>
