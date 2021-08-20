@@ -21,9 +21,20 @@
           />
         </v-col> -->
       </v-row>
-      <v-col cols="12" class="py-2">
-        <v-btn-toggle v-model="tab" tile color="deep-purple accent-3" group>
-          <v-btn v-for="tabItem in tabs" :key="tabItem">
+      <v-col
+        cols="12"
+        class="py-2"
+      >
+        <v-btn-toggle
+          v-model="tab"
+          tile
+          color="deep-purple accent-3"
+          group
+        >
+          <v-btn
+            v-for="tabItem in tabs"
+            :key="tabItem"
+          >
             {{ tabItem }}
           </v-btn>
         </v-btn-toggle>
@@ -65,19 +76,22 @@
           </v-btn>
         </v-col> -->
       </v-row>
-      <div v-for="orderItem in order.orderItemList" :key="orderItem.id">
+      <div
+        v-for="orderItem in order.orderItemList"
+        :key="orderItem.id"
+      >
         <v-form>
           <v-container>
             <v-row>
               <v-col cols="2">
                 <img
                   :src="
-                    'http://localhost:8082/api/item/downloadFile/' +
+                    'http://i5a508.p.ssafy.io:8082/api/item/downloadFile/' +
                       orderItem.item.image
                   "
                   alt="상품 사진"
                   style="width:60px"
-                />
+                >
               </v-col>
 
               <v-col cols="3">
@@ -89,8 +103,8 @@
               </v-col>
               <v-col cols="2">
                 <p>
-                  {{ orderItem.item.price * orderItem.amount }} 원<br />
-                  {{ order.registerTime.split(" ")[0] }}<br />
+                  {{ orderItem.item.price * orderItem.amount }} 원<br>
+                  {{ order.registerTime.split(" ")[0] }}<br>
                 </p>
               </v-col>
               <v-col cols="4">
@@ -102,10 +116,16 @@
         </v-form>
       </div>
       <v-row>
-        <v-col cols="12" offset="9">
-          <br />
-          <br />
-          <v-btn color="success" v-bind:to="orderDetailUrl + index">
+        <v-col
+          cols="12"
+          offset="9"
+        >
+          <br>
+          <br>
+          <v-btn
+            color="success"
+            :to="orderDetailUrl + index"
+          >
             주문 상세보기
           </v-btn>
         </v-col>

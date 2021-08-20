@@ -14,7 +14,7 @@
               <v-img
                 max-height="256"
                 max-width="194"
-                :src="'http://localhost:8082/api/item/downloadFile/' + item.image"
+                :src="'http://i5a508.p.ssafy.io:8082/api/item/downloadFile/' + item.image"
               />
             </td>
             <td>
@@ -129,7 +129,7 @@ export default {
 
       try {
         const { data } = await axios.patch(
-          "http://localhost:8082/api/item/image",
+          "http://i5a508.p.ssafy.io:8082/api/item/image",
           formData,
           {
             headers: {
@@ -151,7 +151,7 @@ export default {
     updateHandler(){
       axios({
         method:'patch',
-        url:`http://localhost:8082/api/item/${this.$store.getters.myStore.id}`,
+        url:`http://i5a508.p.ssafy.io:8082/api/item/${this.$store.getters.myStore.id}`,
         headers:{
           Authorization: `Bearer `+ this.$store.getters.getToken
         },

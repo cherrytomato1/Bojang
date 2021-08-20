@@ -3,7 +3,10 @@
     <v-container>
       <!-- grid로 조절했는데 아직 한줄로 안됨 조절해보기-->
       <v-row>
-        <v-col offset="1" cols="8">
+        <v-col
+          offset="1"
+          cols="8"
+        >
           <h2>
             주문 상세정보
           </h2>
@@ -20,46 +23,55 @@
     </v-container>
     <v-container>
       <v-row>
-        <v-col cols="6" offset="1">
+        <v-col
+          cols="6"
+          offset="1"
+        >
           <span>주문 일자 {{ order.registerTime.split(" ")[0] }}</span>
         </v-col>
         <v-col cols="5">
-          <span
-            >주문번호 : {{ order.id.substring(1, order.id.length - 1) }}</span
-          >
+          <span>주문번호 : {{ order.id.substring(1, order.id.length - 1) }}</span>
         </v-col>
       </v-row>
     </v-container>
     <v-container>
       <v-row>
-        <v-col cols="12" offset="1">
+        <v-col
+          cols="12"
+          offset="1"
+        >
           <h4>주문 상세정보</h4>
-          <br />
-          <span>{{ order.market.name }}</span
-          ><br />
-          <div v-for="(orderItem, index) in order.orderItemList" :key="index">
+          <br>
+          <span>{{ order.market.name }}</span><br>
+          <div
+            v-for="(orderItem, index) in order.orderItemList"
+            :key="index"
+          >
             <v-container>
               <v-row>
                 <v-col cols="2">
                   <img
                     :src="
-                      'http://localhost:8082/api/item/downloadFile/' +
+                      'http://i5a508.p.ssafy.io:8082/api/item/downloadFile/' +
                         orderItem.item.image
                     "
                     alt="상품 사진"
                     style="width:60px"
-                  />
+                  >
                 </v-col>
                 <v-col cols="2">
                   <!-- <span> 민기네 수산 </span><br /> -->
                   <span> {{ orderItem.item.name }} </span>
                 </v-col>
-                <v-col cols="2" offset="4">
-                  <br />
+                <v-col
+                  cols="2"
+                  offset="4"
+                >
+                  <br>
                   <span> {{ orderItem.amount }} </span>
                 </v-col>
                 <v-col cols="2">
-                  <br />
+                  <br>
                   <span>
                     {{ orderItem.item.price * orderItem.amount }} 원
                   </span>
@@ -80,8 +92,11 @@
 
     <v-container>
       <v-row>
-        <v-col cols="5" offset="1">
-          <span>결제 정보</span><br />
+        <v-col
+          cols="5"
+          offset="1"
+        >
+          <span>결제 정보</span><br>
           <span>결제 수단</span>
         </v-col>
         <v-col cols="4">
@@ -99,13 +114,16 @@
       </v-row>
     </v-container>
 
-    <br />
-    <br />
+    <br>
+    <br>
     <v-container>
       <v-row>
         <v-col offset="1">
-          <br />
-          <v-btn color="light-blue" to="/ordercheck">
+          <br>
+          <v-btn
+            color="light-blue"
+            to="/ordercheck"
+          >
             <span> 주문 목록 돌아가기</span>
           </v-btn>
         </v-col>

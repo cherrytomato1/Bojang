@@ -20,7 +20,7 @@
       >
         <v-list-item-avatar>
           <v-img
-            :src="'http://localhost:8082/api/item/downloadFile/' + item.image"
+            :src="'http://i5a508.p.ssafy.io:8082/api/item/downloadFile/' + item.image"
             max-height="256"
             max-width="194"
           />
@@ -99,7 +99,7 @@ export default {
     clickHandler: function(id,num) {
       axios({
         method:'put',
-        url:'http://localhost:8082/api/basket',
+        url:'http://i5a508.p.ssafy.io:8082/api/basket',
         headers:{
           Authorization: `Bearer `+ this.$store.getters.getToken
         },

@@ -147,7 +147,7 @@ export default {
     clickHandler: function(id,num) {
       axios({
         method:'put',
-        url:'http://localhost:8082/api/basket',
+        url:'http://i5a508.p.ssafy.io:8082/api/basket',
         headers:{
           Authorization: `Bearer `+ localStorage.getItem("token")
         },
@@ -170,7 +170,7 @@ export default {
     deleteBasket: function(basketId) {
       axios({
         method:'delete',
-        url:'http://localhost:8082/api/basket',
+        url:'http://i5a508.p.ssafy.io:8082/api/basket',
         headers:{
           Authorization: `Bearer `+ localStorage.getItem("token")
         },

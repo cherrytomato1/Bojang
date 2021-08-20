@@ -30,7 +30,7 @@
             </th>
             <td>
               <v-img
-                :src="'http://localhost:8081/api/store/downloadFile/' + $store.getters.myStore.image"
+                :src="'http://i5a508.p.ssafy.io:8081/api/store/downloadFile/' + $store.getters.myStore.image"
                 max-height="256"
                 max-width="194"
               />
@@ -111,7 +111,7 @@
                   >
                     <td>
                       <v-img
-                        :src="'http://localhost:8082/api/item/downloadFile/' + item.image"
+                        :src="'http://i5a508.p.ssafy.io:8082/api/item/downloadFile/' + item.image"
                         max-height="256"
                         max-width="194"
                       />
@@ -239,7 +239,7 @@ export default {
     updateComment(){
       axios({
         method:'post',
-        url:'http://localhost:8081/api/store/comment',
+        url:'http://i5a508.p.ssafy.io:8081/api/store/comment',
         headers:{
           Authorization: `Bearer `+ this.$store.getters.getToken
         },
@@ -263,7 +263,7 @@ export default {
 
       try {
         const { data } = await axios.post(
-          "http://localhost:8081/api/store/image",
+          "http://i5a508.p.ssafy.io:8081/api/store/image",
           formData,
           {
             headers: {

@@ -96,7 +96,7 @@ export default {
       // storeSearch: function() {
         axios({
           method:'patch',
-          url:'http://localhost:8082/api/orderinfo/check',
+          url:'http://i5a508.p.ssafy.io:8082/api/orderinfo/check',
           headers:{
             Authorization: `Bearer `+ localStorage.getItem("token")
           },

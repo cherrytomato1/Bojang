@@ -16,9 +16,12 @@
     </v-container>
     <v-container>
       <v-row>
-        <v-col cols="12" offset="1">
+        <v-col
+          cols="12"
+          offset="1"
+        >
           <h3>구매자 정보</h3>
-          <br />
+          <br>
 
           <!-- 이 부분에서 mapgetters 가져오는 건 맞는것 같은데 created hook error -->
           <p>이름 : {{ $store.getters.userData.name }}</p>
@@ -33,12 +36,18 @@
     </v-container>
     <v-container>
       <v-row>
-        <v-col cols="12" offset="1">
+        <v-col
+          cols="12"
+          offset="1"
+        >
           <h3>주문 내역</h3>
-          <br />
+          <br>
           <!-- <p>{{ $store.getters.basketList[0].storeName }}</p> -->
           <!-- <v-text>싸피시장</v-text><br> -->
-          <div v-for="(fs, index) in basketList" :key="index">
+          <div
+            v-for="(fs, index) in basketList"
+            :key="index"
+          >
             <v-container>
               <v-row>
                 <v-col cols="2">
@@ -47,18 +56,21 @@
                     src="@/assets/fish1.png"
                     alt="가게 사진"
                     style="width:60px"
-                  />
+                  >
                 </v-col>
                 <v-col cols="2">
-                  {{ fs.storeName }}<br />
+                  {{ fs.storeName }}<br>
                   <h3>{{ fs.basket.item.name }}</h3>
                 </v-col>
-                <v-col cols="2" offset="4">
-                  <br />
+                <v-col
+                  cols="2"
+                  offset="4"
+                >
+                  <br>
                   {{ fs.basket.amount }}
                 </v-col>
                 <v-col cols="2">
-                  <br />
+                  <br>
                   {{ fs.basket.item.price * fs.basket.amount }}원
                 </v-col>
                 <!-- input field 넣어서 요청사항 출력시키기 -->
@@ -87,17 +99,23 @@
 
     <v-container>
       <v-row>
-        <v-col cols="12" offset="1">
+        <v-col
+          cols="12"
+          offset="1"
+        >
           <h4>결제 정보</h4>
-          <br />
+          <br>
           <span>총 결제금액: {{ total }} 원</span>
         </v-col>
       </v-row>
     </v-container>
     <v-container>
       <v-row>
-        <v-col cols="2" offset="1">
-          <br />
+        <v-col
+          cols="2"
+          offset="1"
+        >
+          <br>
           <p>
             결제 방법
           </p>
@@ -106,7 +124,7 @@
           <v-checkbox value />
         </v-col>
         <v-col cols="2">
-          <br />
+          <br>
           <p>
             카드 결제
           </p>
@@ -119,13 +137,16 @@
         </v-col> -->
       </v-row>
     </v-container>
-    <br />
-    <br />
+    <br>
+    <br>
     <v-container>
       <v-row>
         <v-col offset="6">
           <!-- <br> -->
-          <v-btn color="blue" @click="billing">
+          <v-btn
+            color="blue"
+            @click="billing"
+          >
             <span>
               결제하기
             </span>
@@ -194,7 +215,7 @@ export default {
       // console.log(orderItemList);
       axios({
         method: "post",
-        url: "http://localhost:8082/api/billing",
+        url: "http://i5a508.p.ssafy.io:8082/api/billing",
         headers: {
           Authorization: `Bearer ` + this.$store.getters.getToken
         },

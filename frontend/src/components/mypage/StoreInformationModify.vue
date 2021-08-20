@@ -25,7 +25,10 @@
           required
         />
         <v-row>
-          <v-col cols="12" md="4">
+          <v-col
+            cols="12"
+            md="4"
+          >
             <v-select
               v-model="select"
               :items="items"
@@ -34,15 +37,24 @@
               required
             />
           </v-col>
-          <v-col cols="12" md="8">
+          <v-col
+            cols="12"
+            md="8"
+          >
             <v-text-field
               v-model="title"
               :disabled="isUpdating"
               label="계좌번호"
             />
           </v-col>
-          <v-col offset="5" cols="4">
-            <v-btn class="mr-4" @click="submit">
+          <v-col
+            offset="5"
+            cols="4"
+          >
+            <v-btn
+              class="mr-4"
+              @click="submit"
+            >
               저장
             </v-btn>
           </v-col>
@@ -98,7 +110,7 @@ export default {
   created() {
     axios({
       method: "get",
-      url: "http://localhost:8085/api/user/bank-type",
+      url: "http://i5a508.p.ssafy.io:8085/api/user/bank-type",
       headers: {
         Authorization: `Bearer ` + localStorage.getItem("token")
       }
@@ -123,7 +135,7 @@ export default {
       // this.$refs.observer.validate()
       axios({
         method: "patch",
-        url: "http://localhost:8085/api/user",
+        url: "http://i5a508.p.ssafy.io:8085/api/user",
         headers: {
           Authorization: `Bearer ` + localStorage.getItem("token")
         },

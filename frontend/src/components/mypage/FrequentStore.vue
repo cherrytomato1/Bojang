@@ -49,7 +49,7 @@
               <!-- 사진 안나옴 405 에러 발생 -->
               <!--
               <v-img
-                :src="'http://localhost:8081/api/favorite/' + fs.store.image"
+                :src="'http://i5a508.p.ssafy.io:8081/api/favorite/' + fs.store.image"
               /> -->
             </v-col>
             <v-col
@@ -152,7 +152,7 @@ export default {
       deleteFrequent: function(id) {
         axios({
           method:'delete',
-          url:`http://localhost:8081/api/favorite/${this.id}`,
+          url:`http://i5a508.p.ssafy.io:8081/api/favorite/${this.id}`,
           headers:{
             Authorization: `Bearer `+ localStorage.getItem("token")
           },

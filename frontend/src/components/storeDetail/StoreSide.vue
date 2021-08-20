@@ -20,7 +20,7 @@
     >
       <v-row>
         <v-img
-          :src="'http://localhost:8081/api/store/downloadFile/' + $store.getters.store.image"
+          :src="'http://i5a508.p.ssafy.io:8081/api/store/downloadFile/' + $store.getters.store.image"
         />
       </v-row>
       <v-row>
@@ -171,7 +171,7 @@ export default {
     addFavoriteStore(){
       axios({
         method:'post',
-        url:'http://localhost:8081/api/favorite',
+        url:'http://i5a508.p.ssafy.io:8081/api/favorite',
         headers:{
           Authorization: `Bearer `+ this.$store.getters.getToken
         },

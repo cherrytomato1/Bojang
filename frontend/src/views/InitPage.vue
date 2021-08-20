@@ -1,12 +1,16 @@
 <template>
   <v-app class="color5">
     <v-container>
-      <v-layout justify-center align-center ma-10>
+      <v-layout
+        justify-center
+        align-center
+        ma-10
+      >
         <img
           class="justify-center"
           src="@/assets/logo.png"
           style="width: 400px"
-        />
+        >
       </v-layout>
       <v-layout justify-center>
         <p class="text-h1">
@@ -19,20 +23,30 @@
           v-if="$store.state.token == ''"
           class="justify-center align-center"
         >
-          <button class="justify-center align-center" @click="login">
-            <a :href="kakaoLoginLink" alt="kakao login">
+          <button
+            class="justify-center align-center"
+            @click="login"
+          >
+            <a
+              :href="kakaoLoginLink"
+              alt="kakao login"
+            >
               <img
                 class="justify-center"
                 alt="kakao logo"
                 src="@/assets/kakao_login_large.png"
-              />
+              >
             </a>
           </button>
         </div>
 
         <div v-if="isLoaded !== false">
           <v-container>
-            <v-form ref="form" v-model="valid" lazy-validation>
+            <v-form
+              ref="form"
+              v-model="valid"
+              lazy-validation
+            >
               <v-text-field
                 v-model="name"
                 :counter="10"
@@ -66,7 +80,11 @@
                 시장 입장하기
               </v-btn>
 
-              <v-btn color="error" class="mr-4" @click="reset">
+              <v-btn
+                color="error"
+                class="mr-4"
+                @click="reset"
+              >
                 입력 초기화
               </v-btn>
             </v-form>
