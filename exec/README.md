@@ -32,11 +32,11 @@
 
 ### 3. 사용하는 외부 서비스
 
-- SERVICE.md
+-[SERVICE.md](SERVICE.md)
 
 ### 4. 데이터베이스
 
-- DATABASE.md
+-[DATABASE.md](DATABASE.md)
 
 ### 5. 시나리오
 
