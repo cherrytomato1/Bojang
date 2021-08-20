@@ -77,14 +77,12 @@
                 />
               </v-col>
 
-              <v-col cols="4">
-                <!-- <p>
-                민기네 수산<br>
-                고등어<br>
-                수량: 13 <br>
-              </p> -->
-                <!-- {{ fs.item.name }}<br /> -->
+              <v-col cols="3">
                 {{ orderItem.item.name }}
+              </v-col>
+
+              <v-col cols="1">
+                {{ orderItem.amount }}
               </v-col>
               <v-col cols="2">
                 <p>
