@@ -19,4 +19,6 @@ public interface FavoriteStoreRepository extends JpaRepository<FavoriteStore,Str
 
     Optional<FavoriteStore> findByStore(Store store);
 
+    Optional<FavoriteStore> findByStoreAndUser(Store store,User user);
+
 }

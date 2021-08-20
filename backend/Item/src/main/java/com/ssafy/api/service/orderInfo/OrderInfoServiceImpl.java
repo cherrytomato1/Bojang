@@ -36,12 +36,12 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         if (year == null) {
             LocalDateTime endDatetime = LocalDateTime.now();
             LocalDateTime startDatetime = endDatetime.minusMonths(6);
-            List<OrderInfo> orderInfoList = orderInfoRepository.findByRegisterTimeBetweenAndUser(startDatetime, endDatetime, user);
+            List<OrderInfo> orderInfoList = orderInfoRepository.findByRegisterTimeBetweenAndUserOrderByRegisterTimeDesc(startDatetime, endDatetime, user);
             return orderInfoList;
         } else {
             LocalDateTime start = LocalDateTime.of(year, 1, 1, 0, 0, 0);
             LocalDateTime end = LocalDateTime.of(year, 12, 31, 23, 59, 59);
-            List<OrderInfo> orderInfoList = orderInfoRepository.findByRegisterTimeBetweenAndUser(start, end, user);
+            List<OrderInfo> orderInfoList = orderInfoRepository.findByRegisterTimeBetweenAndUserOrderByRegisterTimeDesc(start, end, user);
             return orderInfoList;
         }
     }
