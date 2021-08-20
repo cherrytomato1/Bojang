@@ -87,7 +87,7 @@ export default {
   created(){
     axios({
       method:'get',
-      url:`http://i5a508.p.ssafy.io:8082/api/orderitem/${$store.getters.myStore.id}`,
+      url:`https://i5a508.p.ssafy.io:8082/api/orderitem/${$store.getters.myStore.id}`,
       headers:{
         Authorization: `Bearer `+ this.$store.getters.getToken
       },

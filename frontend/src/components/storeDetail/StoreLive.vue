@@ -149,7 +149,7 @@ export default {
   created(){
     axios({
         method:'get',
-        url:'http://i5a508.p.ssafy.io:8085/api/user',
+        url:'https://i5a508.p.ssafy.io:8085/api/user',
         headers:{
           Authorization: `Bearer `+ this.$store.getters.getToken
         }

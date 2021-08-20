@@ -52,7 +52,7 @@
                 <v-col cols="2">
                   <img
                     :src="
-                      'http://i5a508.p.ssafy.io:8082/api/item/downloadFile/' +
+                      'https://i5a508.p.ssafy.io:8082/api/item/downloadFile/' +
                         orderItem.item.image
                     "
                     alt="상품 사진"

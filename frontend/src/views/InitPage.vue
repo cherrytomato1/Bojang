@@ -113,8 +113,6 @@ export default {
   name: "App",
 
   data: () => ({
-    client_id: "d8d2a25fb9a3d72d3564ed9c5d33c6b3",
-    redirect_uri: "https://localhost:80/oauth2/redirect",
     log: false,
     name: "OOO",
     valid: true,
@@ -179,7 +177,7 @@ export default {
 
         axios({
           method: "patch",
-          url: `http://localhost:8085/api/user`,
+          url: `https://i5a508.p.ssafy.io:8085/api/user`,
           headers: headers,
           data: {
             // userType: userTypeLongValue,

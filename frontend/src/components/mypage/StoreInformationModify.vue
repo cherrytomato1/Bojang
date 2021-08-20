@@ -110,7 +110,7 @@ export default {
   created() {
     axios({
       method: "get",
-      url: "http://i5a508.p.ssafy.io:8085/api/user/bank-type",
+      url: "https://i5a508.p.ssafy.io:8085/api/user/bank-type",
       headers: {
         Authorization: `Bearer ` + localStorage.getItem("token")
       }
@@ -135,7 +135,7 @@ export default {
       // this.$refs.observer.validate()
       axios({
         method: "patch",
-        url: "http://i5a508.p.ssafy.io:8085/api/user",
+        url: "https://i5a508.p.ssafy.io:8085/api/user",
         headers: {
           Authorization: `Bearer ` + localStorage.getItem("token")
         },

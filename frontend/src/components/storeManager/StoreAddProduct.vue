@@ -69,7 +69,7 @@ export default {
     addHandler(){
       axios({
         method:'put',
-        url:`http://i5a508.p.ssafy.io:8082/api/item/${this.$store.getters.myStore.id}`,
+        url:`https://i5a508.p.ssafy.io:8082/api/item/${this.$store.getters.myStore.id}`,
         headers:{
           Authorization: `Bearer `+ this.$store.getters.getToken
         },

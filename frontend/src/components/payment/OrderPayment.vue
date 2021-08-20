@@ -215,7 +215,7 @@ export default {
       // console.log(orderItemList);
       axios({
         method: "post",
-        url: "http://i5a508.p.ssafy.io:8082/api/billing",
+        url: "https://i5a508.p.ssafy.io:8082/api/billing",
         headers: {
           Authorization: `Bearer ` + this.$store.getters.getToken
         },
