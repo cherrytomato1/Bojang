@@ -108,7 +108,7 @@ public class RestUtil {
 		httpHeaders.set(TOKEN_KEY, token);
 
 //		String url = "http://localhost:8083/api/billing";
-		String url = CURRENT_SERVER_DOMAIN + BILLING_PORT + "/api/billing";
+		String url = CURRENT_SERVER_DOMAIN + BILLING_PORT + "/api/bill";
 		RestTemplate restTemplate = new RestTemplate();
 		MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<>();
 		paramMap.add("orderInfoId", orderInfoId);

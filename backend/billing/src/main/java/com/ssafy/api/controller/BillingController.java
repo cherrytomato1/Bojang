@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/billing")
+@RequestMapping("/api/bill")
 public class BillingController {
 
     @Autowired
