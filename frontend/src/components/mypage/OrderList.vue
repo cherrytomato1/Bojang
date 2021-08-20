@@ -71,7 +71,10 @@
             <v-row>
               <v-col cols="2">
                 <img
-                  v-bind:src="orderItem.item.image"
+                  :src="
+                    'http://localhost:8082/api/item/downloadFile/' +
+                      orderItem.item.image
+                  "
                   alt="상품 사진"
                   style="width:60px"
                 />

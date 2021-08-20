@@ -10,32 +10,25 @@
   </v-app>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
 
 <script>
-import Navbar from '@/views/Navbar';
-import StoreMap from '@/components/mainpage/StoreMap';
-import RecommendStore from '@/components/mainpage/RecommendStore';
-import SelectStore from '@/components/mainpage/SelectStore';
-import {mapGetters} from "vuex";
+import Navbar from "@/views/Navbar";
+import StoreMap from "@/components/mainpage/StoreMap";
 
 export default {
   components: {
     Navbar,
-    StoreMap,
+    StoreMap
     // RecommendStore,
     // SelectStore,
-  },
-//  created() {
-//     this.$store.dispatch("getUserData");
-//     // console.log(this.userData)
-//   },
+  }
+  //  created() {
+  //     this.$store.dispatch("getUserData");
+  //     // console.log(this.userData)
+  //   },
   // computed:{
   // ...mapGetters(["userData"])
   // },
-}
-
+};
 </script>
-

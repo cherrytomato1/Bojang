@@ -31,7 +31,7 @@
       </v-app-bar>
       <v-card>
         <v-tabs v-model="tab" background-color="color1" center-active>
-          <v-tab v-for="(market, idx) in markets" :key="idx">
+          <v-tab v-for="(market, idx) in markets" :key="idx" disabled="true">
             {{ market.name }}
           </v-tab>
         </v-tabs>
@@ -95,7 +95,7 @@ export default {
   data() {
     return {
       userType: "",
-      tab: null
+      tab: 0
     };
   },
   //   methods: {
@@ -112,6 +112,9 @@ export default {
   },
   watch: {
     tab: function(val) {
+      if (val === 0) {
+        return;
+      }
       // 선택한 탭 변경될 경우
       alert(`${markets[val]}은 현재 서비스 준비중에 있습니다.`);
       this.$store.commit("setMarket", this.$store.getters.markets[0]);
