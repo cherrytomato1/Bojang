@@ -142,7 +142,7 @@ export default {
           }
         );
         console.log(data);
-        this.$router.go()
+        //this.$router.go()
       } catch (err) {
         console.log(err);
       }
@@ -167,7 +167,7 @@ export default {
       })
       .then(() => {
         alert("상품이 성공적으로 수정되었습니다.");
-        this.$router.go()
+        //this.$router.go()
       })
     },
   }

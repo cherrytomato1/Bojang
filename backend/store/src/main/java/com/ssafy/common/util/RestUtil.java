@@ -11,7 +11,7 @@ import java.util.Map;
 @Component
 public class RestUtil {
     final String LOCAL = "http://localhost";
-    final String AWS = "http://i5a508.p.ssafy.io";
+    final String AWS = "https://i5a508.p.ssafy.io";
     final String CURRENT_SERVER_DOMAIN = AWS;
 
     final String AUTH_PORT = ":8085";

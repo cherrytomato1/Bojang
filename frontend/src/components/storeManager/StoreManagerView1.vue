@@ -250,7 +250,7 @@ export default {
       .then(() => {
         // console.log(this.comment)
         alert("가게설명이 성공적으로 수정되었습니다.");
-        this.$router.go()
+        //this.$router.go()
       })
     },
 
@@ -273,7 +273,7 @@ export default {
           }
         );
         console.log(data);
-        this.$router.go()
+        //this.$router.go()
       } catch (err) {
         console.log(err);
       }

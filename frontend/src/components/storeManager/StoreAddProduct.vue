@@ -84,7 +84,7 @@ export default {
       .then(() => {
         // console.log(this.comment)
         alert("상품이 성공적으로 추가되었습니다.");
-        this.$router.go()
+        this.$router.go("storemanager")
       })
     },
   }
