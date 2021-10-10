@@ -15,7 +15,7 @@
 ## Server
 
 - [Auth Server](./auth/README.md)
-- [Item Server](./item/README.md)
+- [Item Server](./Item/README.md)
 - [Store Server](./store/README.md)
 - [Billing Server](./billing/README.md)
 
