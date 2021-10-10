@@ -10,7 +10,8 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 import java.nio.charset.Charset;
 
-@SpringBootApplication @EnableJpaAuditing
+@SpringBootApplication
+@EnableJpaAuditing
 public class AuthApplication {
 	public static void main(String[] args) {
         SpringApplication.run(AuthApplication.class, args);

@@ -89,14 +89,13 @@ public class UserPrincipal implements OAuth2User, UserDetails {
 	@Override
 	public String getUsername() {
 		//principal은 provider에 따라 다르게 발급
-//		if (this.oAuthProvider == OAuthProvider.google) {
-//			return email;
-//		} else if (this.oAuthProvider == OAuthProvider.kakao) {
-//			return id;
-//		}
-//		return null;
-//		return getName();
-		return id;
+		if (this.oAuthProvider == OAuthProvider.google) {
+			return email;
+		}
+		if (this.oAuthProvider == OAuthProvider.kakao) {
+			return id;
+		}
+		return getName();
 	}
 
 	@Override
