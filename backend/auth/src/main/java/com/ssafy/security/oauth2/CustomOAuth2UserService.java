@@ -48,8 +48,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		} catch (AuthenticationException ex) {
 			throw ex;
 		} catch (Exception ex) {
-			// Throwing an instance of AuthenticationException will trigger the
-			// OAuth2AuthenticationFailureHandler
 			throw new InternalAuthenticationServiceException(ex.getMessage(), ex.getCause());
 		}
 	}
@@ -96,7 +94,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		}
 
 		if (registrationId.equalsIgnoreCase(OAuthProvider.kakao.toString())) {
-			if (StringUtils.isEmpty(oAuth2UserInfo.getId())) {
+			if (oAuth2UserInfo.getId().isEmpty()) {
 				throw new OAuth2AuthenticationProcessingException(
 					"Id not found from Kakao OAuth");
 			}

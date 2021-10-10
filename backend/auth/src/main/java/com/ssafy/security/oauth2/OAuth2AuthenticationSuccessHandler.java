@@ -53,12 +53,12 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         Optional<String> redirectUri = CookieUtils.getCookie(request, HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME)
                 .map(Cookie::getValue);
 
-//        System.out.println("redirect uri : " + redirectUri.orElse("is null!"));
-//        if(redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
-//            throw new BadRequestException("Sorry! We've got an Unauthorized Redirect URI : " + redirectUri);
-//        }
+        if(redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
+//            throw new BadRequestException("We've got an Unauthorized Redirect URI : " + redirectUri);
+            log.error("Got an unauthorized redirect uri - {}", redirectUri.get());
+        }
 
-        String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
+        String targetUrl = redirectUri.orElseGet(this::getDefaultTargetUrl);
 
         String token = tokenProvider.createToken(authentication);
 
@@ -72,13 +72,16 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         httpCookieOAuth2AuthorizationRequestRepository.removeAuthorizationRequestCookies(request, response);
     }
 
+    /**
+     * 허용된 uri(appConfig)왜 현재 uri가 있는지 린턴
+     */
     private boolean isAuthorizedRedirectUri(String uri) {
         URI clientRedirectUri = URI.create(uri);
 
         return appConfig.getAuthorizedRedirectUris()
                 .stream()
                 .anyMatch(authorizedRedirectUri -> {
-                    // Only validate host and port. Let the clients use different paths if they want to
+
                     URI authorizedURI = URI.create(authorizedRedirectUri);
                     return authorizedURI.getHost().equalsIgnoreCase(clientRedirectUri.getHost())
                         && authorizedURI.getPort() == clientRedirectUri.getPort();

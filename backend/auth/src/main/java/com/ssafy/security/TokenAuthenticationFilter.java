@@ -58,11 +58,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 				//securitycontext 에 인증 정보 담기
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			}
-//			response.addHeader("Accept-Patch", "*");
-//			response.addHeader("Access-Control-Allow-Headers", "Content-Type");
-//			response.addHeader("Access-Control-Allow-Origin", "*");
-//			response.addHeader("Access-Control-Allow-Methods", "GET,POST,DELETE,OPTIONS,PATCH");
-//			System.out.println("set Headers");
 		} catch (Exception ex) {
 			log.error("Could not set user authentication in security context", ex);
 			System.out.println("thrown error");

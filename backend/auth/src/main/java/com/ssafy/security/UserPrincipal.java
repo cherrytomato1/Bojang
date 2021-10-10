@@ -21,9 +21,9 @@ public class UserPrincipal implements OAuth2User, UserDetails {
 	private String password;
 	//oauthprovider (unused)
 	private OAuthProvider oAuthProvider;
-	private User user;
+	private final User user;
 
-	private Collection<? extends GrantedAuthority> authorities;
+	private final Collection<? extends GrantedAuthority> authorities;
 	private Map<String, Object> attributes;
 
 	public UserPrincipal(String id, String email, String password, User user,
