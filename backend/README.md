@@ -15,6 +15,9 @@
 ## Server
 
 - [Auth Server](./auth/README.md)
+- [Item Server](./item/README.md)
+- [Store Server](./store/README.md)
+- [Billing Server](./billing/README.md)
 
 ## Structure
 ![img_1.png](img_1.png)
